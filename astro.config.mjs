@@ -9,7 +9,7 @@ export default defineConfig({
   // FONTOS: Add your final production URL here.
   // This is required for SEO and sitemap generation.
   // Cseréld le a végleges domain nevedre, ha más!
-  site: 'https://www.prometheusdigital.hu',
+  site: 'https://www.prometheusdigital.eu',
 
   vite: {
     plugins: [tailwindcss()]
