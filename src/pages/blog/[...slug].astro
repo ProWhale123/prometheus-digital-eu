@@ -1,0 +1,220 @@
+---
+// src/pages/blog/[...slug].astro
+
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { Image } from 'astro:assets';
+import SpotlightCard from '../../components/react/SpotlightCard.jsx'; // ÚJ IMPORT a szerzői dobozhoz
+
+// Képek a szerzőhöz (Cseréld le a saját képedre!)
+import authorImage from '../../../src/assets/images/arpad-bretz.JPG'; // Feltételezve, hogy ez a kép létezik
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout 
+  title={post.data.title}
+  description={post.data.description}
+>
+  <div id="progress-container" class="fixed top-0 left-0 h-1 w-full z-[100] bg-transparent pointer-events-none">
+      <div id="progress-bar" class="h-full bg-gradient-to-r from-sky-400 to-cyan-300 w-0 transition-all duration-100 ease-out"></div>
+  </div>
+
+  <Header />
+
+  <main>
+    <section class="relative flex items-center justify-center text-center min-h-[60vh] overflow-hidden">
+      <div class="absolute inset-0 z-0">
+          <Image 
+              src={post.data.heroImage}
+              alt={`Háttérkép a(z) ${post.data.title} című bejegyzéshez`}
+              quality="mid"
+              class="w-full h-full object-cover opacity-60"
+          />
+      </div>
+      <div class="absolute inset-0 bg-gray-950/70 backdrop-blur-sm"></div>
+      <div class="container mx-auto px-6 relative z-10 pt-20">
+        <div class="inline-block px-4 py-1 mb-4 rounded-full bg-sky-500/10 text-sky-400 text-sm font-semibold border border-sky-500/20">
+            {post.data.tags[0]} </div>
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight max-w-4xl mx-auto">
+          {post.data.title}
+        </h1>
+        <div class="flex items-center justify-center space-x-4 text-gray-300">
+            <div class="flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                {post.data.pubDate.toLocaleDateString('hu-HU', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </div>
+            <span>•</span>
+            <div class="flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                {post.data.author}
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="py-20 md:py-24 bg-gray-950">
+      <div class="container mx-auto px-6">
+        <div class="post-content max-w-3xl mx-auto">
+          
+          <Content />
+
+          <div class="mt-20 pt-10 border-t border-white/10">
+            <SpotlightCard client:visible>
+                <div class="p-8 flex flex-col md:flex-row items-center gap-8">
+                    <Image 
+                        src={authorImage} 
+                        alt="Bretz Árpád" 
+                        class="w-24 h-24 rounded-full border-2 border-sky-500 shadow-lg object-cover"
+                    />
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl font-bold text-white mb-2">A Szerzőről</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            A Prometheus Digital alapítója és vezető fejlesztője. Szenvedélyem a gyors, modern weboldalak és a mérhető üzleti eredmények.
+                        </p>
+                        <a href="/kapcsolat" class="text-sky-400 font-semibold hover:text-white transition-colors">
+                            Dolgozzunk együtt →
+                        </a>
+                    </div>
+                </div>
+            </SpotlightCard>
+          </div>
+
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+    function updateProgress() {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        const bar = document.getElementById("progress-bar");
+        if (bar) {
+            bar.style.width = scrolled + "%";
+        }
+    }
+
+    window.addEventListener("scroll", updateProgress);
+    document.addEventListener('astro:page-load', () => {
+        window.addEventListener("scroll", updateProgress);
+    });
+</script>
+
+<style is:global>
+  .post-content {
+    color: #e0e0ea; 
+    font-size: 1.125rem; 
+    line-height: 1.8;
+    margin-bottom: 1.25em;
+    hyphens: auto; 
+  }
+
+  .post-content h2,
+  .post-content h3 {
+    color: #ffffff; 
+    font-weight: 800;
+    margin-top: 3em;
+    margin-bottom: 1em;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+  .post-content h2 {
+    font-size: 2rem; 
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .post-content h3 {
+    font-size: 1.5rem; 
+  }
+
+  .post-content p {
+    margin-bottom: 1.5em;
+  }
+  .post-content strong {
+    color: #38bdf8; /* Kiemelt részek sky-400 színnel */
+    font-weight: 700;
+  }
+  .post-content a {
+    color: #38bdf8; 
+    text-decoration: none;
+    border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+    transition: all 0.2s ease-in-out;
+  }
+  .post-content a:hover {
+    background-color: rgba(56, 189, 248, 0.1);
+    border-bottom-color: #38bdf8;
+  }
+  .post-content ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 2em;
+  }
+  .post-content li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 1em;
+  }
+  .post-content li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #38bdf8; 
+    font-weight: bold;
+  }
+
+  .post-content blockquote {
+    margin: 3em 0;
+    padding: 2em;
+    border-left: 4px solid #38bdf8; 
+    background-color: rgba(56, 189, 248, 0.05);
+    border-radius: 0 1rem 1rem 0;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #f4f4f5;
+  }
+
+  /* CTA Gomb */
+  .post-content .cta-button {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    color: #0c0a09; 
+    background-image: linear-gradient(to right, #38bdf8, #22d3ee); 
+    padding: 1em 2.5em;
+    border-radius: 9999px; 
+    border: none;
+    margin-top: 3em; 
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.4);
+    text-align: center;
+    width: 100%;
+  }
+  @media (min-width: 768px) {
+      .post-content .cta-button {
+          width: auto;
+      }
+  }
+
+  .post-content .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 25px -5px rgba(56, 189, 248, 0.5);
+    filter: brightness(1.1);
+    background-color: transparent; /* Felülírja a link backgroundot */
+  }
+</style>

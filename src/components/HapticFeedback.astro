@@ -1,0 +1,20 @@
+<script>
+  // Csak akkor fusson, ha a böngésző támogatja a vibrációt
+  function initHaptics() {
+    if (!("vibrate" in navigator)) return;
+
+    // Minden gombot és linket megkeresünk
+    const interactables = document.querySelectorAll('button, a, .magnetic-button');
+
+    interactables.forEach((el) => {
+      el.addEventListener('click', () => {
+        // Egy nagyon rövid, 10ms-os rezgés (finom kattanás érzet)
+        navigator.vibrate(10);
+      });
+    });
+  }
+
+  // Futtatás
+  initHaptics();
+  document.addEventListener('astro:page-load', initHaptics);
+</script>

@@ -1,0 +1,154 @@
+---
+// src/components/Header.astro (MAGYAR HELYREÁLLÍTÁS)
+import { Image } from 'astro:assets';
+import logoImage from '../assets/images/logo.jpg'; 
+import MagneticButton from './react/MagneticButton.jsx';
+
+const { pathname } = Astro.url;
+
+// Fix magyar linkek
+const navLinks = [
+    { name: "Főoldal", href: "/" },
+    { name: "Szolgáltatások", href: "/szolgaltatasok" },
+    { name: "Áraink", href: "/araink" },
+    { name: "Munkáink", href: "/munkaink" },
+    { name: "Rólunk", href: "/rolunk" },
+    { name: "Blog", href: "/blog" },
+    { name: "Kapcsolat", href: "/kapcsolat" },
+];
+---
+
+<header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="/" class="block flex-shrink-0">
+            <Image 
+                src={logoImage} 
+                alt="Prometheus Digital Logó"
+                class="h-8 md:h-10 w-auto" 
+                quality="high"
+            />
+        </a>
+        
+        <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8">
+            {navLinks.filter(link => link.name !== 'Kapcsolat').map(link => (
+                <a 
+                    href={link.href} 
+                    class:list={[
+                        "text-base xl:text-lg font-semibold transition-colors duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-sky-400 after:transition-all after:duration-300 hover:text-white hover:after:w-full",
+                        pathname === link.href ? 'text-sky-400 after:w-full' : 'text-gray-300'
+                    ]}
+                >
+                    {link.name}
+                </a>
+            ))}
+
+            <div class="ml-2">
+                <MagneticButton 
+                    client:load 
+                    href="/kapcsolat" 
+                    className="bg-sky-500 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 hover:bg-sky-600 hover:shadow-lg hover:shadow-sky-500/30"
+                >
+                    Kapcsolat
+                </MagneticButton>
+            </div>
+        </nav>
+
+        <button id="mobile-menu-btn" class="lg:hidden z-50 flex flex-col justify-center items-center w-8 h-8 focus:outline-none" aria-label="Menü megnyitása">
+            <span class="line line-1 block w-6 h-0.5 bg-white transition-transform duration-300 ease-in-out"></span>
+            <span class="line line-2 block w-6 h-0.5 bg-white mt-1.5 transition-transform duration-300 ease-in-out"></span>
+            <span class="line line-3 block w-6 h-0.5 bg-white mt-1.5 transition-transform duration-300 ease-in-out"></span>
+        </button>
+    </div>
+</header>
+
+<div id="mobile-menu-panel" class="fixed inset-0 h-[100dvh] bg-gray-900/95 backdrop-blur-xl z-40 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col justify-center">
+    <nav class="flex flex-col items-center justify-center space-y-8">
+        {navLinks.map(link => (
+            <a 
+                href={link.href} 
+                class:list={[
+                    "mobile-link text-3xl font-bold transition-colors duration-300",
+                    pathname === link.href ? 'text-sky-400' : 'text-gray-300'
+                ]}
+            >
+                {link.name}
+            </a>
+        ))}
+    </nav>
+</div>
+
+<script>
+    function initHeader() {
+        const header = document.getElementById('main-header');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
+        if (!header || !mobileMenuBtn || !mobileMenuPanel) return;
+
+        mobileMenuBtn.classList.remove('is-open');
+        mobileMenuPanel.classList.add('-translate-x-full');
+        mobileMenuPanel.classList.remove('menu-active');
+        document.body.classList.remove('overflow-hidden');
+
+        const toggleMenu = () => {
+            mobileMenuBtn.classList.toggle('is-open');
+            mobileMenuPanel.classList.toggle('-translate-x-full');
+            mobileMenuPanel.classList.toggle('menu-active'); 
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        mobileMenuBtn.onclick = toggleMenu;
+        
+        mobileLinks.forEach(link => {
+            link.onclick = () => {
+                const href = link.getAttribute('href');
+                if (href !== '#' && mobileMenuBtn.classList.contains('is-open')) {
+                    toggleMenu();
+                }
+            };
+        });
+
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+                header.classList.add('bg-gray-900/80', 'backdrop-blur-sm', 'shadow-lg');
+            } else {
+                header.classList.remove('bg-gray-900/80', 'backdrop-blur-sm', 'shadow-lg');
+            }
+        };
+
+        window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll);
+        
+        handleScroll();
+    }
+
+    initHeader();
+    document.addEventListener('astro:page-load', initHeader);
+</script>
+
+<style>
+.line { transform-origin: center; }
+.is-open .line-1 { transform: translateY(8px) rotate(45deg); }
+.is-open .line-2 { transform: scaleX(0); }
+.is-open .line-3 { transform: translateY(-8px) rotate(-45deg); }
+
+.mobile-link {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.4s ease-out;
+}
+
+#mobile-menu-panel.menu-active .mobile-link {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+#mobile-menu-panel.menu-active .mobile-link:nth-child(1) { transition-delay: 0.1s; }
+#mobile-menu-panel.menu-active .mobile-link:nth-child(2) { transition-delay: 0.15s; }
+#mobile-menu-panel.menu-active .mobile-link:nth-child(3) { transition-delay: 0.2s; }
+#mobile-menu-panel.menu-active .mobile-link:nth-child(4) { transition-delay: 0.25s; }
+#mobile-menu-panel.menu-active .mobile-link:nth-child(5) { transition-delay: 0.3s; }
+#mobile-menu-panel.menu-active .mobile-link:nth-child(6) { transition-delay: 0.35s; }
+#mobile-menu-panel.menu-active .mobile-link:nth-child(7) { transition-delay: 0.4s; }
+</style>

@@ -1,0 +1,161 @@
+---
+// src/pages/munkaink.astro
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { Image } from 'astro:assets';
+import portfolioImage from '../../public/images/portfolio-background.jpg';
+import TextScramble from '../components/react/TextScramble.jsx';
+
+// ÚJ IMPORT: A 3D effektushoz
+import TiltCard from '../components/react/TiltCard.jsx';
+
+// Projekt képek importálása (Feltételezve, hogy a src/assets mappában vannak, vagy helyes az útvonal)
+// Ha a public mappában vannak, akkor nem kell importálni, hanem stringként kell megadni az elérési utat.
+// De a kódod alapján importálást használunk, ami a legjobb gyakorlat az optimalizáláshoz.
+import project1Image from '../../public/images/project-1.jpg'; // Ellenőrizd az útvonalat!
+import project2Image from '../../public/images/project-2.jpg';
+import project3Image from '../../public/images/project-3.jpg';
+import project4Image from '../../public/images/project-4.jpg';
+import project5Image from '../../public/images/project-5.jpg';
+import project6Image from '../../public/images/project-6.jpg';
+
+const projects = [
+     {
+        title: "Letisztult Utazási Iroda Weboldal",
+        description: "Egy letisztult és modern weboldal a DOL Bt. utazási iroda számára, amely a Határtalanul! programra specializálódott. A cél egy informatív, könnyen navigálható felület létrehozása volt, amely bemutatja az utazási célpontokat, és egyszerűsíti az iskolák számára az ajánlatkérést és a pályázati folyamatot.",
+        tags: ["Astro", "Határtalanul!", "Ajánlatkérés", "Pályázati útmutató"],
+        imageSrc: project1Image, 
+        liveUrl: "https://dolbt.eu/"
+    },     
+    {
+        title: "Elegáns Fine Dining Weboldal",
+        description: "Egy letisztult és exkluzív online jelenlét a 'Gastronomo' fine dining étterem számára. A dizájn a prémium hangulatot tükrözi, a fókusz pedig a vizuális történetmesélésen és az egyszerű asztalfoglalási folyamaton van.",
+        tags: ["Astro", "UI/UX Dizájn", "Minimalista", "Tipográfia"],
+        imageSrc: project2Image,
+        liveUrl: "https://gastronomo.eu/"
+    },
+    {
+        title: "Modern Éttermi Weboldal Galériával",
+        description: "Egy modern és hangulatos weboldal a Duna Rapszódia étterem számára. A projekt középpontjában a vizuális élmény, az étlap bemutatása és a könnyen kezelhető galéria áll, amely bemutatja az ételek és a hely atmoszféráját.",
+        tags: ["Astro", "UI/UX Dizájn", "Galéria", "Reszponzív"],
+        imageSrc: project3Image,
+        liveUrl: "https://duna-rapszodia.hu/"
+    },
+    {
+        title: "Modern Építőipari és Felújítási Weboldal",
+        description: "Egy letisztult és bizalmat sugárzó weboldal egy építőipari vállalkozás számára. A dizájn a minőségi munkát és a szakértelmet helyezi előtérbe, a cél pedig a portfólió bemutatása és az árajánlatkérések ösztönzése.",
+        tags: ["Astro", "Portfoólió", "Lead Generation"],
+        imageSrc: project4Image,
+        liveUrl: "https://renovation-company.netlify.app/"
+    },
+    {
+        title: "Professzionális Ügyvédi Iroda Weboldal",
+        description: "Egy letisztult és megbízhatóságot sugárzó digitális névjegy egy budapesti ügyvédi iroda számára. A fókuszban a szakterületek szakszerű bemutatása és a kliensekkel való egyszerű, bizalmi kapcsolatfelvétel állt.",
+        tags: ["UI/UX Dizájn", "Reszpoinzív", "Astro", "Stratégia"],
+        imageSrc: project5Image,
+        liveUrl: "https://kovacslegal.hu/"
+    },
+    {
+        title: "Hangulatos Éttermi Landing Page",
+        description: "Egy egyoldalas, vizuális történetmesélésre épülő bemutatkozó oldal egy tradicionális étterem számára. A cél a különleges atmoszféra átadása és az étlap étvágygerjesztő, modern tálalása volt.",
+        tags: ["Dizájn", "Animációk", "UI/UX", "Astro"],
+        imageSrc: project6Image,
+        liveUrl: "https://bistrobudapest.hu/"
+    },
+];
+---
+
+<Layout 
+    title="Munkáink - Prometheus Digital" 
+    description="Tekintse meg a Prometheus Digital által készített weboldalakat, webshopokat és egyedi digitális megoldásokat."
+>
+    <Header />
+
+    <main>
+        <section 
+            class="relative flex items-center justify-center text-center min-h-[50vh] overflow-hidden"
+        >
+            <div class="absolute inset-0 z-0">
+                <Image 
+                    src={portfolioImage}
+                    alt="Prometheus Digital - Munkáink háttérkép"
+                    widths={[400, 800, 1200, 1920]}
+                    sizes="(max-width: 800px) 100vw, 1920px"
+                    quality="mid"
+                    class="w-full h-full object-cover"
+                />
+            </div>
+            <div class="absolute inset-0 bg-black/70"></div>
+            <div class="container mx-auto px-6 relative z-10">
+<h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+    Amire <br class="md:hidden" />
+    <TextScramble 
+        client:load 
+        text="Büszkék Vagyunk" 
+        className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+    />
+</h1>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300">
+                    Minden projekt egy új kihívás és egy új lehetőség, hogy valami maradandót alkossunk. Nézd meg a legutóbbi munkáinkat, és meríts ihletet a sajátodhoz!
+                </p>
+            </div>
+        </section>
+
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    {projects.map(project => (
+                        <div class="animate-on-scroll h-full">
+                            
+                            {/* JAVÍTVA: TiltCard komponens használata */}
+                            <TiltCard client:visible className="h-full">
+                                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" class="group block bg-gray-900/50 border-2 border-white/10 rounded-2xl overflow-hidden h-full transform transition-all duration-300 hover:border-sky-500/50 hover:shadow-2xl hover:shadow-sky-500/10" style="will-change: transform;">
+                                    <div class="overflow-hidden">
+                                        <Image 
+                                            src={project.imageSrc} 
+                                            alt={project.title} 
+                                            widths={[400, 600]}
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                            quality="mid"
+                                            class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105" 
+                                        />
+                                    </div>
+                                    <div class="p-8">
+                                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-sky-400 transition-colors">{project.title}</h3>
+                                        <p class="text-gray-300 mb-6">{project.description}</p>
+                                        <div class="flex flex-wrap gap-2">
+                                            {project.tags.map(tag => (
+                                                <span class="bg-sky-500/10 text-sky-300 text-sm font-semibold px-3 py-1 rounded-full">{tag}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </a>
+                            </TiltCard>
+
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 animate-on-scroll">
+             <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                    Tetszik, amit látsz?
+                </h2>
+                <p class="max-w-2xl mx-auto text-lg text-gray-300 mb-8">
+                    Valósítsuk meg a te ötletedet is! Vegyük fel a kapcsolatot, és beszéljük át, hogyan tudnánk segíteni a digitális céljaid elérésében.
+                </p>
+                <a href="/kapcsolat" 
+                   class="inline-block bg-sky-500 text-white font-bold py-4 px-10 rounded-full text-lg transition-all duration-300 ease-in-out 
+                          transform hover:scale-105 hover:bg-sky-600 hover:shadow-2xl hover:shadow-sky-500/30
+                          focus:outline-none focus:ring-4 focus:ring-sky-500 focus:ring-opacity-50">
+                    Kezdjünk Bele!
+                </a>
+             </div>
+        </section>
+    </main>
+
+    <Footer />
+</Layout>

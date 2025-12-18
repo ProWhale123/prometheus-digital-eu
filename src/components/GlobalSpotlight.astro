@@ -1,0 +1,27 @@
+<div id="global-spotlight" class="fixed inset-0 pointer-events-none z-0 hidden lg:block overflow-hidden">
+    <div class="spotlight-beam absolute w-[400px] h-[400px] bg-sky-500/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-500"></div>
+</div>
+
+<script>
+    import { gsap } from "gsap";
+
+    function initSpotlight() {
+        const beam = document.querySelector('.spotlight-beam');
+        if (!beam || window.matchMedia("(max-width: 1024px)").matches) return;
+
+        // Nagyon lassú, "lustán" követő mozgás (duration: 1.5s)
+        const moveBeam = (e) => {
+            gsap.to(beam, { 
+                x: e.clientX, 
+                y: e.clientY, 
+                duration: 1.5, 
+                ease: "power2.out" 
+            });
+        };
+
+        window.addEventListener("mousemove", moveBeam);
+    }
+
+    initSpotlight();
+    document.addEventListener('astro:page-load', initSpotlight);
+</script>

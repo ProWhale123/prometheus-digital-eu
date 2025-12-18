@@ -1,0 +1,69 @@
+---
+// src/components/Process.astro
+
+const processSteps = [
+    {
+        step: "01",
+        title: "Megismerés & Stratégiai Tervezés",
+        description: "A közös munka egy mélyreható beszélgetéssel indul, ahol megértjük a vállalkozásod céljait, a célközönségedet és a piaci környezetedet. Nem csak hallgatunk, kérdezünk is. Ennek a fázisnak az eredménye egy konkrét stratégiai terv és egy projekt-ütemterv, ami a sikeres weboldal alapját képezi."
+    },
+    {
+        step: "02",
+        title: "Felhasználói Élmény (UX) & Dizájn (UI)",
+        description: "A stratégia alapján drótvázakat és felhasználói útvonalakat tervezünk, hogy a weboldal logikus és könnyen használható legyen. Ezt követi a modern, a márkádhoz illeszkedő vizuális dizájn megalkotása. A cél egy olyan felület, ami nem csak esztétikus, de hatékonyan vezeti a látogatót a konverzió felé. Csak a te jóváhagyásod után lépünk a fejlesztési fázisba."
+    },
+    {
+        step: "03",
+        title: "Fejlesztés & Megvalósítás",
+        description: "Itt történik a varázslat. A jóváhagyott tervekből tiszta, gyors és jövőbiztos kódot írunk. Az Astro keretrendszernek köszönhetően egy villámgyors, SEO-barát és minden eszközön tökéletesen megjelenő (reszponzív) weboldalt építünk, ami a legmodernebb technológiai sztenderdeknek is megfelel."
+    },
+    
+    {
+        step: "04",
+        title: "Tartalomfeltöltés & Keresőoptimalizálás",
+        description: "A kész keretet feltöltjük élettel: beillesztjük a szöveges és képi tartalmakat. Ezzel párhuzamosan elvégezzük az alapvető, de kritikus fontosságú keresőoptimalizálási (SEO) beállításokat a meta leírásoktól a képek optimalizálásáig, hogy a Google azonnal megszeresse az új oldaladat."
+    },
+    
+    {
+        step: "05",
+        title: "Minőségellenőrzés & Indítás",
+        description: "Mielőtt a világ elé tárnánk a weboldalt, mindent aprólékosan letesztelünk. Ellenőrizzük a linkeket, űrlapokat, a böngészőkompatibilitást és a reszponzív viselkedést. Célunk a hibátlan, zökkenőmentes indulás, ami az első perctől kezdve pozitív benyomást kelt a látogatókban."
+    },
+    
+    {
+        step: "06",
+        title: "Átadás, Oktatás & Támogatás",
+        description: "A sikeres indítás után átadjuk neked a kulcsokat, és ha van tartalomkezelő rendszer (CMS), egy rövid oktatás keretében megmutatjuk a használatát. A közös munka itt nem ér véget: igény esetén opcionális karbantartási csomagjainkkal gondoskodunk a weboldalad biztonságáról, frissítéseiről és a folyamatos, zavartalan működésről."
+    },
+]
+---
+
+<section class="py-20 md:py-32">
+    <div class="container mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                A Sikeres Projekt <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Lépései</span>
+            </h2>
+            <p class="text-lg text-gray-300">
+                Egy átlátható és hatékony folyamat, ami garantálja a minőségi végeredményt. Nincsenek meglepetések, csak kiszámítható haladás a közös cél felé.
+            </p>
+        </div>
+
+        <div class="relative max-w-5xl mx-auto">
+            <!-- Connecting line for desktop -->
+            <div class="hidden md:block absolute top-10 left-0 w-full h-0.5 bg-white/10"></div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-16 relative">
+                {processSteps.map(item => (
+                    <div class="text-center">
+                        <div class="relative flex items-center justify-center h-20 w-20 rounded-full bg-gray-900 border-2 border-white/10 text-sky-400 text-3xl font-bold mx-auto mb-6 z-10">
+                            {item.step}
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">{item.title}</h3>
+                        <p class="text-gray-300">{item.description}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>

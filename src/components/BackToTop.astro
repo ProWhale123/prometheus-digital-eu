@@ -1,0 +1,80 @@
+<button
+  id="back-to-top"
+  aria-label="Vissza a tetejére"
+  class="fixed bottom-8 right-8 z-50 translate-y-20 opacity-0 transition-all duration-500 hover:scale-110 focus:outline-none"
+>
+  <svg class="w-14 h-14 transform -rotate-90" viewBox="0 0 100 100">
+    <circle
+      cx="50"
+      cy="50"
+      r="45"
+      fill="transparent"
+      stroke="#1f2937" 
+      stroke-width="6"
+    ></circle>
+    <circle
+      id="progress-circle"
+      cx="50"
+      cy="50"
+      r="45"
+      fill="#111827" 
+      stroke="url(#gradient)" 
+      stroke-width="6"
+      stroke-linecap="round"
+      stroke-dasharray="283"
+      stroke-dashoffset="283"
+      class="transition-all duration-100 ease-out"
+    ></circle>
+    
+    <defs>
+      <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#38bdf8" />
+        <stop offset="100%" stop-color="#06b6d4" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sky-400">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </span>
+</button>
+
+<script>
+  function initBackToTop() {
+    const btn = document.getElementById('back-to-top');
+    const circle = document.getElementById('progress-circle');
+    
+    if (!btn || !circle) return;
+
+    const circumference = 2 * Math.PI * 45; // 2 * pi * r
+
+    window.addEventListener('scroll', () => {
+      // 1. Megjelenítés / Elrejtés
+      if (window.scrollY > 300) {
+        btn.classList.remove('translate-y-20', 'opacity-0');
+      } else {
+        btn.classList.add('translate-y-20', 'opacity-0');
+      }
+
+      // 2. Progress számítás
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollFraction = scrollTop / docHeight;
+      
+      // A kör kitöltése
+      const offset = circumference - scrollFraction * circumference;
+      circle.style.strokeDashoffset = offset.toString();
+    });
+
+    // 3. Klikk esemény
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Futtatás betöltéskor és navigációkor
+  initBackToTop();
+  document.addEventListener('astro:page-load', initBackToTop);
+</script>

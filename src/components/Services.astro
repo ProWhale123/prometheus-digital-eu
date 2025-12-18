@@ -1,0 +1,72 @@
+---
+// src/components/Services.astro
+import WebsiteIcon from './icons/WebsiteIcon.astro';
+import CartIcon from './icons/CartIcon.astro';
+import DesignIcon from './icons/DesignIcon.astro';
+import SeoIcon from './icons/SeoIcon.astro';
+
+// ÚJ IMPORT: A Spotlight effektus
+import SpotlightCard from './react/SpotlightCard.jsx';
+
+// JAVÍTOTT, ÜGYFÉLKÖZPONTÚ SZÖVEGEK
+const services = [
+    {
+        icon: WebsiteIcon,
+        title: "Konverzió-Optimalizált Weboldalak",
+        description: "Nem csak forgalmat, hanem ügyfeleket is generálunk. Villámgyors, Astro alapú weboldalaink a felhasználói élményre és a mérhető eredményekre fókuszálnak."
+    },
+    {
+        icon: CartIcon,
+        title: "Növekedés-orientált Webshopok",
+        description: "Olyan online áruházat építünk, ami a vásárlási élmény maximalizálásával növeli a bevételét. Az egyszerű kezelhetőségtől a biztonságos fizetésig mindenre odafigyelünk."
+    },
+    {
+        icon: DesignIcon,
+        title: "Stratégiai UI/UX Tervezés",
+        description: "A dizájn nálunk nem öncélú. Olyan intuitív felületeket tervezünk, amelyek bizalmat építenek és a látogatókat elégedett ügyfelekké konvertálják."
+    },
+    {
+        icon: SeoIcon,
+        title: "Hosszú Távú SEO Stratégia",
+        description: "Biztosítjuk, hogy a potenciális vevői megtalálják Önt, ne csak a versenytársait. Technikai és tartalmi megoldásaink fenntartható organikus növekedést garantálnak."
+    }
+]
+---
+
+<section id="szolgaltatasok" class="py-20 md:py-32 bg-gray-900/40">
+    <div class="container mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                Miben <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Segíthetünk?</span>
+            </h2>
+            <p class="text-lg text-gray-300">
+                Digitális céljait üzleti eredményekké alakítjuk. A legmodernebb technológiákat használjuk, hogy ne csak egy weboldalt kapjon, hanem egy hatékony eszközt az ügyfélszerzéshez.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            {services.map(service => {
+                const Icon = service.icon;
+                return (
+                    /* JAVÍTVA: SpotlightCard használata a sima div helyett */
+                    /* A client:visible fontos, hogy a JS betöltődjön */
+                    <SpotlightCard client:idle className="h-full">
+                        <div class="p-8 text-center h-full flex flex-col items-center">
+                            <div class="flex items-center justify-center h-16 w-16 rounded-full bg-sky-500/10 text-sky-400 mb-6">
+                               <Icon />
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-3">{service.title}</h3>
+                            <p class="text-gray-300">{service.description}</p>
+                        </div>
+                    </SpotlightCard>
+                )
+            })}
+        </div>
+        
+        <div class="text-center mt-16">
+            <a href="/szolgaltatasok" class="inline-block bg-gray-700/50 text-white font-bold py-3 px-8 rounded-full text-base transition-colors duration-300 hover:bg-gray-600/80">
+                Részletesebben a szolgáltatásokról
+            </a>
+        </div>
+    </div>
+</section>

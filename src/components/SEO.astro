@@ -1,0 +1,48 @@
+---
+// src/components/SEO.astro
+interface Props {
+	title: string;
+	description: string;
+    // Az 'image' prop opcionális. Ha nem adunk meg egyedi képet egy aloldalnak,
+    // akkor az alapértelmezett og-image.jpg-t fogja használni.
+	image?: string; 
+}
+
+const { 
+    title, 
+    description, 
+    image = '/images/og-image.jpg' // Alapértelmezett kép
+} = Astro.props;
+
+const siteName = "Prometheus Digital";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const absoluteImageUrl = new URL(image, Astro.site);
+---
+
+<!-- Alapvető Meta Tagek -->
+<meta charset="UTF-8">
+<title>{title}</title>
+<meta name="description" content={description}>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content={Astro.generator}>
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL}>
+
+<!-- Favicon (már beállítottuk, de itt is lehetne) -->
+<link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={canonicalURL}>
+<meta property="og:image" content={absoluteImageUrl}>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content={siteName}>
+<meta property="og:locale" content="hu_HU">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={title}>
+<meta name="twitter:description" content={description}>
+<meta name="twitter:image" content={absoluteImageUrl}>

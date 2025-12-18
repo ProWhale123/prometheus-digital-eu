@@ -1,0 +1,42 @@
+---
+// src/components/Schema.astro
+
+interface Props {
+	title: string;
+	description: string;
+    url: URL;
+    image: string;
+}
+
+const { title, description, url, image } = Astro.props;
+const absoluteImageUrl = new URL(image, Astro.site);
+
+const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Prometheus Digital",
+    "url": Astro.site,
+    "logo": new URL("/logo.jpg", Astro.site).href,
+    "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+36-30-922-2042",
+        "contactType": "customer service"
+    }
+};
+
+const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": title,
+    "description": description,
+    "url": url.href,
+    "image": absoluteImageUrl.href,
+    "publisher": {
+        "@type": "Organization",
+        "name": "Prometheus Digital"
+    }
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />

@@ -1,0 +1,53 @@
+---
+// src/components/Philosophy.astro
+import PartnershipIcon from './icons/PartnershipIcon.astro';
+import QualityIcon from './icons/QualityIcon.astro';
+import InnovationIcon from './icons/InnovationIcon.astro';
+
+const values = [
+    {
+        icon: PartnershipIcon,
+        title: "Partnerség",
+        description: "Nem csak beszállítók, hanem stratégiai partnerek vagyunk. A te sikered a mi sikerünk is."
+    },
+    {
+        icon: QualityIcon,
+        title: "Minőség",
+        description: "Minden pixelnek és kódsornak jelentése van. Munkánkra igényesek vagyunk, kompromisszumok nélkül."
+    },
+    {
+        icon: InnovationIcon,
+        title: "Innováció",
+        description: "Folyamatosan keressük a legújabb és leghatékonyabb technológiákat, hogy a te projekted is jövőbiztos legyen."
+    }
+]
+---
+
+<section class="py-20 md:py-32">
+    <div class="container mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                A Siker <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Alapkövei</span>
+            </h2>
+            <p class="text-lg text-gray-300">
+                Három alapelv, ami minden projektünket vezérli a koncepciótól a megvalósításig. Ezek biztosítják, hogy az eredmény mindig felülmúlja a várakozásokat.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto">
+            {values.map(value => {
+                const Icon = value.icon;
+                return (
+                    <div class="bg-gray-900/50 border border-white/10 rounded-2xl p-8 text-center transform transition-all duration-300 hover:border-sky-500/80 hover:shadow-2xl hover:-translate-y-2" style="will-change: transform;">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-sky-500/10 text-sky-400 mx-auto mb-6">
+                           <Icon />
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">{value.title}</h3>
+                        <p class="text-gray-300">{value.description}</p>
+                    </div>
+                )
+            })}
+        </div>
+    </div>
+</section>
+

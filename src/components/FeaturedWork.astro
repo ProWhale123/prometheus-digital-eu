@@ -1,0 +1,156 @@
+---
+// src/components/FeaturedWork.astro
+import { Image } from 'astro:assets';
+
+// ÚJ IMPORT: A 3D Tilt effektushoz
+import TiltCard from './react/TiltCard.jsx';
+
+// Az optimalizáláshoz a képeket közvetlenül importáljuk a src/assets mappából.
+import project1Image from '../../public/images/project-1.jpg';
+import project2Image from '../../public/images/project-2.jpg';
+import project3Image from '../../public/images/project-3.jpg';
+import project4Image from '../../public/images/project-4.jpg';
+import project5Image from '../../public/images/project-5.jpg';
+import project6Image from '../../public/images/project-6.jpg';
+
+const projects = [
+     {
+        title: "Letisztult Utazási Iroda Weboldal",
+        description: "Egy letisztult és modern weboldal a DOL Bt. utazási iroda számára, amely a Határtalanul! programra specializálódott. A cél egy informatív, könnyen navigálható felület létrehozása volt, amely bemutatja az utazási célpontokat, és egyszerűsíti az iskolák számára az ajánlatkérést és a pályázati folyamatot.",
+        tags: ["Astro", "Határtalanul!", "Ajánlatkérés", "Pályázati útmutató"],
+        imageSrc: project1Image,
+        liveUrl: "https://dolbt.eu/"
+    },     
+    {
+        title: "Elegáns Fine Dining Weboldal",
+        description: "Egy letisztult és exkluzív online jelenlét a 'Gastronomo' fine dining étterem számára. A dizájn a prémium hangulatot tükrözi, a fókusz pedig a vizuális történetmesélésen és az egyszerű asztalfoglalási folyamaton van.",
+        tags: ["Astro", "UI/UX Dizájn", "Minimalista", "Tipográfia"],
+        imageSrc: project2Image,
+        liveUrl: "https://gastronomo.eu/"
+    },
+    {
+        title: "Modern Éttermi Weboldal Galériával",
+        description: "Egy modern és hangulatos weboldal a Duna Rapszódia étterem számára. A projekt középpontjában a vizuális élmény, az étlap bemutatása és a könnyen kezelhető galéria áll, amely bemutatja az ételek és a hely atmoszféráját.",
+        tags: ["Astro", "UI/UX Dizájn", "Galéria", "Reszponzív"],
+        imageSrc: project3Image,
+        liveUrl: "https://duna-rapszodia.hu/"
+    },
+    {
+        title: "Modern Építőipari és Felújítási Weboldal",
+        description: "Egy letisztult és bizalmat sugárzó weboldal egy építőipari vállalkozás számára. A dizájn a minőségi munkát és a szakértelmet helyezi előtérbe, a cél pedig a portfólió bemutatása és az árajánlatkérések ösztönzése.",
+        tags: ["Astro", "Portfoólió", "Lead Generation"],
+        imageSrc: project4Image,
+        liveUrl: "https://renovation-company.netlify.app/"
+    },
+    {
+        title: "Professzionális Ügyvédi Iroda Weboldal",
+        description: "Egy letisztult és megbízhatóságot sugárzó digitális névjegy egy budapesti ügyvédi iroda számára. A fókuszban a szakterületek szakszerű bemutatása és a kliensekkel való egyszerű, bizalmi kapcsolatfelvétel állt.",
+        tags: ["UI/UX Dizájn", "Reszpoinzív", "Astro", "Stratégia"],
+        imageSrc: project5Image,
+        liveUrl: "https://kovacslegal.hu/"
+    },
+    {
+        title: "Hangulatos Éttermi Landing Page",
+        description: "Egy egyoldalas, vizuális történetmesélésre épülő bemutatkozó oldal egy tradicionális étterem számára. A cél a különleges atmoszféra átadása és az étlap étvágygerjesztő, modern tálalása volt.",
+        tags: ["Dizájn", "Animációk", "UI/UX", "Astro"],
+        imageSrc: project6Image,
+        liveUrl: "https://bistrobudapest.hu/"
+    },
+];
+---
+<section class="py-20 md:py-32 overflow-hidden">
+    <div class="container mx-auto px-6">
+        <div class="flex flex-col items-center mb-16 animate-on-scroll">
+            <div class="text-center max-w-2xl">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    Legutóbbi <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Munkáink</span>
+                </h2>
+                <p class="text-lg text-gray-300">
+                    Büszkék vagyunk a munkánkra. Nézz meg néhányat a legutóbbi projektjeink közül, amikkel segítettünk partnereinknek a digitális térben kitűnni.
+                </p>
+            </div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto animate-on-scroll">
+            <div id="featured-work-gallery" class="flex overflow-x-auto snap-x snap-mandatory pb-8 scroll-smooth" style="scrollbar-width: none;">
+                {projects.map(project => (
+                    <div class="flex-shrink-0 w-10/12 md:w-1/2 lg:w-1/3 snap-center px-4">
+                        
+                        {/* JAVÍTVA: TiltCard becsomagolás a kártya köré */}
+                        <TiltCard client:idle className="h-full">
+                            <a href={project.liveUrl} class="group block bg-gray-900/50 border-2 border-white/10 rounded-2xl overflow-hidden h-full transform transition-all duration-300 hover:border-sky-500/50 hover:shadow-2xl hover:shadow-sky-500/10 hover:-translate-y-2" style="will-change: transform;">
+                                <div class="overflow-hidden">
+                                    <Image 
+                                        src={project.imageSrc} 
+                                        alt={project.title}
+                                        widths={[400, 600]}
+                                        sizes="(max-width: 768px) 90vw, 33vw"
+                                        quality="mid"
+                                        class="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105" 
+                                    />
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-white mb-3">{project.title}</h3>
+                                    <p class="text-gray-300 mb-6 text-sm">{project.description}</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        {project.tags.map(tag => (
+                                            <span class="bg-sky-500/10 text-sky-300 text-xs font-semibold px-3 py-1 rounded-full">{tag}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </a>
+                        </TiltCard>
+
+                    </div>
+                ))}
+            </div>
+            <div class="hidden md:flex justify-end absolute -top-20 right-0">
+                <button id="scroll-left-btn" aria-label="Görgetés balra" class="w-12 h-12 rounded-full bg-gray-800/50 border border-white/10 text-white flex items-center justify-center transition-all duration-300 hover:bg-sky-500 hover:scale-105 mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                <button id="scroll-right-btn" aria-label="Görgetés jobbra" class="w-12 h-12 rounded-full bg-gray-800/50 border border-white/10 text-white flex items-center justify-center transition-all duration-300 hover:bg-sky-500 hover:scale-105">
+                     <svg xmlns="http://www.w.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+#featured-work-gallery::-webkit-scrollbar {
+    display: none;
+}
+</style>
+
+<script>
+    // 1. Függvénybe csomagoljuk a logikát
+    function initGallery() {
+        const gallery = document.getElementById('featured-work-gallery');
+        const scrollLeftBtn = document.getElementById('scroll-left-btn');
+        const scrollRightBtn = document.getElementById('scroll-right-btn');
+
+        if (gallery && scrollLeftBtn && scrollRightBtn) {
+            const scrollAmount = () => {
+                const card = gallery.querySelector('div:first-child');
+                // Ellenőrizzük, hogy a kártya létezik-e, mielőtt az offsetWidth-et lekérjük
+                return card ? card.offsetWidth + 16 : 320;
+            };
+
+            // Fontos: Eseménykezelők hozzáadása
+            // (Mivel minden navigációnál új gombok jönnek létre, nem kell aggódni a duplikálás miatt)
+            scrollLeftBtn.onclick = () => {
+                gallery.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+            };
+
+            scrollRightBtn.onclick = () => {
+                gallery.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+            };
+        }
+    }
+
+    // 2. Lefuttatjuk azonnal (első betöltés)
+    initGallery();
+
+    // 3. Lefuttatjuk minden navigáció után (View Transitions miatt)
+    document.addEventListener('astro:page-load', initGallery);
+</script>

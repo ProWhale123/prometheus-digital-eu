@@ -1,0 +1,196 @@
+---
+// src/pages/szolgaltatasok.astro (TEXT SCRAMBLE + TILT + SPOTLIGHT)
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Contact from '../components/Contact.astro';
+import { Image } from 'astro:assets';
+import servicesImage from '../../public/images/services-background.jpg';
+
+// Ikon importok
+import WebsiteIcon from '../components/icons/WebsiteIcon.astro';
+import CartIcon from '../components/icons/CartIcon.astro';
+import DesignIcon from '../components/icons/DesignIcon.astro';
+import SeoIcon from '../components/icons/SeoIcon.astro';
+
+// React Interakciók
+import TiltCard from '../components/react/TiltCard.jsx';
+import SpotlightCard from '../components/react/SpotlightCard.jsx';
+import TextScramble from '../components/react/TextScramble.jsx'; // <-- ÚJ IMPORT
+
+const services = [
+    {
+        icon: WebsiteIcon,
+        title: "Konverzió-Optimalizált Weboldalak",
+        description: "Nem csak forgalmat, hanem ügyfeleket is generálunk. Villámgyors, Astro alapú weboldalaink a felhasználói élményre és a mérhető eredményekre fókuszálnak.",
+        whoFor: [
+            "Induló vállalkozásoknak, akik erős online alapokra vágynak.",
+            "Működő cégeknek, akiknek elavult a jelenlegi oldaluk és szintet lépnének.",
+            "Személyes márkáknak és szakértőknek, akik bemutatkoznának."
+        ],
+        includes: [
+            "Stratégiai konzultáció és tervezés",
+            "Egyedi, reszponzív UI/UX dizájn",
+            "Villámgyors Astro fejlesztés",
+            "Keresőoptimalizálási (SEO) alapok",
+            "Tartalomkezelő (CMS) integráció",
+            "Oktatás és projektátadás"
+        ]
+    },
+    {
+        icon: CartIcon,
+        title: "Növekedés-orientált Webshopok",
+        description: "Olyan online áruházat építünk, ami a vásárlási élmény maximalizálásával növeli a bevételét. Az egyszerű termékkezeléstől a biztonságos fizetésig mindenre odafigyelünk.",
+        whoFor: [
+            "Kézműveseknek és alkotóknak, akik online értékesítenének.",
+            "Kiskereskedőknek, akik a digitális térben is terjeszkednének.",
+            "Digitális termékeket (pl. kurzusokat) árusítóknak."
+        ],
+        includes: [
+            "Platform-tanácsadás (pl. Shopify, egyedi megoldás)",
+            "Termékstruktúra és adatbázis tervezés",
+            "Biztonságos fizetési kapuk integrációja (Stripe, stb.)",
+            "Logisztikai és számlázó rendszerek bekötése",
+            "Felhasználóbarát adminisztrációs felület",
+            "Konverziómérés és analitika beállítása"
+        ]
+    },
+    {
+        icon: DesignIcon,
+        title: "Stratégiai UI/UX Tervezés",
+        description: "A dizájn nálunk nem öncélú. Olyan intuitív és esztétikus felületeket tervezünk, amelyek bizalmat építenek és a látogatókat elégedett ügyfelekké konvertálják.",
+        whoFor: [
+            "Cégeknek, akik a meglévő oldaluk felhasználói élményét javítanák.",
+            "Startupoknak, akiknek egy letisztult applikáció-dizájnra van szükségük.",
+            "Fejlesztő csapatoknak, akik professzionális tervekre van szükségük."
+        ],
+        includes: [
+            "Felhasználói kutatás és perszóna-alkotás",
+            "Drótvázak (wireframes) és felhasználói útvonalak",
+            "Interaktív prototípusok készítése (Figma)",
+            "Komplett dizájnrendszer (Design System) felépítése",
+            "Reszponzív tervek minden képernyőméretre",
+            "Fejlesztői átadásra előkészített anyagok"
+        ]
+    },
+    {
+        icon: SeoIcon,
+        title: "Hosszú Távú SEO Stratégia",
+        description: "Biztosítjuk, hogy a potenciális vevői megtalálják Önt, ne csak a versenytársait. Technikai és tartalmi megoldásaink fenntartható organikus növekedést garantálnak.",
+        whoFor: [
+            "Új weboldalak tulajdonosainak, akik az elejétől fogva jól akarnak indulni.",
+            "Meglévő oldalaknak, amik nem teljesítenek jól a keresőkben.",
+            "Cégeknek, akik a tartalommarketinggel szeretnének ügyfeleket szerezni."
+        ],
+        includes: [
+            "Teljeskörű technikai SEO audit",
+            "Kulcsszókutatás és versenytárs-elemzés",
+            "On-page SEO (meta adatok, belső linkek, struktúra)",
+            "Tartalomstratégia kidolgozása",
+            "Rendszeres riportálás és finomhangolás"
+        ]
+    }
+];
+
+const processSteps = [
+    { title: "Megismerés & Stratégiai Tervezés", description: "A közös munka egy mélyreható beszélgetéssel indul, ahol megértjük a vállalkozásod céljait, a célközönségedet és a piaci környezetedet." },
+    { title: "Felhasználói Élmény (UX) & Dizájn (UI)", description: "A stratégia alapján drótvázakat és felhasználói útvonalakat tervezünk. Ezt követi a modern, a márkádhoz illeszkedő vizuális dizájn megalkotása." },
+    { title: "Fejlesztés & Megvalósítás", description: "A jóváhagyott tervekből tiszta, gyors és jövőbiztos kódot írunk az Astro keretrendszer segítségével, ami garantálja a kiváló teljesítményt." },
+    { title: "Tartalomfeltöltés & SEO", description: "A kész keretet feltöltjük a kapott tartalmakkal és elvégezzük a kritikus keresőoptimalizálási alapbeállításokat." },
+    { title: "Minőségellenőrzés & Indítás", description: "Mielőtt élesítenénk az oldalt, mindent aprólékosan letesztelünk a hibátlan, zökkenőmentes indulás érdekében." },
+    { title: "Átadás, Oktatás & Támogatás", description: "A sikeres indítás után átadjuk a kulcsokat, és igény esetén opcionális karbantartási csomagjainkkal továbbra is gondoskodunk az oldaladról." },
+]
+---
+
+<Layout 
+    title="Szolgáltatások - Prometheus Digital" 
+    description="Ismerje meg részletesen, hogyan segítünk vállalkozásának a növekedésben modern weboldal készítéssel, webshop fejlesztéssel és SEO-val."
+>
+    <Header />
+
+    <main>
+        <section class="relative flex items-center justify-center text-center min-h-[50vh] overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <Image
+                    src={servicesImage} 
+                    alt="Prometheus Digital - Szolgáltatások háttérkép" 
+                    widths={[400, 800, 1200, 1920]}
+                    sizes="(max-width: 800px) 100vw, 1920px"
+                    quality="mid" 
+                    class="w-full h-full object-cover"
+                />
+            </div>
+            <div class="absolute inset-0 bg-black/70"></div>
+            <div class="container mx-auto px-6 relative z-10">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                    Digitális Eszközök <br class="md:hidden" />
+                    {/* JAVÍTVA: Text Scramble effekt a kiemelt szövegre */}
+                    <TextScramble 
+                        client:load 
+                        text="A Növekedésért" 
+                        className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+                    />
+                </h1>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300">Többet nyújtunk egy egyszerű weboldalnál: stratégiai megoldásokat szállítunk, amelyek valódi üzleti eredményeket hoznak.</p>
+            </div>
+        </section>
+
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-6 space-y-24">
+                {services.map((service, index) => {
+                    const Icon = service.icon;
+                    const isReversed = index % 2 !== 0; 
+                    return (
+                        <div class:list={["grid grid-cols-1 lg:grid-cols-2 gap-12 items-center", { "lg:grid-flow-col-dense": isReversed }]}>
+                            
+                            {/* Szöveges rész */}
+                            <div class:list={["text-center lg:text-left", { "lg:order-last": isReversed }]}>
+                                <div class="inline-flex items-center justify-center h-20 w-20 rounded-full bg-sky-500/10 text-sky-400 mx-auto lg:mx-0 mb-6"><Icon /></div>
+                                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">{service.title}</h2>
+                                <p class="text-lg text-gray-300">{service.description}</p>
+                            </div>
+                            
+                            {/* Kártya rész (Spotlight effekttel) */}
+                            <SpotlightCard client:visible className="h-full">
+                                <div class="p-8 h-full"> 
+                                    <h4 class="font-semibold text-sky-400 mb-3 uppercase tracking-wider text-sm">Kinek ajánljuk?</h4>
+                                    <ul class="text-gray-300 space-y-2 mb-8">{service.whoFor.map(item => <li class="flex items-start"><span class="mr-2 mt-1.5 text-sky-500">&rarr;</span>{item}</li>)}</ul>
+                                    <h4 class="font-semibold text-sky-400 mb-3 uppercase tracking-wider text-sm">Mit tartalmaz a szolgáltatás?</h4>
+                                    <ul class="text-gray-300 space-y-2">{service.includes.map(item => <li class="flex items-center"><svg class="w-4 h-4 mr-3 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>{item}</li>)}</ul>
+                                </div>
+                            </SpotlightCard>
+
+                        </div>
+                    )
+                })}
+            </div>
+        </section>
+
+        <section class="py-20 md:py-32 border-t border-white/10 bg-gray-900/40 animate-on-scroll">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                        {/* JAVÍTVA: Text Scramble effekt a szekció címére is */}
+                        <TextScramble client:visible text="A Közös Munka Lépései" />
+                    </h2>
+                    <p class="text-lg text-gray-300">Egy jól felépített, átlátható folyamat a sikeres projekt kulcsa. Nálunk pontosan tudni fogja, mi és miért történik.</p>
+                </div>
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                    {processSteps.map((step, index) => (
+                        <div class="flex items-start space-x-6">
+                            <div class="text-sky-400 font-black text-4xl">0{index+1}</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-2">{step.title}</h3>
+                                <p class="text-gray-300">{step.description}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <Contact />
+    </main>
+
+    <Footer />
+</Layout>

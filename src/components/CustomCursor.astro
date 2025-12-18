@@ -1,0 +1,50 @@
+<div id="custom-cursor" class="fixed top-0 left-0 w-8 h-8 border border-white/30 rounded-full pointer-events-none z-[9999] hidden lg:block transition-opacity duration-300"></div>
+
+<script>
+  import { gsap } from "gsap";
+
+  function initCursor() {
+    const cursor = document.getElementById("custom-cursor");
+    
+    // Mobilon ne fusson
+    if (window.matchMedia("(max-width: 1024px)").matches || !cursor) return;
+
+    gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+
+    // Gyorsabb követés (duration lecsökkentve 0.15-ről 0.1-re)
+    const moveCursor = (e) => {
+      gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: "power2.out" });
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+
+    // Hover effektek: Csak akkor "aktiválódik", ha interaktív elem fölé megyünk
+    const hoverElements = document.querySelectorAll('a, button, .magnetic-button, input, textarea');
+    
+    hoverElements.forEach((el) => {
+      el.addEventListener("mouseenter", () => {
+        // Rátapad és inverz színű lesz, hogy jelezze a kattinthatóságot
+        gsap.to(cursor, { 
+            scale: 2, 
+            backgroundColor: "white", 
+            mixBlendMode: "difference", 
+            border: "none",
+            duration: 0.3 
+        });
+      });
+      el.addEventListener("mouseleave", () => {
+        // Visszaáll "Szellem" módba
+        gsap.to(cursor, { 
+            scale: 1, 
+            backgroundColor: "transparent", 
+            mixBlendMode: "normal", 
+            border: "1px solid rgba(255, 255, 255, 0.3)",
+            duration: 0.3 
+        });
+      });
+    });
+  }
+
+  initCursor();
+  document.addEventListener('astro:page-load', initCursor);
+</script>

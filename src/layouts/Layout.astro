@@ -1,0 +1,152 @@
+---
+// src/layouts/Layout.astro
+import '../styles/global.css';
+import SEO from '../components/SEO.astro';
+import Schema from '../components/Schema.astro';
+import BackToTop from '../components/BackToTop.astro';
+import { ClientRouter } from 'astro:transitions'; // <-- 1. Importáld ezt
+import GlobalSpotlight from '../components/GlobalSpotlight.astro';
+import HapticFeedback from '../components/HapticFeedback.astro';
+interface Props {
+	title: string;
+	description: string;
+    image?: string;
+}
+
+const { title, description, image } = Astro.props;
+
+const GA_MEASUREMENT_ID = 'G-9WGZSCWPEE';
+---
+
+<!doctype html>
+<html lang="hu" class="scroll-smooth">
+	<head>
+		<SEO title={title} description={description} image={image} />
+        <Schema title={title} description={description} url={Astro.url} image={image || '/images/og-image.jpg'} />
+        <ClientRouter />
+        {/* JAVÍTVA: Gyorsabb, aszinkron betűtípus-betöltés */}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" media="print" onload="this.media='all'">
+        <noscript>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap">
+        </noscript>
+	
+        <script define:vars={{ GA_MEASUREMENT_ID }}>
+            function initAnalytics() {
+                if (window.gtag) return;
+
+                const script = document.createElement('script');
+                script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+                script.async = true;
+                document.head.appendChild(script);
+
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = gtag; 
+
+                gtag('js', new Date());
+                gtag('config', GA_MEASUREMENT_ID);
+                console.log('Google Analytics betöltve és konfigurálva.');
+            }
+
+            function handleConsent() {
+                 const consentData = localStorage.getItem('cookie_consent');
+                if (consentData) {
+                    const consent = JSON.parse(consentData);
+                    if (consent.analytics) {
+                        initAnalytics();
+                    } else {
+                        console.log('Google Analytics betöltése letiltva a felhasználói beállítások miatt.');
+                    }
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', handleConsent);
+            document.addEventListener('consent-updated', handleConsent);
+        </script>
+    </head>
+	<body class="bg-gray-900 text-gray-200 font-sans leading-relaxed selection:bg-sky-500 selection:text-white">
+		<slot />
+        
+        <BackToTop />
+        
+        <script>
+            // Animációs logika
+            function setupAnimations() {
+                const elementsToAnimate = document.querySelectorAll(".animate-on-scroll");
+                if (elementsToAnimate.length === 0) return;
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("is-visible");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                elementsToAnimate.forEach((el) => observer.observe(el));
+            }
+            setupAnimations();
+            document.addEventListener("astro:page-load", setupAnimations);
+        </script>
+
+<script>
+    // Ez a függvény intézi az animációt
+    function setupRevealAnimations() {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1 // Akkor aktiválódik, ha az elem 10%-a látható
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Csak egyszer animáljon
+                }
+            });
+        }, observerOptions);
+
+        // Minden elemet megkeresünk, amin rajta van a 'reveal' osztály
+        document.querySelectorAll('.reveal').forEach((el) => {
+            observer.observe(el);
+        });
+    }
+
+    // Lefuttatjuk betöltéskor
+    setupRevealAnimations();
+
+    // Lefuttatjuk minden oldalváltásnál (View Transitions miatt kell)
+    document.addEventListener('astro:page-load', setupRevealAnimations);
+</script>       
+<HapticFeedback />
+	</body>
+</html>
+
+<style is:global>
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+    body {
+        background-color: #0B1120;
+        background-image: 
+            radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+        background-size: 2rem 2rem;
+    }
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .animate-on-scroll.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .animate-on-scroll:nth-child(2) { transition-delay: 0.1s; }
+    .animate-on-scroll:nth-child(3) { transition-delay: 0.2s; }
+    .animate-on-scroll:nth-child(4) { transition-delay: 0.3s; }
+</style>
+

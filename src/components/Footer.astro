@@ -1,0 +1,88 @@
+---
+// src/components/Footer.astro
+import { Image } from 'astro:assets';
+import logoImage from '../assets/images/logo.jpg';
+import MagneticButton from './react/MagneticButton.jsx';
+// Linkek a könnyebb szerkeszthetőségért
+const serviceLinks = [
+    { name: "Szolgáltatások", href: "/szolgaltatasok" },
+    { name: "Áraink", href: "/araink" },
+    { name: "Munkáink", href: "/munkaink" },
+    { name: "Rólunk", href: "/rolunk" },
+    { name: "Blog", href: "/blog" },
+    { name: "Kapcsolat", href: "/kapcsolat" },
+];
+
+const seoLinks = [
+    { name: "Weboldal Készítés Budapest", href: "/weboldal-keszites-budapest" },
+    { name: "Webshop Készítés Budapest", href: "/webshop-keszites-budapest" },
+    { name: "SEO Tanácsadás KKV-knak", href: "/seo-tanacsadas-kkv-knak" },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-black/30 border-t border-white/10 text-gray-300">
+    <div class="container mx-auto px-6 pt-16 pb-8">
+        {/* Felső, többoszlopos rész */}
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
+            
+            <div class="md:col-span-1 lg:col-span-1 text-center md:text-left">
+                {/* === ÚJ, STÍLUSOS LOGÓ === */}
+                <a href="/" class="inline-block mb-4 mx-auto md:mx-0">
+                    <Image 
+                        src={logoImage} 
+                        alt="Prometheus Digital Logó"
+                        class="w-36 md:w-40"
+                        width={160}
+                        quality="high"
+                    />
+                </a>
+                <p class="text-gray-400">Digitális Jövőt Építünk, Együtt.</p>
+            </div>
+
+            <div class="text-center md:text-left">
+                <h3 class="font-bold text-white uppercase tracking-wider mb-4">Menü</h3>
+                <ul class="space-y-3">
+                    {serviceLinks.map(link => (
+                        <li><a href={link.href} class="text-gray-400 hover:text-white transition-colors">{link.name}</a></li>
+                    ))}
+                </ul>
+            </div>
+
+            <div class="text-center md:text-left">
+                <h3 class="font-bold text-white uppercase tracking-wider mb-4">Célzott Megoldások</h3>
+                <ul class="space-y-3">
+                    {seoLinks.map(link => (
+                        <li>
+                            {link.href ? (
+                                <a href={link.href} class="text-gray-400 hover:text-white transition-colors">{link.name}</a>
+                            ) : (
+                                <span class="text-gray-600 cursor-not-allowed">{link.name}</span>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            <div class="text-center md:text-left">
+                 <h3 class="font-bold text-white uppercase tracking-wider mb-4">Kapcsolat</h3>
+                 <ul class="space-y-3">
+                    <li>
+                        <a href="mailto:info@prometheusdigital.hu" class="text-gray-400 hover:text-white transition-colors">info@prometheusdigital.hu</a>
+                    </li>
+                    <li>
+                        <a href="tel:+36309222042" class="text-gray-400 hover:text-white transition-colors">+36 30 922 2042</a>
+                    </li>
+                 </ul>
+            </div>
+
+        </div>
+
+        {/* Alsó, jogi rész */}
+        <div class="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center text-center text-sm text-gray-500 gap-4">
+            <p>&copy; {currentYear} Prometheus Digital Kft. Minden jog fenntartva.</p>
+            <a href="/adatvedelem" class="hover:text-white transition-colors">Adatvédelmi Nyilatkozat</a>
+        </div>
+    </div>
+</footer>

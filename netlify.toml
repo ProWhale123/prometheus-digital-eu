@@ -1,0 +1,16 @@
+# Netlify konfigurációs fájl
+# Ez a fájl felülírja a Netlify alapértelmezett beállításait.
+
+[[headers]]
+  # Az alábbi szabályokat minden oldalra alkalmazzuk:
+  for = "/*"
+  [headers.values]
+    # Content-Security-Policy (CSP) beállítások
+    # Ez egy biztonságos, de Astro-barát szabályrendszer.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://placehold.co https://images.unsplash.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://www.google.com; object-src 'none'; frame-ancestors 'none';"
+    # További biztonsági fejlécek
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
