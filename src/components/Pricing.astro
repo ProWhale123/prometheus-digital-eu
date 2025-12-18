@@ -1,31 +1,29 @@
 ---
-// src/components/Pricing.astro
+// src/components/Pricing.astro (ENGLISH VERSION)
 
-// A legfontosabb értékajánlatok, amik minden csomagra igazak.
 const coreValues = [
-    { text: "Villámgyors Astro Technológia" },
-    { text: "SEO Alapok Minden Csomagban" },
-    { text: "Nincsenek Rejtett Költségek" },
-    { text: "Teljesen Egyedi Dizájn" }
+    { text: "Lightning-Fast Astro Technology" },
+    { text: "SEO Basics in Every Package" },
+    { text: "No Hidden Costs" },
+    { text: "Completely Custom Design" }
 ];
 ---
 
-<section class="py-20 md:py-32">
+<section class="py-12 md:py-32">
     <div class="container mx-auto px-6">
         
-        {/* Kétoszlopos elrendezés a jobb olvashatóságért és fókuszért */}
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
             <div class="animate-on-scroll text-center lg:text-left">
                 <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
-                    Átlátható Árak, <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Rugalmas Megoldások</span>
+                    Transparent Pricing, <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Flexible Solutions</span>
                 </h2>
                 <p class="text-lg text-gray-300 mb-8">
-                    Hiszünk a tiszta és egyértelmű árazásban. Minden projekt más, ezért rugalmas csomagokat és fizetési konstrukciókat kínálunk, hogy pontosan azt a megoldást kapja, amire a vállalkozásának szüksége van – rejtett költségek nélkül.
+                    We believe in clean and clear pricing. Every project is different, which is why we offer flexible packages and payment structures so you get exactly the solution your business needs – without hidden costs.
                 </p>
                 <ul class="space-y-4">
                     {coreValues.map(value => (
-                        <li class="flex items-center">
+                        <li class="flex items-center justify-center lg:justify-start">
                             <svg class="w-6 h-6 text-sky-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             <span class="text-lg text-gray-200">{value.text}</span>
                         </li>
@@ -35,18 +33,18 @@ const coreValues = [
 
             <div class="animate-on-scroll">
                 <div class="bg-gray-900/50 border border-white/10 rounded-2xl p-8 text-center transform transition-all duration-300 hover:border-sky-500/50 hover:shadow-2xl">
-                    <h3 class="text-2xl font-bold text-white mb-4">Készen áll a következő lépésre?</h3>
+                    <h3 class="text-2xl font-bold text-white mb-4">Ready for the next step?</h3>
                     <p class="text-gray-300 mb-6">
-                        Tekintse meg részletes csomagjainkat, hasonlítsa össze a funkciókat, és válassza ki az Önnek legmegfelelőbb konstrukciót.
+                        Check out our detailed packages, compare features, and choose the construction that suits you best.
                     </p>
                     <p class="text-gray-200 mb-8">
-                        Weboldal csomagjaink már <span class="font-bold text-white">290 000 Ft-tól</span> elérhetőek.
+                        Website packages starting from <span class="font-bold text-white">290 000 Ft</span>.
                     </p>
-                    <a href="/araink" class="block w-full text-center font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 bg-gradient-to-r from-sky-400 to-cyan-300 text-zinc-900 hover:shadow-2xl hover:shadow-sky-500/50 transform hover:-translate-y-1">
-                        Részletes Árak Megtekintése
+                    <a href="/pricing" class="block w-full text-center font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 bg-gradient-to-r from-sky-400 to-cyan-300 text-zinc-900 hover:shadow-2xl hover:shadow-sky-500/50 transform hover:-translate-y-1">
+                        View Detailed Pricing
                     </a>
-                    <a href="/kapcsolat?csomag=egyedi" class="block mt-4 text-sm text-gray-300 hover:text-white transition-colors">
-                        Vagy kérjen teljesen egyedi ajánlatot
+                    <a href="/contact?package=custom" class="block mt-4 text-sm text-gray-300 hover:text-white transition-colors">
+                        Or request a completely custom quote
                     </a>
                 </div>
             </div>

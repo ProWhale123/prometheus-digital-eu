@@ -1,54 +1,52 @@
 ---
-// src/components/Hero.astro
+// src/components/Hero.astro (ENGLISH VERSION)
 import { Image } from 'astro:assets';
 import heroImage from '../assets/images/hero-background.jpg'; 
 import Typewriter from './react/Typewriter.jsx';
 import MagneticButton from './react/MagneticButton.jsx';
-
-// ÚJ IMPORT: A teljes képernyős Spotlight háttér
 import SpotlightHeroBackground from './react/SpotlightHeroBackground.jsx';
 ---
 
 <section 
     id="home" 
-    class="relative min-h-screen flex items-center justify-center text-center overflow-hidden bg-gray-950"
+    class="relative min-h-[100dvh] flex items-center justify-center text-center overflow-hidden bg-gray-950"
 >
     <div class="absolute inset-0 z-0">
         <Image 
             src={heroImage} 
-            alt="Prometheus Digital háttér" 
+            alt="Prometheus Digital Background" 
             quality="low"
             class="w-full h-full object-cover opacity-60" 
             loading="eager" 
         />
     </div>
 
-
     <div class="absolute inset-0 bg-gray-950/40 backdrop-blur-[3px] z-20"></div>
 
-    <div class="relative z-30 container mx-auto px-6 pt-24 md:pt-20">
-        <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-wider mb-6 animate-fade-in-down break-words">
-            Mi Építjük Vállalkozása<br />
-            <Typewriter client:load />
+    <div class="relative z-30 container mx-auto px-6 pt-28 md:pt-20">
+        <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-wider mb-6 animate-fade-in-down break-words leading-tight">
+            We Build Your Business'<br />
+            {/* Itt adjuk át az angol szavakat */}
+            <Typewriter client:load words={["Digital Future", "Online Success", "Website"]} />
         </h1>
         
-        <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 mb-10 animate-fade-in-up">
-            Modern, Astro alapú weboldalakat tervezünk és építünk, amelyek a sebességre és a keresőoptimalizálásra (SEO) fókuszálnak. Az eredmény egy olyan digitális élmény, ami mérhető üzleti eredményeket produkál.
+        <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 mb-10 animate-fade-in-up px-2">
+            We design and build modern, Astro-based websites focused on speed and Search Engine Optimization (SEO). The result is a digital experience that delivers measurable business results.
         </p>
         
-        <MagneticButton 
-            client:visible 
-            href="/kapcsolat" 
-            className="bg-sky-500 text-white font-bold py-4 px-10 rounded-full text-lg transition-colors duration-300 hover:bg-sky-400 hover:shadow-2xl hover:shadow-sky-500/40 animate-fade-in-up"
-        >
-            Ingyenes Konzultáció Kérése
-        </MagneticButton>
+        <div class="w-full sm:w-auto inline-block">
+            <MagneticButton 
+                client:visible 
+                href="/contact" 
+                className="w-full sm:w-auto bg-sky-500 text-white font-bold py-4 px-10 rounded-full text-lg transition-colors duration-300 hover:bg-sky-400 hover:shadow-2xl hover:shadow-sky-500/40 animate-fade-in-up"
+            >
+                Get a Free Consultation
+            </MagneticButton>
+        </div>
     </div>
 </section>
 
 <style>
-    /* A régi blob stílusok törölve, csak a szöveg animáció marad */
-    
     @keyframes fade-in-down { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fade-in-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     

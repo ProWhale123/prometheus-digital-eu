@@ -1,55 +1,56 @@
 ---
-// src/components/Contact.astro
+// src/components/Contact.astro (ENGLISH VERSION)
 import MailIcon from './icons/MailIcon.astro';
 import PhoneIcon from './icons/PhoneIcon.astro';
 
-// Interaktív komponensek importálása
+// Interactive components
 import MagneticButton from './react/MagneticButton.jsx';
 import SpotlightCard from './react/SpotlightCard.jsx';
 
 const contactDetails = [
     {
         icon: MailIcon,
-        title: "Általános Érdeklődés",
-        contact: "info@prometheusdigital.hu",
+        title: "General Inquiry",
+        contact: "info@prometheusdigital.hu", // Az email maradhat .hu, de ha van .eu, írd át!
         href: "mailto:info@prometheusdigital.hu"
     },
     {
         icon: PhoneIcon,
-        title: "Telefon",
+        title: "Phone",
         contact: "+36 30 922 2042",
         href: "tel:+36309222042"
     }
 ]
 ---
 
-<section id="kapcsolat" class="py-20 md:py-32 bg-gray-900/40 border-t border-white/10">
+<section id="contact" class="py-20 md:py-32 bg-gray-900/40 border-t border-white/10">
     <div class="container mx-auto px-6">
         <div class="text-center max-w-3xl mx-auto mb-16">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
-                Kérj Ingyenes <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Konzultációt</span>
+                Get a Free <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Consultation</span>
             </h2>
             <p class="text-lg text-gray-300">
-                Van egy ötleted, de nem tudod, hol kezdd? Töltsd ki az űrlapot egy díjmentes, 30 perces konzultációért, ahol átbeszéljük a lehetőségeidet, kötelezettségek nélkül.
+                Have an idea but don't know where to start? Fill out the form for a free, 30-minute consultation where we discuss your opportunities, no strings attached.
             </p>
         </div>
 
         <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             
-            <form name="contact" method="POST" action="/koszonjuk" data-netlify="true" class="w-full">
+            {/* JAVÍTVA: action="/thank-you" az angol köszönőoldalhoz */}
+            <form name="contact" method="POST" action="/thank-you" data-netlify="true" class="w-full">
                 <input type="hidden" name="form-name" value="contact" />
                 <div class="space-y-6">
                     <div class="relative group">
-                        <input type="text" name="name" placeholder="Teljes neved" required class="w-full bg-gray-900/50 border border-white/10 rounded-xl px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all duration-300">
+                        <input type="text" name="name" placeholder="Full Name" required class="w-full bg-gray-900/50 border border-white/10 rounded-xl px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all duration-300">
                     </div>
                     <div class="relative group">
-                        <input type="email" name="email" placeholder="E-mail címed" required class="w-full bg-gray-900/50 border border-white/10 rounded-xl px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all duration-300">
+                        <input type="email" name="email" placeholder="Email Address" required class="w-full bg-gray-900/50 border border-white/10 rounded-xl px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all duration-300">
                     </div>
                     <div class="relative group">
-                        <input type="text" name="subject" placeholder="Tárgy (pl. Ingyenes konzultáció)" required class="w-full bg-gray-900/50 border border-white/10 rounded-xl px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all duration-300">
+                        <input type="text" name="subject" placeholder="Subject (e.g., Free Consultation)" required class="w-full bg-gray-900/50 border border-white/10 rounded-xl px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all duration-300">
                     </div>
                     <div class="relative group">
-                        <textarea name="message" placeholder="Röviden az ötletedről" rows="5" required class="w-full bg-gray-900/50 border border-white/10 rounded-xl px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all duration-300 resize-none"></textarea>
+                        <textarea name="message" placeholder="Briefly about your idea" rows="5" required class="w-full bg-gray-900/50 border border-white/10 rounded-xl px-6 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition-all duration-300 resize-none"></textarea>
                     </div>
                 </div>
                 
@@ -58,7 +59,7 @@ const contactDetails = [
                         client:idle 
                         className="w-full bg-gradient-to-r from-sky-500 to-cyan-400 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg hover:shadow-sky-500/40 transition-all"
                     >
-                        Konzultáció Kérése
+                        Request Consultation
                     </MagneticButton>
                 </div>
             </form>
@@ -66,9 +67,9 @@ const contactDetails = [
             <SpotlightCard client:idle className="h-full">
                 <div class="p-8 space-y-10">
                     <div>
-                        <h3 class="text-2xl font-bold text-white mb-6">Elérhetőségeink</h3>
+                        <h3 class="text-2xl font-bold text-white mb-6">Contact Details</h3>
                         <p class="text-gray-400 mb-8">
-                            Inkább telefonálnál vagy írnál közvetlenül? Keress minket bátran az alábbi elérhetőségeken.
+                            Prefer to call or email directly? Feel free to reach out to us via the contact methods below.
                         </p>
                     </div>
 

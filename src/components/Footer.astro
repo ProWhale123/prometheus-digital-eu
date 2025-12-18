@@ -1,22 +1,24 @@
 ---
-// src/components/Footer.astro
+// src/components/Footer.astro (ENGLISH VERSION)
 import { Image } from 'astro:assets';
 import logoImage from '../assets/images/logo.jpg';
 import MagneticButton from './react/MagneticButton.jsx';
-// Linkek a könnyebb szerkeszthetőségért
+
+// Navigációs linkek angolul
 const serviceLinks = [
-    { name: "Szolgáltatások", href: "/szolgaltatasok" },
-    { name: "Áraink", href: "/araink" },
-    { name: "Munkáink", href: "/munkaink" },
-    { name: "Rólunk", href: "/rolunk" },
+    { name: "Services", href: "/services" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "Works", href: "/works" },
+    { name: "About", href: "/about" },
     { name: "Blog", href: "/blog" },
-    { name: "Kapcsolat", href: "/kapcsolat" },
+    { name: "Contact", href: "/contact" },
 ];
 
+// SEO linkek (Ha ezeket az aloldalakat is elkészíted angolul)
 const seoLinks = [
-    { name: "Weboldal Készítés Budapest", href: "/weboldal-keszites-budapest" },
-    { name: "Webshop Készítés Budapest", href: "/webshop-keszites-budapest" },
-    { name: "SEO Tanácsadás KKV-knak", href: "/seo-tanacsadas-kkv-knak" },
+    { name: "Web Design Budapest", href: "/web-design-budapest" },
+    { name: "Webshop Development", href: "/webshop-development" },
+    { name: "SEO Consulting", href: "/seo-consulting" },
 ];
 
 const currentYear = new Date().getFullYear();
@@ -28,21 +30,20 @@ const currentYear = new Date().getFullYear();
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10">
             
             <div class="md:col-span-1 lg:col-span-1 text-center md:text-left">
-                {/* === ÚJ, STÍLUSOS LOGÓ === */}
                 <a href="/" class="inline-block mb-4 mx-auto md:mx-0">
                     <Image 
                         src={logoImage} 
-                        alt="Prometheus Digital Logó"
+                        alt="Prometheus Digital Logo"
                         class="w-36 md:w-40"
                         width={160}
                         quality="high"
                     />
                 </a>
-                <p class="text-gray-400">Digitális Jövőt Építünk, Együtt.</p>
+                <p class="text-gray-400">Building the Digital Future, Together.</p>
             </div>
 
             <div class="text-center md:text-left">
-                <h3 class="font-bold text-white uppercase tracking-wider mb-4">Menü</h3>
+                <h3 class="font-bold text-white uppercase tracking-wider mb-4">Menu</h3>
                 <ul class="space-y-3">
                     {serviceLinks.map(link => (
                         <li><a href={link.href} class="text-gray-400 hover:text-white transition-colors">{link.name}</a></li>
@@ -51,7 +52,7 @@ const currentYear = new Date().getFullYear();
             </div>
 
             <div class="text-center md:text-left">
-                <h3 class="font-bold text-white uppercase tracking-wider mb-4">Célzott Megoldások</h3>
+                <h3 class="font-bold text-white uppercase tracking-wider mb-4">Targeted Solutions</h3>
                 <ul class="space-y-3">
                     {seoLinks.map(link => (
                         <li>
@@ -66,7 +67,7 @@ const currentYear = new Date().getFullYear();
             </div>
 
             <div class="text-center md:text-left">
-                 <h3 class="font-bold text-white uppercase tracking-wider mb-4">Kapcsolat</h3>
+                 <h3 class="font-bold text-white uppercase tracking-wider mb-4">Contact</h3>
                  <ul class="space-y-3">
                     <li>
                         <a href="mailto:info@prometheusdigital.hu" class="text-gray-400 hover:text-white transition-colors">info@prometheusdigital.hu</a>
@@ -81,8 +82,9 @@ const currentYear = new Date().getFullYear();
 
         {/* Alsó, jogi rész */}
         <div class="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center text-center text-sm text-gray-500 gap-4">
-            <p>&copy; {currentYear} Prometheus Digital Kft. Minden jog fenntartva.</p>
-            <a href="/adatvedelem" class="hover:text-white transition-colors">Adatvédelmi Nyilatkozat</a>
+            <p>&copy; {currentYear} Prometheus Digital Kft. All rights reserved.</p>
+            {/* JAVÍTVA: /privacy-policy */}
+            <a href="/privacy-policy" class="hover:text-white transition-colors">Privacy Policy</a>
         </div>
     </div>
 </footer>

@@ -1,0 +1,101 @@
+---
+// src/pages/privacy-policy.astro
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout 
+    title="Privacy Policy - Prometheus Digital" 
+    description="Learn how we handle and protect your personal data at Prometheus Digital."
+>
+    <Header />
+
+    <main class="py-32 md:py-40">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto prose prose-invert lg:prose-xl prose-headings:text-transparent prose-headings:bg-clip-text prose-headings:bg-gradient-to-r prose-headings:from-sky-400 prose-headings:to-cyan-300 prose-a:text-sky-400 hover:prose-a:text-sky-500">
+                
+                <h1>Privacy Policy</h1>
+                <p><strong>Effective Date:</strong> September 28, 2025</p>
+                <p class="lead">
+                    This Privacy Policy (hereinafter: <strong>Policy</strong>) governs the data processing activities carried out by Prometheus Digital Kft. (hereinafter: <strong>Data Controller</strong>) on the website `https://www.prometheusdigital.eu` (hereinafter: <strong>Website</strong>).
+                </p>
+
+                <h2>1. Data Controller Details</h2>
+                <p>
+                    <strong>Name:</strong> Prometheus Digital Kft.<br>
+                    <strong>Registered Seat:</strong> 1125 Budapest, Hableány utca 6/A, Hungary<br>
+                    <strong>Tax Number:</strong> 32910128-1-43<br>
+                    <strong>Email:</strong> info@prometheusdigital.hu<br>
+                    <strong>Phone:</strong> +36 30 922 2042<br>
+                    <strong>Representative:</strong> Árpád Bretz, Managing Director
+                </p>
+                
+                <h2>2. Scope, Purpose, Legal Basis, and Duration of Data Processing</h2>
+                
+                <h3>2.1. Contact via the Website</h3>
+                <p>
+                    <strong>Scope of data processed:</strong> Name, email address, phone number (optional), and any other personal data provided in the message.<br>
+                    <strong>Purpose of processing:</strong> Answering your message, contacting you, providing a quote.<br>
+                    <strong>Legal basis for processing:</strong> Your consent [Article 6(1)(a) of Regulation (EU) 2016/679 of the European Parliament and of the Council (hereinafter: <strong>GDPR</strong>)].<br>
+                    <strong>Duration of processing:</strong> Until the purpose is fulfilled or until you withdraw your consent. In the case of a request for a quote, data will be retained for 8 years in accordance with accounting laws.
+                </p>
+
+                <h3>2.2. Use of Cookies</h3>
+                <p>The Website uses cookies to improve user experience and analyze traffic. Your prior explicit consent is required for the use of cookies, which you can provide on the cookie banner appearing upon your first visit to the website (except for strictly necessary cookies).</p>
+
+                <h3>2.3. Server Logging</h3>
+                <p>
+                    <strong>Scope of data processed:</strong> IP address, time of visit, pages visited, browser and operating system type.<br>
+                    <strong>Purpose of processing:</strong> Guaranteeing the security of the service, troubleshooting technical errors, detecting attacks against the website.<br>
+                    <strong>Legal basis for processing:</strong> Legitimate interest of the Data Controller [GDPR Article 6(1)(f)].<br>
+                    <strong>Duration of processing:</strong> 30 days.
+                </p>
+
+                <h2>3. Data Processors</h2>
+                <p>The Data Controller uses the following data processors in the course of its activities:</p>
+                <ul>
+                    <li><strong>Hosting Provider:</strong> Netlify, Inc. (2325 3rd Street, Suite 296, San Francisco, CA 94107, USA).</li>
+                    <li><strong>Email Provider:</strong> Google LLC (Google Workspace). (1600 Amphitheatre Parkway, Mountain View, CA 94043, USA).</li>
+                    <li><strong>Analytics Provider (if applicable):</strong> Google LLC (Google Analytics).</li>
+                </ul>
+                <p>Data transfer to the USA takes place based on the EU-US Data Privacy Framework, ensuring an adequate level of data protection.</p>
+
+                <h2>4. Your Rights (Data Subject Rights)</h2>
+                <p>You are entitled to the following rights regarding the processing of your personal data at any time via the contact details provided above:</p>
+                 <ul>
+                    <li><strong>Right to access:</strong> You may request information about the processing of your personal data.</li>
+                    <li><strong>Right to rectification:</strong> You may request the correction of your personal data if it is inaccurate.</li>
+                    <li><strong>Right to erasure ("Right to be forgotten"):</strong> You may request the deletion of your personal data, except in cases of mandatory data processing prescribed by law.</li>
+                    <li><strong>Right to restriction of processing:</strong> You may request the restriction of processing in certain cases.</li>
+                    <li><strong>Right to object:</strong> You may object to the processing of your personal data if the processing is based on legitimate interest.</li>
+                    <li><strong>Right to data portability:</strong> You have the right to receive the personal data concerning you, which you have provided to us, in a structured, commonly used and machine-readable format.</li>
+                </ul>
+                
+                <h2>5. Legal Remedies</h2>
+                <p>If you believe that the Data Controller has violated your rights regarding the protection of personal data, we suggest that you first contact us to settle the situation peacefully.</p>
+                <p>If this does not lead to a result, you are entitled to lodge a complaint with the supervisory authority or turn to a court.</p>
+                <p>
+                    <strong>Supervisory Authority:</strong><br>
+                    National Authority for Data Protection and Freedom of Information (NAIH)<br>
+                    <strong>Address:</strong> 1055 Budapest, Falk Miksa utca 9-11, Hungary<br>
+                    <strong>Postal Address:</strong> 1363 Budapest, Pf.: 9.<br>
+                    <strong>Website:</strong> <a href="http://www.naih.hu" target="_blank" rel="noopener noreferrer">http://www.naih.hu</a>
+                </p>
+
+                <p><em><strong>Note:</strong> This document is a general template. For full legal compliance, we recommend consulting with a data protection expert before finalizing.</em></p>
+                
+            </div>
+        </div>
+    </main>
+
+    <Footer />
+</Layout>
+
+<style>
+    .prose.prose-invert {
+        --tw-prose-body: #d1d5db; /* gray-300 */
+        --tw-prose-bold: #ffffff; /* white */
+        --tw-prose-links: #38bdf8; /* sky-400 */
+    }
+</style>

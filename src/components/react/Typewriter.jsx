@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const words = ["Weboldalát.", "Webshopját.", "Digitális Jövőjét."];
+const words = ["Website.", "Webshop.", "Digital Future."];
 
 export default function Typewriter() {
   const [text, setText] = useState('');
