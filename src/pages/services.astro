@@ -1,5 +1,5 @@
 ---
-// src/pages/szolgaltatasok.astro (TEXT SCRAMBLE + TILT + SPOTLIGHT)
+// src/pages/services.astro (ENGLISH VERSION)
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -7,104 +7,103 @@ import Contact from '../components/Contact.astro';
 import { Image } from 'astro:assets';
 import servicesImage from '../../public/images/services-background.jpg';
 
-// Ikon importok
+// Icon imports
 import WebsiteIcon from '../components/icons/WebsiteIcon.astro';
 import CartIcon from '../components/icons/CartIcon.astro';
 import DesignIcon from '../components/icons/DesignIcon.astro';
 import SeoIcon from '../components/icons/SeoIcon.astro';
 
-// React Interakciók
-import TiltCard from '../components/react/TiltCard.jsx';
+// React Interactions
 import SpotlightCard from '../components/react/SpotlightCard.jsx';
-import TextScramble from '../components/react/TextScramble.jsx'; // <-- ÚJ IMPORT
+import TextScramble from '../components/react/TextScramble.jsx';
 
 const services = [
     {
         icon: WebsiteIcon,
-        title: "Konverzió-Optimalizált Weboldalak",
-        description: "Nem csak forgalmat, hanem ügyfeleket is generálunk. Villámgyors, Astro alapú weboldalaink a felhasználói élményre és a mérhető eredményekre fókuszálnak.",
+        title: "Conversion-Optimized Websites",
+        description: "We don't just generate traffic; we generate customers. Our lightning-fast, Astro-based websites focus on user experience and measurable results.",
         whoFor: [
-            "Induló vállalkozásoknak, akik erős online alapokra vágynak.",
-            "Működő cégeknek, akiknek elavult a jelenlegi oldaluk és szintet lépnének.",
-            "Személyes márkáknak és szakértőknek, akik bemutatkoznának."
+            "Startups looking for a strong online foundation.",
+            "Established companies with outdated sites looking to level up.",
+            "Personal brands and experts wanting to showcase themselves."
         ],
         includes: [
-            "Stratégiai konzultáció és tervezés",
-            "Egyedi, reszponzív UI/UX dizájn",
-            "Villámgyors Astro fejlesztés",
-            "Keresőoptimalizálási (SEO) alapok",
-            "Tartalomkezelő (CMS) integráció",
-            "Oktatás és projektátadás"
+            "Strategic consultation and planning",
+            "Custom, responsive UI/UX design",
+            "Lightning-fast Astro development",
+            "Search Engine Optimization (SEO) basics",
+            "Content Management System (CMS) integration",
+            "Training and project handover"
         ]
     },
     {
         icon: CartIcon,
-        title: "Növekedés-orientált Webshopok",
-        description: "Olyan online áruházat építünk, ami a vásárlási élmény maximalizálásával növeli a bevételét. Az egyszerű termékkezeléstől a biztonságos fizetésig mindenre odafigyelünk.",
+        title: "Growth-Oriented Webshops",
+        description: "We build online stores that increase revenue by maximizing the shopping experience. From simple product management to secure payments, we handle everything.",
         whoFor: [
-            "Kézműveseknek és alkotóknak, akik online értékesítenének.",
-            "Kiskereskedőknek, akik a digitális térben is terjeszkednének.",
-            "Digitális termékeket (pl. kurzusokat) árusítóknak."
+            "Crafters and creators wanting to sell online.",
+            "Retailers looking to expand into the digital space.",
+            "Sellers of digital products (e.g., courses)."
         ],
         includes: [
-            "Platform-tanácsadás (pl. Shopify, egyedi megoldás)",
-            "Termékstruktúra és adatbázis tervezés",
-            "Biztonságos fizetési kapuk integrációja (Stripe, stb.)",
-            "Logisztikai és számlázó rendszerek bekötése",
-            "Felhasználóbarát adminisztrációs felület",
-            "Konverziómérés és analitika beállítása"
+            "Platform consultation (e.g., Shopify, custom solution)",
+            "Product structure and database design",
+            "Secure payment gateway integration (Stripe, etc.)",
+            "Logistics and invoicing system connection",
+            "User-friendly administration interface",
+            "Conversion tracking and analytics setup"
         ]
     },
     {
         icon: DesignIcon,
-        title: "Stratégiai UI/UX Tervezés",
-        description: "A dizájn nálunk nem öncélú. Olyan intuitív és esztétikus felületeket tervezünk, amelyek bizalmat építenek és a látogatókat elégedett ügyfelekké konvertálják.",
+        title: "Strategic UI/UX Design",
+        description: "Design is not self-serving for us. We create intuitive and aesthetic interfaces that build trust and convert visitors into satisfied customers.",
         whoFor: [
-            "Cégeknek, akik a meglévő oldaluk felhasználói élményét javítanák.",
-            "Startupoknak, akiknek egy letisztult applikáció-dizájnra van szükségük.",
-            "Fejlesztő csapatoknak, akik professzionális tervekre van szükségük."
+            "Companies wanting to improve their existing site's UX.",
+            "Startups needing a clean application design.",
+            "Development teams needing professional designs."
         ],
         includes: [
-            "Felhasználói kutatás és perszóna-alkotás",
-            "Drótvázak (wireframes) és felhasználói útvonalak",
-            "Interaktív prototípusok készítése (Figma)",
-            "Komplett dizájnrendszer (Design System) felépítése",
-            "Reszponzív tervek minden képernyőméretre",
-            "Fejlesztői átadásra előkészített anyagok"
+            "User research and persona creation",
+            "Wireframes and user journeys",
+            "Interactive prototyping (Figma)",
+            "Complete Design System creation",
+            "Responsive designs for all screen sizes",
+            "Assets prepared for developer handover"
         ]
     },
     {
         icon: SeoIcon,
-        title: "Hosszú Távú SEO Stratégia",
-        description: "Biztosítjuk, hogy a potenciális vevői megtalálják Önt, ne csak a versenytársait. Technikai és tartalmi megoldásaink fenntartható organikus növekedést garantálnak.",
+        title: "Long-Term SEO Strategy",
+        description: "We ensure potential customers find YOU, not just your competitors. Our technical and content solutions guarantee sustainable organic growth.",
         whoFor: [
-            "Új weboldalak tulajdonosainak, akik az elejétől fogva jól akarnak indulni.",
-            "Meglévő oldalaknak, amik nem teljesítenek jól a keresőkben.",
-            "Cégeknek, akik a tartalommarketinggel szeretnének ügyfeleket szerezni."
+            "New website owners wanting to start strong.",
+            "Existing sites not performing well in search engines.",
+            "Companies wanting to acquire customers through content marketing."
         ],
         includes: [
-            "Teljeskörű technikai SEO audit",
-            "Kulcsszókutatás és versenytárs-elemzés",
-            "On-page SEO (meta adatok, belső linkek, struktúra)",
-            "Tartalomstratégia kidolgozása",
-            "Rendszeres riportálás és finomhangolás"
+            "Comprehensive technical SEO audit",
+            "Keyword research and competitor analysis",
+            "On-page SEO (meta data, internal links, structure)",
+            "Content strategy development",
+            "Regular reporting and fine-tuning"
         ]
     }
 ];
 
 const processSteps = [
-    { title: "Megismerés & Stratégiai Tervezés", description: "A közös munka egy mélyreható beszélgetéssel indul, ahol megértjük a vállalkozásod céljait, a célközönségedet és a piaci környezetedet." },
-    { title: "Felhasználói Élmény (UX) & Dizájn (UI)", description: "A stratégia alapján drótvázakat és felhasználói útvonalakat tervezünk. Ezt követi a modern, a márkádhoz illeszkedő vizuális dizájn megalkotása." },
-    { title: "Fejlesztés & Megvalósítás", description: "A jóváhagyott tervekből tiszta, gyors és jövőbiztos kódot írunk az Astro keretrendszer segítségével, ami garantálja a kiváló teljesítményt." },
-    { title: "Tartalomfeltöltés & SEO", description: "A kész keretet feltöltjük a kapott tartalmakkal és elvégezzük a kritikus keresőoptimalizálási alapbeállításokat." },
-    { title: "Minőségellenőrzés & Indítás", description: "Mielőtt élesítenénk az oldalt, mindent aprólékosan letesztelünk a hibátlan, zökkenőmentes indulás érdekében." },
-    { title: "Átadás, Oktatás & Támogatás", description: "A sikeres indítás után átadjuk a kulcsokat, és igény esetén opcionális karbantartási csomagjainkkal továbbra is gondoskodunk az oldaladról." },
+    { title: "Discovery & Strategic Planning", description: "Our cooperation starts with an in-depth conversation where we understand your business goals, target audience, and market environment." },
+    { title: "User Experience (UX) & Design (UI)", description: "Based on the strategy, we design wireframes and user journeys. This is followed by creating a modern visual design that fits your brand." },
+    { title: "Development & Implementation", description: "We write clean, fast, and future-proof code from the approved designs using the Astro framework, guaranteeing excellent performance." },
+    { title: "Content Upload & SEO", description: "We populate the finished framework with the provided content and perform critical basic search engine optimization settings." },
+    { title: "Quality Assurance & Launch", description: "Before going live, we meticulously test everything for a flawless, smooth launch." },
+    { title: "Handover, Training & Support", description: "After a successful launch, we hand over the keys, and with our optional maintenance packages, we continue to take care of your site if needed." },
 ]
 ---
 
 <Layout 
-    title="Szolgáltatások - Prometheus Digital" 
-    description="Ismerje meg részletesen, hogyan segítünk vállalkozásának a növekedésben modern weboldal készítéssel, webshop fejlesztéssel és SEO-val."
+    title="Services - Prometheus Digital" 
+    description="Learn in detail how we help your business grow with modern website creation, webshop development, and SEO."
 >
     <Header />
 
@@ -113,7 +112,7 @@ const processSteps = [
             <div class="absolute inset-0 z-0">
                 <Image
                     src={servicesImage} 
-                    alt="Prometheus Digital - Szolgáltatások háttérkép" 
+                    alt="Prometheus Digital - Services Background" 
                     widths={[400, 800, 1200, 1920]}
                     sizes="(max-width: 800px) 100vw, 1920px"
                     quality="mid" 
@@ -123,19 +122,18 @@ const processSteps = [
             <div class="absolute inset-0 bg-black/70"></div>
             <div class="container mx-auto px-6 relative z-10">
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
-                    Digitális Eszközök <br class="md:hidden" />
-                    {/* JAVÍTVA: Text Scramble effekt a kiemelt szövegre */}
+                    Digital Tools <br class="md:hidden" />
                     <TextScramble 
                         client:load 
-                        text="A Növekedésért" 
+                        text="For Growth" 
                         className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
                     />
                 </h1>
-                <p class="max-w-3xl mx-auto text-lg text-gray-300">Többet nyújtunk egy egyszerű weboldalnál: stratégiai megoldásokat szállítunk, amelyek valódi üzleti eredményeket hoznak.</p>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300">We offer more than a simple website: we deliver strategic solutions that bring real business results.</p>
             </div>
         </section>
 
-        <section class="py-20 md:py-32">
+        <section class="py-12 md:py-32">
             <div class="container mx-auto px-6 space-y-24">
                 {services.map((service, index) => {
                     const Icon = service.icon;
@@ -143,19 +141,19 @@ const processSteps = [
                     return (
                         <div class:list={["grid grid-cols-1 lg:grid-cols-2 gap-12 items-center", { "lg:grid-flow-col-dense": isReversed }]}>
                             
-                            {/* Szöveges rész */}
+                            {/* Text Part */}
                             <div class:list={["text-center lg:text-left", { "lg:order-last": isReversed }]}>
                                 <div class="inline-flex items-center justify-center h-20 w-20 rounded-full bg-sky-500/10 text-sky-400 mx-auto lg:mx-0 mb-6"><Icon /></div>
                                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">{service.title}</h2>
                                 <p class="text-lg text-gray-300">{service.description}</p>
                             </div>
                             
-                            {/* Kártya rész (Spotlight effekttel) */}
+                            {/* Card Part */}
                             <SpotlightCard client:visible className="h-full">
                                 <div class="p-8 h-full"> 
-                                    <h4 class="font-semibold text-sky-400 mb-3 uppercase tracking-wider text-sm">Kinek ajánljuk?</h4>
+                                    <h4 class="font-semibold text-sky-400 mb-3 uppercase tracking-wider text-sm">Who is it for?</h4>
                                     <ul class="text-gray-300 space-y-2 mb-8">{service.whoFor.map(item => <li class="flex items-start"><span class="mr-2 mt-1.5 text-sky-500">&rarr;</span>{item}</li>)}</ul>
-                                    <h4 class="font-semibold text-sky-400 mb-3 uppercase tracking-wider text-sm">Mit tartalmaz a szolgáltatás?</h4>
+                                    <h4 class="font-semibold text-sky-400 mb-3 uppercase tracking-wider text-sm">What's included?</h4>
                                     <ul class="text-gray-300 space-y-2">{service.includes.map(item => <li class="flex items-center"><svg class="w-4 h-4 mr-3 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>{item}</li>)}</ul>
                                 </div>
                             </SpotlightCard>
@@ -166,14 +164,13 @@ const processSteps = [
             </div>
         </section>
 
-        <section class="py-20 md:py-32 border-t border-white/10 bg-gray-900/40 animate-on-scroll">
+        <section class="py-12 md:py-32 border-t border-white/10 bg-gray-900/40 animate-on-scroll">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto mb-16">
                     <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
-                        {/* JAVÍTVA: Text Scramble effekt a szekció címére is */}
-                        <TextScramble client:visible text="A Közös Munka Lépései" />
+                        <TextScramble client:visible text="Steps of Our Cooperation" />
                     </h2>
-                    <p class="text-lg text-gray-300">Egy jól felépített, átlátható folyamat a sikeres projekt kulcsa. Nálunk pontosan tudni fogja, mi és miért történik.</p>
+                    <p class="text-lg text-gray-300">A well-structured, transparent process is the key to a successful project. With us, you will know exactly what is happening and why.</p>
                 </div>
                 <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                     {processSteps.map((step, index) => (

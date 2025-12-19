@@ -1,12 +1,12 @@
 ---
-// src/pages/rolunk.astro (JAVÍTOTT VERZIÓ)
+// src/pages/about.astro (ENGLISH VERSION)
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { Image } from 'astro:assets';
 import aboutImage from '../../public/images/about-background.jpg';
 
-// Ikon importok
+// Icons - Ha ezek nincsenek meg, pótold őket vagy használd a meglévőket ideiglenesen
 import FacebookIcon from '../components/icons/FacebookIcon.astro';
 import EmailIcon from '../components/icons/EmailIcon.astro';
 import LinkedInIcon from '../components/icons/LinkedInIcon.astro';
@@ -14,35 +14,34 @@ import TextScramble from '../components/react/TextScramble.jsx';
 
 const teamMembers = [
     {
-        name: "Bretz Árpád",
-        role: "Alapító & Vezető Fejlesztő",
-        bio: "Szenvedélyem a tiszta kód és a hatékony rendszerek építése. Hiszem, hogy egy jó weboldal alapja a sziklaszilárd technológiai háttér, ami gyorsaságot és megbízhatóságot ad.",
-        imageUrl: "/images/arpad-bretz.JPG",
+        name: "Árpád Bretz",
+        role: "Founder & Lead Developer",
+        bio: "My passion is clean code and building efficient systems. I believe the foundation of a good website is a rock-solid technological background that provides speed and reliability.",
+        imageUrl: "/images/arpad-bretz.JPG", // Ellenőrizd, hogy a kép ott van-e a public mappában!
         email: "arpadbretz@prometheusdigital.hu",
         socials: { linkedin: "#", facebook: "#" }
     },
     {
-        name: "Bary Félix",
-        role: "Alapító & Kreatív Technológus",
-        bio: "Engem az emberi oldal érdekel: hogyan hozhatunk létre olyan digitális élményeket, amik nem csak működnek, de valódi érzelmeket váltanak ki és emlékezetesek maradnak.",
-        imageUrl: "/images/felix-bary.JPG",
+        name: "Félix Bary",
+        role: "Founder & Creative Technologist",
+        bio: "I am interested in the human side: how can we create digital experiences that not only work but evoke real emotions and remain memorable.",
+        imageUrl: "/images/felix-bary.JPG", // Ellenőrizd, hogy a kép ott van-e a public mappában!
         email: "felixbary@prometheusdigital.hu",
         socials: { linkedin: "#", facebook: "#" }
     }
 ];
 
-// ÚJ SZEKCIÓ ADATAI
 const principles = [
-    { title: "Stratégiai Partnerség", description: "Nem csak kivitelezők, hanem partnerek vagyunk. Mélyen megértjük az üzleti céljaidat, hogy a weboldalad valóban neked dolgozzon." },
-    { title: "Mérhető Eredmények", description: "A dizájn és a technológia számunkra eszközök. A valódi cél a mérhető növekedés: több ügyfél, nagyobb bevétel, erősebb márka." },
-    { title: "Radikális Transzparencia", description: "Nincsenek rejtett költségek vagy érthetetlen szakzsargon. A teljes folyamat során tiszta és őszinte kommunikációra számíthatsz." },
-    { title: "Jövőbiztos Technológia", description: "Kizárólag modern, időtálló eszközökkel (mint az Astro) dolgozunk, hogy a befektetésed hosszú távon is megtérüljön." }
+    { title: "Strategic Partnership", description: "We are not just contractors, but partners. We deeply understand your business goals so that your website truly works for you." },
+    { title: "Measurable Results", description: "Design and technology are tools for us. The real goal is measurable growth: more customers, higher revenue, stronger brand." },
+    { title: "Radical Transparency", description: "No hidden costs or incomprehensible jargon. You can expect clear and honest communication throughout the entire process." },
+    { title: "Future-Proof Technology", description: "We work exclusively with modern, durable tools (like Astro) to ensure your investment pays off in the long run." }
 ];
 ---
 
 <Layout 
-    title="Rólunk - Prometheus Digital" 
-    description="Ismerje meg a Prometheus Digital történetét, filozófiáját és a csapatot a digitális megoldások mögött."
+    title="About Us - Prometheus Digital" 
+    description="Learn about the story, philosophy, and team behind the digital solutions at Prometheus Digital."
 >
     <Header />
 
@@ -50,42 +49,43 @@ const principles = [
         <section class="relative pt-40 pb-20 flex items-center justify-center text-center overflow-hidden">
             <div class="absolute inset-0 z-0">
                 <Image src={aboutImage} 
-                alt="Prometheus Digital - Rólunk háttérkép" 
+                alt="Prometheus Digital - About Us Background" 
                 widths={[400, 800, 1200, 1920]}
                 sizes="(max-width: 800px) 100vw, 1920px"
                 quality="mid" 
                 class="w-full h-full object-cover"/></div>
             <div class="absolute inset-0 bg-black/70"></div>
             <div class="container mx-auto px-6 text-center relative z-10">
-<h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
-    Két Szenvedély, <br class="md:hidden" />
-    <TextScramble 
-        client:load 
-        text="Egy Küldetés" 
-        className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
-    />
-</h1>                <p class="max-w-3xl mx-auto text-lg text-gray-300">Nem csak egy ügynökség vagyunk. Egy partnerség, amely a technológia és a kreativitás iránti közös szenvedélyből született, hogy segítsünk a vállalkozásoknak a digitális térben növekedni.</p>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                    Two Passions, <br class="md:hidden" />
+                    <TextScramble 
+                        client:load 
+                        text="One Mission" 
+                        className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+                    />
+                </h1>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300">We are not just an agency. A partnership born from a shared passion for technology and creativity to help businesses grow in the digital space.</p>
             </div>
         </section>
 
-        <section class="py-20 md:py-32">
+        <section class="py-12 md:py-32">
             <div class="container mx-auto px-6 animate-on-scroll">
                 <div class="max-w-4xl mx-auto text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">A Tűz, Ami Mindenkié</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">The Fire That Belongs to Everyone</h2>
                     <div class="prose prose-invert lg:prose-xl mx-auto text-gray-300 space-y-6">
-                        <p>A görög mitológia szerint Prométheusz látta az emberiséget a sötétben, eszközök és tudás nélkül. Szembeszállt az istenekkel, és ellopta számukra a tüzet – a fejlődés, a közösség és a tudás szimbólumát.</p>
-                        <p>Ma a csúcstechnológiás digitális jelenlét a "tűz". Sokáig ez is csak a legnagyobb vállalatok kiváltsága volt. A mi küldetésünk, hogy a modern kor Prométheuszai legyünk. Elhozzuk a legmodernebb technológiák, a lenyűgöző dizájn és a hatékony stratégiák tüzét minden vállalkozásnak, akinek van egy víziója.</p>
-                        <p>Hisszük, hogy ez a digitális tűz mindenkié. Azért vagyunk, hogy átadjuk neked a fáklyát.</p>
+                        <p>According to Greek mythology, Prometheus saw humanity in the dark, without tools and knowledge. He defied the gods and stole fire for them – the symbol of progress, community, and knowledge.</p>
+                        <p>Today, cutting-edge digital presence is the "fire". For a long time, this was the privilege of only the largest corporations. Our mission is to be the modern-day Prometheans. We bring the fire of the latest technologies, stunning design, and effective strategies to every business with a vision.</p>
+                        <p>We believe this digital fire belongs to everyone. We are here to pass the torch to you.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-20 md:py-32 bg-gray-900/40">
+        <section class="py-12 md:py-32 bg-gray-900/40">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto mb-20 animate-on-scroll">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Ismerd meg a Csapatot</h2>
-                    <p class="text-lg text-gray-300">Mi vagyunk az arcok a kód és a stratégia mögött. Ismerj meg minket, akik minden nap azon dolgozunk, hogy a te digitális víziód valósággá váljon.</p>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Meet the Team</h2>
+                    <p class="text-lg text-gray-300">We are the faces behind the code and strategy. Get to know us, who work every day to make your digital vision a reality.</p>
                 </div>
                 <div class="space-y-24">
                     {teamMembers.map((member, index) => (
@@ -99,7 +99,6 @@ const principles = [
                                 <p class="text-sky-400 font-semibold text-lg mb-4">{member.role}</p>
                                 <p class="text-gray-300 text-lg mb-6">{member.bio}</p>
                                 <div class:list={["flex items-center gap-6", { 'justify-start': index % 2 === 0, 'md:justify-end': index % 2 !== 0 }]}>
-                                    {/* JAVÍTVA: Mindhárom linknél ikon + szöveg */}
                                     <a href={`mailto:${member.email}`} class="flex items-center text-gray-400 hover:text-sky-400 transition-colors"><EmailIcon class="w-5 h-5 mr-2" /></a>
                                     <a href={member.socials.linkedin} target="_blank" class="flex items-center text-gray-400 hover:text-sky-400 transition-colors"><LinkedInIcon class="w-5 h-5 mr-2" /></a>
                                     <a href={member.socials.facebook} target="_blank" class="flex items-center text-gray-400 hover:text-sky-400 transition-colors"><FacebookIcon class="w-5 h-5 mr-2" /></a>
@@ -111,11 +110,11 @@ const principles = [
             </div>
         </section>
         
-        <section class="py-20 md:py-32">
+        <section class="py-12 md:py-32">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Iránytűnk a közös munkához</h2>
-                    <p class="text-lg text-gray-300">Ezek az alapelvek határozzák meg minden döntésünket és partnerségünket. Ha ezek az értékek Önnek is fontosak, akkor jó helyen jár.</p>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Our Compass for Cooperation</h2>
+                    <p class="text-lg text-gray-300">These principles define all our decisions and partnerships. If these values are important to you too, you are in the right place.</p>
                 </div>
                 <div class="text-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
                     {principles.map(principle => (
@@ -130,9 +129,9 @@ const principles = [
 
         <section class="py-20 animate-on-scroll">
              <div class="container mx-auto px-6 text-center">
-                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Beszéljük át az ötleteidet!</h2>
-                <p class="max-w-2xl mx-auto text-lg text-gray-300 mb-8">Ha a mi értékeink a te értékeid is, akkor valószínűleg remekül fogunk együttműködni. Vegyük fel a kapcsolatot és alkossunk valami maradandót.</p>
-                <a href="/kapcsolat" class="inline-block bg-sky-500 text-white font-bold py-4 px-10 rounded-full text-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-sky-600 hover:shadow-2xl hover:shadow-sky-500/30">Kapcsolatfelvétel</a>
+                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Let's Discuss Your Ideas!</h2>
+                <p class="max-w-2xl mx-auto text-lg text-gray-300 mb-8">If our values are your values, we will likely work great together. Contact us and let's create something lasting.</p>
+                <a href="/contact" class="inline-block bg-sky-500 text-white font-bold py-4 px-10 rounded-full text-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-sky-600 hover:shadow-2xl hover:shadow-sky-500/30">Get in Touch</a>
              </div>
         </section>
     </main>

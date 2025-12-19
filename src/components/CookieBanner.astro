@@ -1,19 +1,19 @@
 ---
-// src/components/CookieBanner.astro
+// src/components/CookieBanner.astro (ENGLISH VERSION)
 ---
 <div id="cookie-banner-wrapper" class="fixed bottom-0 left-0 right-0 p-4 z-50 transform translate-y-full transition-transform duration-500 ease-in-out hidden">
     <div id="cookie-banner" class="container mx-auto max-w-4xl bg-gray-900/90 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-2xl">
         <div class="flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="text-center md:text-left">
-                <h3 class="text-xl font-bold text-white mb-1">Ez a weboldal sütiket használ</h3>
+                <h3 class="text-xl font-bold text-white mb-1">We use cookies</h3>
                 <p class="text-gray-300 text-sm">
-                    A legjobb felhasználói élmény érdekében sütiket használunk. A "Beállítások" gombra kattintva testreszabhatod a választásodat.
+                    We use cookies to ensure the best user experience. You can customize your choices by clicking "Settings".
                 </p>
             </div>
             <div class="flex-shrink-0 flex flex-wrap justify-center gap-3">
-                <button id="cookie-settings-btn" class="bg-gray-700/50 text-white text-sm font-semibold py-2 px-5 rounded-full transition-colors duration-300 hover:bg-gray-600 border border-white/10">Beállítások</button>
-                <button id="cookie-decline-btn" class="bg-gray-700/50 text-white text-sm font-semibold py-2 px-5 rounded-full transition-colors duration-300 hover:bg-gray-600 border border-white/10">Elutasítom</button>
-                <button id="cookie-accept-btn" class="bg-sky-500 text-white text-sm font-bold py-2 px-5 rounded-full transition-colors duration-300 hover:bg-sky-600 shadow-lg hover:shadow-sky-500/20">Elfogadom</button>
+                <button id="cookie-settings-btn" class="bg-gray-700/50 text-white text-sm font-semibold py-2 px-5 rounded-full transition-colors duration-300 hover:bg-gray-600 border border-white/10">Settings</button>
+                <button id="cookie-decline-btn" class="bg-gray-700/50 text-white text-sm font-semibold py-2 px-5 rounded-full transition-colors duration-300 hover:bg-gray-600 border border-white/10">Decline</button>
+                <button id="cookie-accept-btn" class="bg-sky-500 text-white text-sm font-bold py-2 px-5 rounded-full transition-colors duration-300 hover:bg-sky-600 shadow-lg hover:shadow-sky-500/20">Accept All</button>
             </div>
         </div>
     </div>
@@ -25,51 +25,50 @@
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
 
-        <h2 class="text-2xl font-bold text-white mb-4">Süti Beállítások</h2>
-        <p class="text-gray-400 text-sm mb-8">Kérjük, válaszd ki, mely típusú sütik használatához járulsz hozzá.</p>
+        <h2 class="text-2xl font-bold text-white mb-4">Cookie Settings</h2>
+        <p class="text-gray-400 text-sm mb-8">Please choose which types of cookies you consent to.</p>
         
         <div class="space-y-6">
             <div>
                 <label class="flex items-center justify-between cursor-not-allowed opacity-70">
-                    <span class="font-semibold text-white">Szükséges Sütik</span>
+                    <span class="font-semibold text-white">Necessary Cookies</span>
                     <div class="relative inline-flex items-center h-6 rounded-full w-11 bg-sky-600/50">
                         <span class="inline-block w-4 h-4 transform bg-white rounded-full translate-x-6 transition-transform"></span>
                     </div>
                 </label>
-                <p class="text-xs text-gray-500 mt-1">Ezek a sütik elengedhetetlenek a weboldal alapvető működéséhez.</p>
+                <p class="text-xs text-gray-500 mt-1">These cookies are essential for the basic functioning of the website.</p>
             </div>
             
             <div class="border-t border-white/10 pt-6">
                  <label for="analytics-cookie-checkbox" class="flex items-center justify-between cursor-pointer group">
-                    <span class="font-semibold text-white group-hover:text-sky-400 transition-colors">Analitikai Sütik</span>
+                    <span class="font-semibold text-white group-hover:text-sky-400 transition-colors">Analytics Cookies</span>
                     <div class="relative">
                         <input type="checkbox" id="analytics-cookie-checkbox" class="sr-only peer">
                         <div class="w-11 h-6 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500 transition-colors"></div>
                     </div>
                 </label>
-                <p class="text-xs text-gray-500 mt-1">Statisztikai adatok gyűjtése a weboldal fejlesztéséhez.</p>
+                <p class="text-xs text-gray-500 mt-1">Collecting statistical data to improve the website.</p>
             </div>
 
             <div class="border-t border-white/10 pt-6">
                 <label for="marketing-cookie-checkbox" class="flex items-center justify-between cursor-pointer group">
-                    <span class="font-semibold text-white group-hover:text-sky-400 transition-colors">Marketing Sütik</span>
+                    <span class="font-semibold text-white group-hover:text-sky-400 transition-colors">Marketing Cookies</span>
                      <div class="relative">
                         <input type="checkbox" id="marketing-cookie-checkbox" class="sr-only peer">
                         <div class="w-11 h-6 bg-gray-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500 transition-colors"></div>
                     </div>
                 </label>
-                <p class="text-xs text-gray-500 mt-1">Személyre szabott ajánlatok megjelenítése.</p>
+                <p class="text-xs text-gray-500 mt-1">Displaying personalized offers and ads.</p>
             </div>
         </div>
 
         <div class="mt-8 pt-6 border-t border-white/10 flex justify-end">
-            <button id="save-cookie-settings-btn" class="bg-sky-500 text-white font-bold py-3 px-8 rounded-full transition-colors duration-300 hover:bg-sky-600 shadow-lg hover:shadow-sky-500/20 w-full md:w-auto">Beállítások Mentése</button>
+            <button id="save-cookie-settings-btn" class="bg-sky-500 text-white font-bold py-3 px-8 rounded-full transition-colors duration-300 hover:bg-sky-600 shadow-lg hover:shadow-sky-500/20 w-full md:w-auto">Save Settings</button>
         </div>
     </div>
 </div>
 
 <script is:inline>
-// Függvénybe csomagoljuk, hogy újra lehessen hívni navigációkor
 function initCookieConsent() {
     const bannerWrapper = document.getElementById('cookie-banner-wrapper');
     const modal = document.getElementById('cookie-modal');
@@ -83,11 +82,8 @@ function initCookieConsent() {
     const analyticsCheckbox = document.getElementById('analytics-cookie-checkbox');
     const marketingCheckbox = document.getElementById('marketing-cookie-checkbox');
 
-    // Ha nincs banner (már elfogadták és az oldal újratöltődött), ne csináljunk semmit
-    // Kivéve ha a footerből hívnánk meg a beállításokat (későbbi fejlesztés lehet)
     if (!bannerWrapper) return;
 
-    // Helper függvények
     const hideBanner = () => {
         bannerWrapper.classList.add('translate-y-full');
         setTimeout(() => {
@@ -97,7 +93,6 @@ function initCookieConsent() {
     
     const showBanner = () => {
         bannerWrapper.classList.remove('hidden');
-        // Kis késleltetés az animációhoz
         requestAnimationFrame(() => {
             bannerWrapper.classList.remove('translate-y-full');
         });
@@ -107,13 +102,12 @@ function initCookieConsent() {
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         
-        // Jelenlegi beállítások betöltése a checkboxokba
         try {
             const currentConsent = JSON.parse(localStorage.getItem('cookie_consent') || '{}');
             if (analyticsCheckbox) analyticsCheckbox.checked = currentConsent.analytics || false;
             if (marketingCheckbox) marketingCheckbox.checked = currentConsent.marketing || false;
         } catch (e) {
-            console.error("Hiba a süti beállítások betöltésekor", e);
+            console.error("Error loading cookie settings", e);
         }
     }
 
@@ -127,24 +121,18 @@ function initCookieConsent() {
         hideBanner();
         closeModal();
         
-        // Esemény küldése, ha más scriptek figyelnék (pl. GTM)
         window.dispatchEvent(new CustomEvent('cookie-consent-updated', { detail: consentData }));
         
-        // Itt lehetne inicializálni a Google Analytics-et, ha van engedély
         if (consentData.analytics) {
-            console.log("Analitika engedélyezve");
-            // initGA(); 
+            console.log("Analytics enabled");
         }
     }
 
-    // Ellenőrzés: volt-e már döntés?
     const existingConsent = localStorage.getItem('cookie_consent');
     if (!existingConsent) {
-        // Ha nincs döntés, várjunk kicsit, majd mutassuk a bannert
         setTimeout(showBanner, 1000);
     }
 
-    // Eseménykezelők
     if (acceptBtn) {
         acceptBtn.onclick = () => {
             setConsent({ necessary: true, analytics: true, marketing: true, timestamp: Date.now() });
@@ -176,7 +164,6 @@ function initCookieConsent() {
         };
     }
 
-    // Háttérre kattintva bezárás
     if (modal) {
         modal.onclick = (e) => {
             if (e.target === modal) closeModal();
@@ -184,7 +171,6 @@ function initCookieConsent() {
     }
 }
 
-// Futtatás azonnal és minden navigációnál (Astro View Transitions miatt)
 initCookieConsent();
 document.addEventListener('astro:page-load', initCookieConsent);
 </script>

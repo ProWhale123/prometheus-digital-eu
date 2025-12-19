@@ -1,0 +1,175 @@
+---
+// src/pages/web-design-budapest.astro (ENGLISH VERSION)
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Contact from '../components/Contact.astro';
+import { Image } from 'astro:assets';
+
+// Images
+import project1Image from '../../public/images/project-1.jpg';
+import project2Image from '../../public/images/project-2.jpg';
+import project3Image from '../../public/images/project-3.jpg';
+import project4Image from '../../public/images/project-4.jpg';
+import project5Image from '../../public/images/project-5.jpg';
+
+// Icons
+import LocalIcon from '../components/icons/LocalIcon.astro'; 
+import AstroIcon from '../components/icons/AstroIcon.astro'; 
+import ResultsIcon from '../components/icons/ResultsIcon.astro'; 
+import PartnerIcon from '../components/icons/PartnerIcon.astro'; 
+
+const budapestProjects = [
+     {
+        title: "Elegant Fine Dining Website",
+        description: "A clean and exclusive online presence for 'Gastronomo' fine dining restaurant.",
+        result: "+40% Table Reservations",
+        tags: ["Astro", "UI/UX", "Minimalist"],
+        imageSrc: project1Image,
+        liveUrl: "https://gastronomo.eu/"
+    },
+    {
+        title: "Modern Restaurant Website",
+        description: "Modern website for Duna Rapszódia, focusing on the menu and the gallery.",
+        result: "Faster Loading Speed",
+        tags: ["Astro", "Gallery", "Responsive"],
+        imageSrc: project2Image,
+        liveUrl: "https://duna-rapszodia.hu/"
+    },
+    {
+        title: "Construction Website",
+        description: "Trust-building site with portfolio showcase and quote request incentives.",
+        result: "More Quote Requests",
+        tags: ["Astro", "Portfolio", "Lead Gen"],
+        imageSrc: project3Image,
+        liveUrl: "https://renovation-company.netlify.app/"
+    },
+    {
+        title: "Law Firm Website",
+        description: "Digital business card for a Budapest law firm to build client trust.",
+        result: "Professional Presence",
+        tags: ["UI/UX", "Astro", "Strategy"],
+        imageSrc: project4Image,
+        liveUrl: "https://kovacslegal.hu/"
+    },
+    {
+        title: "Bistro Landing Page",
+        description: "One-page introduction site built on visual storytelling.",
+        result: "Strong Branding",
+        tags: ["Design", "Animation", "Astro"],
+        imageSrc: project5Image,
+        liveUrl: "https://bistrobudapest.hu/"
+    },
+];
+
+const whyUsFeatures = [
+    { icon: LocalIcon, title: "Local Market Knowledge", description: "We know not just the code, but the dynamics of the Budapest market. We know how to appeal to local customers." },
+    { icon: AstroIcon, title: "Astro Specialization", description: "We work with the fastest technology. Your website will not only be modern, but Google will love its speed too." },
+    { icon: ResultsIcon, title: "Measurable Results", description: "Success for us is measured in numbers, not just design. We help achieve your real business goals with data-driven solutions." },
+    { icon: PartnerIcon, title: "Personal Partnership", description: "We are accessible partners in Budapest. We think together with you, and we can discuss project details over a coffee." }
+];
+---
+
+<Layout 
+    title="Web Design Budapest | Professional Astro Development - Prometheus Digital" 
+    description="Boost your Budapest business traffic with a lightning-fast, SEO-optimized website. Strategic planning and measurable results for SMBs."
+>
+    <Header />
+
+    <main>
+        {/* Hero Section */}
+        <section class="relative pt-40 pb-20 flex items-center justify-center text-center overflow-hidden">
+            <div class="absolute inset-0 bg-gray-950"></div>
+            <div class="absolute inset-0 bg-black/70"></div>
+            <div class="container mx-auto px-6 text-center relative z-10">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                    Web Design in Budapest That <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Delivers Results</span>
+                </h1>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300 mb-8">
+                    Where competitors just make noise, we acquire customers for you. Data-driven web development specifically tailored for Budapest businesses.
+                </p>
+                <a href="/contact?subject=budapest-market-analysis" class="inline-block bg-sky-500 text-white font-bold py-4 px-10 rounded-full text-lg transition-all duration-300 transform hover:scale-105 hover:bg-sky-600 hover:shadow-2xl">
+                    Get a Free Market Analysis!
+                </a>
+            </div>
+        </section>
+        
+        {/* Why Us Section */}
+        <section class="py-12 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">The Local Partner in Digital Growth</h2>
+                    <p class="text-lg text-gray-400">We offer more than a faceless, remote agency. We know the Budapest market and offer personal partnership for success.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+                    {whyUsFeatures.map(feature => {
+                        const Icon = feature.icon;
+                        return(
+                            <div class="flex items-start space-x-6">
+                                <div class="flex-shrink-0 flex items-center justify-center h-16 w-16 rounded-full bg-sky-500/10 text-sky-400">
+                                   <Icon />
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white mb-3">{feature.title}</h3>
+                                    <p class="text-gray-400">{feature.description}</p>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+        </section>
+
+        {/* Success Stories Section */}
+        <section class="py-12 md:py-32 bg-gray-900/40">
+            <div class="container mx-auto px-6">
+                 <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Success Stories in Budapest</h2>
+                    <p class="text-lg text-gray-400">A few examples of how we helped local businesses grow.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {budapestProjects.map(project => (
+                        <div class="border border-white/10 rounded-2xl overflow-hidden group transform transition-all duration-300 hover:shadow-2xl hover:shadow-sky-500/20 hover:-translate-y-2">
+                            <Image src={project.imageSrc} alt={project.title} class="w-full h-48 object-cover" />
+                            <div class="p-6 bg-gray-900/50">
+                                <h3 class="text-xl font-bold text-white">{project.title}</h3>
+                                <p class="text-gray-400 mt-2 text-sm">{project.description}</p>
+                                <div class="mt-4 text-sky-400 font-bold text-lg">{project.result}</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        {/* Location / Map Section */}
+        <section class="py-12 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">A Partner Who Is Truly Accessible</h2>
+                        <p class="text-lg text-gray-400 mb-6">
+                            We believe in the power of personal connection. Since we are in Budapest too, we are easily available for a personal consultation where we can discuss your project over a coffee. No time zones, no distant, faceless project managers.
+                        </p>
+                         <a href="/contact" class="font-semibold text-sky-400 hover:text-sky-300 transition-colors">Let's talk in person! →</a>
+                    </div>
+                    <div class="h-96 w-full border border-white/10 rounded-2xl overflow-hidden shadow-xl">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2695.53328243685!2d19.01168921562668!3d47.50202977917789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4741de753b8113c3%3A0x60f470a21f7c3583!2sBudapest%2C%20Hable%C3%A1ny%20u.%206a%2C%201125!5e0!3m2!1shu!2shu!4v1695924844883!5m2!1shu!2shu"
+                            title="Prometheus Digital office on Google Maps"
+                            width="100%"
+                            height="100%"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <Contact />
+    </main>
+    <Footer />
+</Layout>

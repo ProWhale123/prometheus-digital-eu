@@ -1,5 +1,5 @@
 ---
-// src/pages/araink.astro
+// src/pages/pricing.astro (ENGLISH VERSION)
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -9,88 +9,87 @@ import SeoIcon from '../components/icons/SeoIcon.astro';
 import DesignIcon from '../components/icons/DesignIcon.astro';
 import ShieldIcon from '../components/icons/ShieldIcon.astro';
 
-// React komponensek
+// React components
 import PriceCalculator from '../components/react/PriceCalculator.jsx';
 import TiltCard from '../components/react/TiltCard.jsx';
 import TextScramble from '../components/react/TextScramble.jsx';
 
-// JAVÍTVA: Visszaállítottuk az importot a src/assets mappából az optimalizáláshoz
-import pricingImage from '../assets/images/araink-background.jpg';
+// Image import
+import pricingImage from '../assets/images/araink-background.jpg'; // Ellenőrizd a fájlnevet!
 
 const pricingPlans = [
   {
-    name: 'Induló Csomag',
-    oneTimePrice: '290 000 Ft',
-    monthlyPrice: '61 500 Ft / hó',
-    description: 'Tökéletes választás induló vállalkozásoknak, akiknek egy modern és gyors bemutatkozó oldalra van szükségük.',
-    features: [ 'Egyedi, reszponzív dizájn', '1-5 oldal', 'SEO alapbeállítások', 'Villámgyors betöltés (Astro)', 'Hosting és domain management', 'Céges email beállítás', 'Kapcsolati űrlap' ],
-    monthlyFeatures: [ 'Havi biztonsági mentés', 'Technikai karbantartás' ],
+    name: 'Starter Package',
+    oneTimePrice: '€750', // Átírtam EUR-ra
+    monthlyPrice: '€160 / month',
+    description: 'Perfect choice for startups needing a modern and fast introduction site.',
+    features: [ 'Custom, responsive design', '1-5 pages', 'SEO basics', 'Lightning fast loading (Astro)', 'Hosting and domain management', 'Business email setup', 'Contact form' ],
+    monthlyFeatures: [ 'Monthly backups', 'Technical maintenance' ],
     isPopular: false,
-    cta: { text: 'Érdekel az ajánlat', href: '/kapcsolat?csomag=indulo' }
+    cta: { text: 'I\'m interested', href: '/contact?package=starter' }
   },
   {
-    name: 'Növekedés Csomag',
-    oneTimePrice: '390 000 Ft',
-    monthlyPrice: '81 500 Ft / hó',
-    description: 'A legnépszerűbb opciónk cégeknek, akik aktívan szeretnének ügyfeleket szerezni egy dinamikus, tartalom-központú weboldallal.',
-    features: [ 'Minden az Induló csomagból', 'Professzionális Blog motor', 'Többnyelvűség lehetősége', 'Hírlevél feliratkozási modul', 'Haladó SEO beállítások' ],
-    monthlyFeatures: [ 'Heti biztonsági mentés', 'Prémium technikai karbantartás' ],
+    name: 'Growth Package',
+    oneTimePrice: '€1,000', // Átírtam EUR-ra
+    monthlyPrice: '€210 / month',
+    description: 'Our most popular option for companies actively looking to acquire customers with a dynamic, content-focused website.',
+    features: [ 'Everything in Starter', 'Professional Blog engine', 'Multi-language capability', 'Newsletter subscription module', 'Advanced SEO settings' ],
+    monthlyFeatures: [ 'Weekly backups', 'Premium technical maintenance' ],
     isPopular: true,
-    cta: { text: 'Kiválasztom', href: '/kapcsolat?csomag=novekedes' }
+    cta: { text: 'Select This', href: '/contact?package=growth' }
   },
   {
-    name: 'Prémium Csomag',
-    oneTimePrice: '690 000 Ft-tól',
-    monthlyPrice: '141 500 Ft / hó',
-    description: 'Komplexebb igényekre, webshopokhoz vagy cégeknek, akik a maximumot akarják kihozni online jelenlétükből.',
-    features: [ 'Minden a Növekedés csomagból', 'Webshop funkcionalitás (alap)', 'Fizetési kapu integráció (pl. Stripe)', 'CMS integráció (önálló tartalomszerkesztés)', 'Kiemelt támogatás' ],
-    monthlyFeatures: [ 'Napi biztonsági mentés', 'Folyamatos technikai karbantartás' ],
+    name: 'Premium Package',
+    oneTimePrice: 'From €1,800', // Átírtam EUR-ra
+    monthlyPrice: '€370 / month',
+    description: 'For complex needs, webshops, or companies wanting to get the maximum out of their online presence.',
+    features: [ 'Everything in Growth', 'Webshop functionality (basic)', 'Payment gateway integration (e.g., Stripe)', 'CMS integration (self-editing)', 'Priority support' ],
+    monthlyFeatures: [ 'Daily backups', 'Continuous technical maintenance' ],
     isPopular: false,
-    cta: { text: 'Prémium Indítása', href: '/kapcsolat?csomag=premium' }
+    cta: { text: 'Start Premium', href: '/contact?package=premium' }
   }
 ];
 
 const standaloneServices = [
     {
         icon: SeoIcon,
-        title: "Havi SEO Csomag",
-        price: "60 000 Ft / hó-tól",
-        description: "Folyamatos keresőoptimalizálás, hogy weboldalad hosszú távon is a Google találati lista élén maradjon és folyamatosan új ügyfeleket hozzon.",
-        features: [ "Technikai SEO audit és javítások", "Kulcsszókutatás és tartalomstratégia", "Havi riportálás és elemzés", "Linképítési tanácsadás" ],
-        cta: { text: "Érdekel a SEO Csomag", href: "/kapcsolat?szolgaltatas=seo" }
+        title: "Monthly SEO Package",
+        price: "From €160 / month",
+        description: "Continuous search engine optimization to keep your website at the top of Google search results and constantly bring in new customers.",
+        features: [ "Technical SEO audit and fixes", "Keyword research and content strategy", "Monthly reporting and analysis", "Link building consultation" ],
+        cta: { text: "Interested in SEO", href: "/contact?service=seo" }
     },
     {
         icon: DesignIcon,
-        title: "Stratégiai UI/UX Tervezés",
-        price: "Egyedi árajánlat alapján",
-        description: "Legyen szó meglévő oldalad újratervezéséről vagy egy teljesen új applikáció-koncepcióról, segítünk egy felhasználóbarát és esztétikus felület megalkotásában.",
-        features: [ "Felhasználói kutatás és drótvázazás", "Interaktív prototípus készítés (Figma)", "Komplett dizájnrendszer felépítése", "Fejlesztésre kész anyagok átadása" ],
-        cta: { text: "Ajánlatot Kérek", href: "/kapcsolat?szolgaltatas=design" }
+        title: "Strategic UI/UX Design",
+        price: "Custom Quote",
+        description: "Whether it's redesigning an existing site or a brand new app concept, we help create a user-friendly and aesthetic interface.",
+        features: [ "User research and wireframing", "Interactive prototyping (Figma)", "Complete design system", "Development-ready assets" ],
+        cta: { text: "Get a Quote", href: "/contact?service=design" }
     },
     {
         icon: ShieldIcon,
-        title: "Havi Karbantartási Csomag",
-        price: "20 000 Ft / hó-tól",
-        description: "Gondoskodunk róla, hogy weboldalad mindig biztonságos, gyors és naprakész maradjon, így te az üzletre fókuszálhatsz.",
-        features: [ 'Havi biztonsági frissítések', 'Heti teljes biztonsági mentés', 'Folyamatos rendelkezésre állás figyelése', 'Havi 5 óra fejlesztői támogatás' ],
-        cta: { text: "Karbantartást Kérek", href: "/kapcsolat?szolgaltatas=karbantartas" }
+        title: "Monthly Maintenance",
+        price: "From €55 / month",
+        description: "We ensure your website stays secure, fast, and up-to-date, so you can focus on your business.",
+        features: [ 'Monthly security updates', 'Weekly full backups', 'Uptime monitoring', '5 hours of developer support / month' ],
+        cta: { text: "Request Maintenance", href: "/contact?service=maintenance" }
     }
 ];
 ---
 
 <Layout 
-    title="Áraink és Szolgáltatásaink - Prometheus Digital" 
-    description="Ismerje meg weboldal készítési csomagjainkat és önálló szolgáltatásainkat. Átlátható árak, rugalmas megoldások az Ön üzleti igényeire szabva."
+    title="Pricing & Services - Prometheus Digital" 
+    description="Explore our web development packages and standalone services. Transparent pricing, flexible solutions tailored to your business needs."
 >
     <Header />
 
     <main>
         <section class="relative flex items-center justify-center text-center min-h-[50vh] overflow-hidden">
              <div class="absolute inset-0 z-0">
-                {/* JAVÍTVA: Visszaállítva az <Image> komponensre */}
                 <Image 
                     src={pricingImage}
-                    alt="Prometheus Digital - Árak háttérkép"
+                    alt="Prometheus Digital - Pricing Background"
                     widths={[400, 800, 1200, 1920]}
                     sizes="(max-width: 800px) 100vw, 1920px"
                     quality="mid"
@@ -100,51 +99,52 @@ const standaloneServices = [
              </div>
             <div class="absolute inset-0 bg-black/70"></div>
             <div class="container mx-auto px-6 relative z-10">
-<h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
-    Átlátható Árak, <br class="lg:hidden" />
-    <TextScramble 
-        client:load 
-        text="Rugalmas Megoldások" 
-        className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
-    />
-</h1>                <p class="max-w-3xl mx-auto text-lg text-gray-300">Válasszon egyszeri díjas vagy kényelmes havi díjas konstrukcióink közül. Minden csomagunkat az Ön igényeire szabhatjuk.</p>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                    Transparent Pricing, <br class="lg:hidden" />
+                    <TextScramble 
+                        client:load 
+                        text="Flexible Solutions" 
+                        className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+                    />
+                </h1>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300">Choose between one-time fees or convenient monthly plans. We can tailor any package to your needs.</p>
             </div>
         </section>
 
-        <section class="py-20 md:py-32 pricing-section">
+        <section class="py-12 md:py-32 pricing-section">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Weboldal & Webshop Készítési Csomagok</h2>
-                    <p class="text-lg text-gray-300">Komplett megoldások új online jelenlét építéséhez, az alapoktól a prémium funkciókig.</p>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Website & Webshop Packages</h2>
+                    <p class="text-lg text-gray-300">Complete solutions for building a new online presence, from basics to premium features.</p>
                 </div>
 
                 <div class="flex justify-center items-center mb-16">
-                    <span class="font-semibold text-white mr-4 transition-colors duration-300" data-pricing-label="onetime">Egyszeri díj</span>
+                    <span class="font-semibold text-white mr-4 transition-colors duration-300" data-pricing-label="onetime">One-time fee</span>
                     <label for="pricing-toggle" class="relative inline-block w-14 h-8 bg-gray-700 rounded-full cursor-pointer"><input type="checkbox" id="pricing-toggle" class="peer sr-only"><span class="absolute left-1 top-1 w-6 h-6 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-6"></span></label>
-                    <span class="font-semibold text-gray-300 ml-4 transition-colors duration-300" data-pricing-label="monthly">Havi díjas konstrukció (6 hónap)</span>
+                    <span class="font-semibold text-gray-300 ml-4 transition-colors duration-300" data-pricing-label="monthly">Monthly plan (6 months)</span>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto items-start">
                     {pricingPlans.map(plan => (
                         <TiltCard client:visible className="h-full">
                             <div class:list={["bg-gray-900/50 border rounded-2xl p-8 flex flex-col h-full transform transition-all duration-300", plan.isPopular ? "border-sky-500/80 shadow-2xl scale-105" : "border-white/10 hover:-translate-y-2"]}>
-                                {plan.isPopular && <div class="absolute top-0 right-8 -mt-4"><span class="bg-gradient-to-r from-sky-400 to-cyan-300 text-zinc-900 text-xs font-bold px-4 py-1 rounded-full uppercase">Legnépszerűbb</span></div>}
+                                {plan.isPopular && <div class="absolute top-0 right-8 -mt-4"><span class="bg-gradient-to-r from-sky-400 to-cyan-300 text-zinc-900 text-xs font-bold px-4 py-1 rounded-full uppercase">Most Popular</span></div>}
                                 <h3 class="text-2xl font-bold text-white mb-2">{plan.name}</h3>
                                 <p class="text-gray-300 text-sm mb-6 flex-grow">{plan.description}</p>
                                 
                                 <div class="price-onetime">
                                     <div class="text-4xl font-bold text-white mb-2">{plan.oneTimePrice}</div>
-                                    <div class="text-xs text-gray-500 mb-6">Egyszeri fejlesztési díj</div>
+                                    <div class="text-xs text-gray-500 mb-6">One-time development fee</div>
                                 </div>
                                 <div class="price-monthly hidden">
                                     <div class="text-4xl font-bold text-white mb-2">{plan.monthlyPrice}</div>
-                                    <div class="text-xs text-gray-500 mb-6">6 hónapos futamidővel</div>
+                                    <div class="text-xs text-gray-500 mb-6">With 6-month contract</div>
                                 </div>
                                 
                                 <ul class="space-y-4 text-gray-300 mb-8 flex-grow">
                                     {plan.features.map(feature => ( <li class="flex items-start"><svg class="w-5 h-5 mr-3 mt-1 text-sky-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>{feature}</span></li> ))}
                                     <div class="price-monthly hidden">
-                                        <li class="flex items-start font-bold text-sky-300"><svg class="w-5 h-5 mr-3 mt-1 text-sky-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>+ Havi karbantartás</span></li>
+                                        <li class="flex items-start font-bold text-sky-300"><svg class="w-5 h-5 mr-3 mt-1 text-sky-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>+ Monthly maintenance</span></li>
                                     </div>
                                 </ul>
 
@@ -156,18 +156,19 @@ const standaloneServices = [
             </div>
         </section>
 
-        <section class="py-20 md:py-24 border-t border-white/10 bg-gray-900/40">
+        <section class="py-12 md:py-24 border-t border-white/10 bg-gray-900/40">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-8 reveal">Tervezd meg a költségeket</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-8 reveal">Plan Your Costs</h2>
+                {/* A PriceCalculator.jsx-t is át kell majd írni angolra/EUR-ra, ha használod! */}
                 <PriceCalculator client:idle />
             </div>
         </section> 
 
-        <section class="py-20 md:py-24 border-t border-white/10 bg-gray-900/40">
+        <section class="py-12 md:py-24 border-t border-white/10 bg-gray-900/40">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Önálló Szolgáltatások</h2>
-                    <p class="text-lg text-gray-300">Nincs szüksége teljes weboldalra, csak egy specifikus területen szeretne fejlődni? Válasszon célzott megoldásaink közül.</p>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Standalone Services</h2>
+                    <p class="text-lg text-gray-300">Don't need a full website, just want to improve in a specific area? Choose from our targeted solutions.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     {standaloneServices.map((service, index) => {
@@ -201,9 +202,9 @@ const standaloneServices = [
 
         <section class="py-20 text-center">
             <div class="container mx-auto px-6 max-w-3xl">
-                <h2 class="text-3xl md:text-4xl font-bold text-white">Nem találja a tökéletes csomagot?</h2>
-                <p class="text-gray-300 mt-4 max-w-2xl mx-auto">Előfordulhat, hogy Önnek csak egyetlen funkcióra van szüksége egy magasabb csomagból. Rugalmasak vagyunk! Kombinálja a funkciókat, vagy kérjen teljesen egyedi ajánlatot.</p>
-                <a href="/kapcsolat?csomag=egyedi" class="inline-block mt-8 font-bold py-3 px-8 rounded-lg bg-gradient-to-r from-sky-400 to-cyan-300 text-zinc-900 hover:shadow-2xl hover:shadow-sky-500/50 transition-all duration-300 transform hover:-translate-y-1">Kérek egyedi ajánlatot</a>
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Can't Find the Perfect Package?</h2>
+                <p class="text-gray-300 mt-4 max-w-2xl mx-auto">Maybe you only need a single feature from a higher package. We are flexible! Combine features or request a completely custom quote.</p>
+                <a href="/contact?package=custom" class="inline-block mt-8 font-bold py-3 px-8 rounded-lg bg-gradient-to-r from-sky-400 to-cyan-300 text-zinc-900 hover:shadow-2xl hover:shadow-sky-500/50 transition-all duration-300 transform hover:-translate-y-1">Get a Custom Quote</a>
             </div>
         </section>
 
@@ -213,32 +214,26 @@ const standaloneServices = [
 </Layout>
 
 <style>
-  /* Toggle stílusok */
   .pricing-section.show-monthly .price-monthly { display: block; }
   .pricing-section.show-monthly .price-onetime { display: none; }
   .price-monthly.hidden { display: none; }
 </style>
 
 <script>
-  // 1. Függvénybe csomagoljuk a logikát
   function initPricingToggle() {
     const toggle = document.getElementById('pricing-toggle');
     const pricingSection = document.querySelector('.pricing-section');
     const onetimeLabel = document.querySelector('[data-pricing-label="onetime"]');
     const monthlyLabel = document.querySelector('[data-pricing-label="monthly"]');
 
-    // Ha nem vagyunk az árak oldalon (nincsenek elemek), ne fusson tovább
     if (!toggle || !pricingSection || !onetimeLabel || !monthlyLabel) return;
 
-    // Segédfüggvény a UI frissítéséhez
     const updateUI = () => {
       // @ts-ignore
       const isChecked = toggle.checked;
       
-      // Osztályok cseréje a szülő konténeren
       pricingSection.classList.toggle('show-monthly', isChecked);
 
-      // Címkék színezése
       if (isChecked) {
         monthlyLabel.classList.remove('text-gray-300');
         monthlyLabel.classList.add('text-white', 'font-semibold');
@@ -252,13 +247,9 @@ const standaloneServices = [
       }
     };
 
-    // Eseményfigyelő hozzáadása (klikkre/váltásra)
     toggle.addEventListener('change', updateUI);
-
-    // Kezdeti állapot beállítása (hogy navigálás után is jó legyen az alapállapot)
     updateUI();
   }
 
-  // 2. Futtatás minden oldalbetöltésnél és navigációnál
   document.addEventListener('astro:page-load', initPricingToggle);
 </script>

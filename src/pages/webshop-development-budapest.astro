@@ -1,0 +1,151 @@
+---
+// src/pages/webshop-development-budapest.astro
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Contact from '../components/Contact.astro';
+import { Image } from 'astro:assets';
+
+// Images
+import project1Image from '../../public/images/project-1.jpg';
+import project2Image from '../../public/images/project-2.jpg';
+import project3Image from '../../public/images/project-3.jpg';
+
+// Icons - (Ideiglenesen a meglévőket használom, hogy ne törjön el az oldal)
+import CartIcon from '../components/icons/CartIcon.astro'; // ConversionIcon helyett
+import SpeedIcon from '../components/icons/SeoIcon.astro'; // SpeedIcon helyett
+import PaymentIcon from '../components/icons/WebsiteIcon.astro'; // PaymentIcon helyett
+import PartnerIcon from '../components/icons/DesignIcon.astro'; // PartnerIcon helyett
+
+// Ha megvannak az új ikonjaid, cseréld vissza erre:
+// import ConversionIcon from '../components/icons/ConversionIcon.astro';
+// import SpeedIcon from '../components/icons/SpeedIcon.astro';
+// ...
+
+const budapestProjects = [
+    { 
+        name: "Elegant Fine Dining Website", 
+        description: "Although not a webshop, this site demonstrates the power of premium design and Astro speed, which is critical for an online store as well.", 
+        imageSrc: project1Image, 
+        result: "Premium User Experience" 
+    },
+    { 
+        name: "Modern Restaurant Website", 
+        description: "The elegant, clean design and conversion focus (table reservation) is a good example of the principles we apply to webshops.", 
+        imageSrc: project2Image, 
+        result: "Exclusive Online Presence" 
+    },
+    { 
+        name: "Construction Website", 
+        description: "This project is about building trust and efficient lead generation, which is the foundation of every successful e-commerce site.", 
+        imageSrc: project3Image, 
+        result: "+60% Quote Requests" 
+    },
+];
+
+const whyUsFeatures = [
+    { icon: CartIcon, title: "Conversion-Focused Design", description: "A webshop has only one goal: to sell. We subordinate every design decision and function to this, from product pages to the checkout process." },
+    { icon: SpeedIcon, title: "Lightning-Fast Product Pages", description: "Every second of delay means a lost customer. Our Astro-based webshops guarantee market-leading loading speeds, reducing cart abandonment." },
+    { icon: PaymentIcon, title: "Secure Payment Systems", description: "We ensure customer trust and transaction security through seamless integration of Stripe and other modern payment gateways." },
+    { icon: PartnerIcon, title: "Personal, Local Support", description: "We are accessible partners in Budapest. We help with webshop training and are quickly available for any questions that arise." },
+];
+---
+
+<Layout 
+    title="Webshop Development Budapest | Conversion-Optimized E-commerce - Prometheus Digital" 
+    description="Launch a profit-generating webshop in Budapest! Astro-based, custom e-commerce solutions with secure payment integration for SMBs."
+>
+    <Header />
+
+    <main>
+        {/* Hero Section */}
+        <section class="relative pt-40 pb-20 flex items-center justify-center text-center overflow-hidden">
+            <div class="absolute inset-0 bg-gray-950"></div>
+            <div class="absolute inset-0 bg-black/70"></div>
+            <div class="container mx-auto px-6 text-center relative z-10">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                    Webshop Development in Budapest, <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">That Sells, Not Just Lists</span>
+                </h1>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300 mb-8">
+                    We turn visitors into buyers. We build user-friendly online stores specifically tailored for Budapest brands and merchants.
+                </p>
+                <a href="/contact?subject=ecommerce-consultation" class="inline-block bg-sky-500 text-white font-bold py-4 px-10 rounded-full text-lg transition-all duration-300 transform hover:scale-105 hover:bg-sky-600 hover:shadow-2xl">
+                    Request a Free E-commerce Consultation!
+                </a>
+            </div>
+        </section>
+        
+        {/* Why Us Section */}
+        <section class="py-12 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">More Than a Webshop: A Growth Partner</h2>
+                    <p class="text-lg text-gray-400">Launching an online store is a complex task. We don't just provide the technical background, but help you succeed as a strategic partner.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+                    {whyUsFeatures.map(feature => {
+                        const Icon = feature.icon;
+                        return(
+                            <div class="flex items-start space-x-6">
+                                <div class="flex-shrink-0 flex items-center justify-center h-16 w-16 rounded-full bg-sky-500/10 text-sky-400">
+                                   <Icon />
+                                </div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white mb-3">{feature.title}</h3>
+                                    <p class="text-gray-400">{feature.description}</p>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+        </section>
+
+        {/* References Section */}
+        <section class="py-12 md:py-32 bg-gray-900/40">
+            <div class="container mx-auto px-6">
+                 <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Budapest References</h2>
+                    <p class="text-lg text-gray-400">Although every project is different, our core principles (quality design, speed, business focus) resonate in all our work.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {budapestProjects.map(project => (
+                        <div class="border border-white/10 rounded-2xl overflow-hidden group transform transition-all duration-300 hover:shadow-2xl hover:shadow-sky-500/20 hover:-translate-y-2">
+                            <Image src={project.imageSrc} alt={project.name} class="w-full h-48 object-cover" />
+                            <div class="p-6 bg-gray-900/50">
+                                <h3 class="text-xl font-bold text-white">{project.name}</h3>
+                                <p class="text-gray-400 mt-2 text-sm">{project.description}</p>
+                                <div class="mt-4 text-sky-400 font-bold text-lg">{project.result}</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        {/* Location Section */}
+        <section class="py-12 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">A Partner Who Is Truly Accessible</h2>
+                        <p class="text-lg text-gray-400 mb-6">
+                            We believe in the power of personal connection. Since we are in Budapest too, we are easily available for a personal consultation where we can discuss your project over a coffee.
+                        </p>
+                         <a href="/contact" class="font-semibold text-sky-400 hover:text-sky-300 transition-colors">Let's talk in person! →</a>
+                    </div>
+                    <div class="h-96 w-full border border-white/10 rounded-2xl overflow-hidden shadow-xl">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2695.53328243685!2d19.01168921562668!3d47.50202977917789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4741de753b8113c3%3A0x60f470a21f7c3583!2sBudapest%2C%20Hable%C3%A1ny%20u.%206a%2C%201125!5e0!3m2!1shu!2shu!4v1695924844883!5m2!1shu!2shu"
+                            title="Prometheus Digital office on Google Maps"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <Contact />
+    </main>
+    <Footer />
+</Layout>

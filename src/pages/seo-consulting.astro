@@ -1,0 +1,150 @@
+---
+// src/pages/seo-consulting.astro (ENGLISH VERSION)
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Contact from '../components/Contact.astro';
+import { Image } from 'astro:assets';
+
+// Images
+import project1Image from '../../public/images/project-1.jpg';
+import project2Image from '../../public/images/project-2.jpg';
+import project3Image from '../../public/images/project-3.jpg';
+
+// Icons - Ideiglenes helyettesítők, amíg nincsenek újak
+import SmeIcon from '../components/icons/DesignIcon.astro'; // SmeIcon helyett
+import CodeIcon from '../components/icons/WebsiteIcon.astro'; // CodeIcon helyett
+import ResultsIcon from '../components/icons/SeoIcon.astro'; // ResultsIcon helyett
+import ReportIcon from '../components/icons/CartIcon.astro'; // ReportIcon helyett
+
+const seoProjects = [
+    { 
+        name: "Elegant Fine Dining Website", 
+        description: "Through local SEO strategy, we achieved top 3 Google rankings for 'restaurant budapest' searches.", 
+        imageSrc: project1Image, 
+        result: "+40% Organic Traffic" 
+    },
+    { 
+        name: "Construction Website", 
+        description: "With technical SEO and targeted content, the site reached the first page for relevant keywords (e.g., 'home renovation budapest').", 
+        imageSrc: project3Image, 
+        result: "Top 3 Search Ranking" 
+    },
+    { 
+        name: "Modern Restaurant Website", 
+        description: "Targeted blog posts and expert content building doubled the number of quality inquiries via the contact form.", 
+        imageSrc: project2Image, 
+        result: "2x More Quality Leads" 
+    },
+];
+
+const whyUsFeatures = [
+    { icon: SmeIcon, title: "SMB-Focused Approach", description: "We understand the resources and challenges of small and medium businesses perfectly. No unrealistic promises, just an effective strategy tailored to your company." },
+    { icon: CodeIcon, title: "Technical SEO Expertise", description: "Since we develop websites ourselves, we deeply understand the technical foundations of SEO. A lightning-fast website built with Astro is an SEO superpower in itself." },
+    { icon: ResultsIcon, title: "Data-Driven Decisions", description: "We don't rely on gut feelings but on hard data. We find the best opportunities through keyword research, competitor analysis, and analytics." },
+    { icon: ReportIcon, title: "Transparent Reporting", description: "We have no secrets. We present achieved results in regular, easy-to-understand reports so you can see exactly where your investment is going." },
+];
+
+const seoProcess = [
+    { title: "Audit & Goal Setting", description: "We start with a comprehensive analysis to assess the current situation and define realistic, measurable goals." },
+    { title: "Keyword Research & Strategy", description: "We find the keywords your customers are searching for and build a strategy to target them." },
+    { title: "Technical & On-Page Optimization", description: "We fix the technical foundations of your website, from speed to meta data, so Google will love it." },
+    { title: "Content & Link Building", description: "We help create valuable content that attracts visitors and backlinks, increasing your site's authority." },
+    { title: "Measurement & Fine-Tuning", description: "We continuously measure results and fine-tune the strategy based on data for maximum performance." }
+];
+---
+
+<Layout 
+    title="SEO Consulting for SMBs | Get More Customers from Google - Prometheus Digital" 
+    description="Increase your organic traffic and get more clients from Google! Professional, data-driven SEO consulting specifically for SMBs."
+>
+    <Header />
+
+    <main>
+        {/* Hero Section */}
+        <section class="relative pt-40 pb-20 flex items-center justify-center text-center overflow-hidden">
+            <div class="absolute inset-0 bg-gray-950"></div>
+            <div class="absolute inset-0 bg-black/70"></div>
+            <div class="container mx-auto px-6 text-center relative z-10">
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                    Stop Guessing. <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Get Customers from Google.</span>
+                </h1>
+                <p class="max-w-3xl mx-auto text-lg text-gray-300 mb-8">
+                    Even the best product remains invisible if customers can't find it. We help your company become the first one Google recommends when a potential client searches.
+                </p>
+                <a href="/contact?subject=seo-audit" class="inline-block bg-sky-500 text-white font-bold py-4 px-10 rounded-full text-lg transition-all duration-300 transform hover:scale-105 hover:bg-sky-600 hover:shadow-2xl">
+                    Request a Free SEO Audit!
+                </a>
+            </div>
+        </section>
+        
+        {/* Why Us Section */}
+        <section class="py-12 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Not Magic, But Strategy</h2>
+                    <p class="text-lg text-gray-400">SEO is not a collection of secret tricks. It's a data-driven, long-term process tailored specifically to the needs of small and medium businesses.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+                    {whyUsFeatures.map(feature => {
+                        const Icon = feature.icon;
+                        return(
+                            <div class="flex items-start space-x-6">
+                                <div class="flex-shrink-0 flex items-center justify-center h-16 w-16 rounded-full bg-sky-500/10 text-sky-400"><Icon /></div>
+                                <div>
+                                    <h3 class="text-2xl font-bold text-white mb-3">{feature.title}</h3>
+                                    <p class="text-gray-400">{feature.description}</p>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+        </section>
+
+        {/* Process Section */}
+        <section class="py-12 md:py-32 border-t border-b border-white/10 bg-gray-900/40">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Steps of Our Cooperation</h2>
+                    <p class="text-lg text-gray-300">A well-structured, transparent process is the key to a successful SEO project.</p>
+                </div>
+                <div class="max-w-4xl mx-auto space-y-8">
+                    {seoProcess.map((step, index) => (
+                        <div class="flex items-center space-x-6 bg-gray-900/50 border border-white/10 rounded-2xl p-6">
+                            <div class="text-sky-400 font-black text-4xl flex-shrink-0">0{index+1}</div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white mb-2">{step.title}</h3>
+                                <p class="text-gray-400">{step.description}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        {/* Results Section */}
+        <section class="py-12 md:py-32">
+            <div class="container mx-auto px-6">
+                 <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Results That Speak for Themselves</h2>
+                    <p class="text-lg text-gray-400">The impact of SEO strategy is measurable in numbers.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {seoProjects.map(project => (
+                        <div class="border border-white/10 rounded-2xl overflow-hidden group transform transition-all duration-300 hover:shadow-2xl hover:shadow-sky-500/20 hover:-translate-y-2">
+                            <Image src={project.imageSrc} alt={project.name} class="w-full h-48 object-cover" />
+                            <div class="p-6 bg-gray-900/50">
+                                <h3 class="text-xl font-bold text-white">{project.name}</h3>
+                                <div class="mt-4 text-sky-400 font-bold text-lg">{project.result}</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <Contact />
+    </main>
+    <Footer />
+</Layout>
