@@ -15,7 +15,7 @@ interface Props {
 
 const { title, description, image } = Astro.props;
 
-const GA_MEASUREMENT_ID = 'G-9WGZSCWPEE';
+const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
 ---
 
 <!doctype html>
@@ -32,13 +32,19 @@ const GA_MEASUREMENT_ID = 'G-9WGZSCWPEE';
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap">
         </noscript>
 	
-        <script define:vars={{ GA_MEASUREMENT_ID }}>
+<script define:vars={{ GA_MEASUREMENT_ID }}>
+            // 1. Load Google Analytics
             function initAnalytics() {
                 if (window.gtag) return;
 
                 const script = document.createElement('script');
                 script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
                 script.async = true;
+                
+                script.onerror = function() {
+                    console.error("CSP ERROR: Browser blocked GA4 script. Check netlify.toml!");
+                };
+
                 document.head.appendChild(script);
 
                 window.dataLayer = window.dataLayer || [];
@@ -47,9 +53,10 @@ const GA_MEASUREMENT_ID = 'G-9WGZSCWPEE';
 
                 gtag('js', new Date());
                 gtag('config', GA_MEASUREMENT_ID);
-                console.log('Google Analytics betöltve és konfigurálva.');
+                console.log('✅ Google Analytics (EU) started.');
             }
 
+            // 2. Handle Consent
             function handleConsent() {
                  const consentData = localStorage.getItem('cookie_consent');
                 if (consentData) {
@@ -57,13 +64,26 @@ const GA_MEASUREMENT_ID = 'G-9WGZSCWPEE';
                     if (consent.analytics) {
                         initAnalytics();
                     } else {
-                        console.log('Google Analytics betöltése letiltva a felhasználói beállítások miatt.');
+                        console.log('Analytics disabled by user.');
                     }
                 }
             }
 
+            // 3. Handle Page Views (Astro View Transitions)
+            document.addEventListener('astro:page-load', () => {
+                if (window.gtag) {
+                    window.gtag('config', GA_MEASUREMENT_ID, {
+                        page_path: window.location.pathname,
+                        page_title: document.title
+                    });
+                }
+            });
+
+            // 4. Event Listeners
             document.addEventListener('DOMContentLoaded', handleConsent);
-            document.addEventListener('consent-updated', handleConsent);
+            document.addEventListener('astro:page-load', handleConsent);
+            // Figyeljük a cookie banner eseményét
+            window.addEventListener('cookie-consent-updated', handleConsent);
         </script>
     </head>
 	<body class="bg-gray-900 text-gray-200 font-sans leading-relaxed selection:bg-sky-500 selection:text-white">
