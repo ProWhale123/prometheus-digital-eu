@@ -1,14 +1,18 @@
 ---
 /* src/components/LogoPreloader.astro */
 import { Image } from 'astro:assets';
-import logoImage from '../assets/images/logo.jpg'; 
+import logoImage from '../assets/images/logo.jpg'
 ---
 
-<div id="preloader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0B1120]">
+<div 
+    id="preloader" 
+    transition:persist
+    class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0B1120]"
+>
     <div class="relative flex flex-col items-center justify-center overflow-hidden">
         
         <div id="preloader-logo" class="opacity-0 scale-90">
-            <Image src={logoImage} alt="Prometheus Digital Logó" class="h-20 md:h-30 w-auto" quality="high" />
+                         <Image src={logoImage} alt="Prometheus Digital Logó" class="w-32 md:w-48 h-auto object-contain" />
         </div>
 
         <div class="mt-8 h-[2px] w-0 bg-sky-500" id="loader-line"></div>
@@ -23,47 +27,61 @@ import logoImage from '../assets/images/logo.jpg';
     const line = document.getElementById('loader-line');
 
     const sessionKey = 'prometheus_intro_shown';
-    const isVisited = sessionStorage.getItem(sessionKey);
+    
+    // Azonnali ellenőrzés (hogy F5 frissítésnél se villanjon be)
+    if (sessionStorage.getItem(sessionKey) && preloader) {
+        preloader.style.display = 'none';
+    }
 
-    if (isVisited) {
-        // Ha már látta, azonnal kuka
-        if(preloader) preloader.style.display = 'none';
-    } else {
-        // ANIMÁCIÓ
+    // Animációs logika
+    function runPreloader() {
+        if (!preloader) return;
+
+        // Ha már látta a felhasználó, azonnal rejtjük
+        if (sessionStorage.getItem(sessionKey)) {
+            preloader.style.display = 'none';
+            return;
+        }
+
+        // --- ANIMÁCIÓ INDÍTÁSA ---
         const tl = gsap.timeline({
             onComplete: () => {
-                // Függöny felhúzása (Preloader eltűnése)
+                // Eltüntetés animáció (Függöny fel)
                 gsap.to(preloader, {
                     yPercent: -100,
                     duration: 0.8,
                     ease: "power3.inOut",
                     onComplete: () => {
-                        if(preloader) preloader.style.display = 'none';
+                        preloader.style.display = 'none';
+                        // Elmentjük, hogy már látta
                         sessionStorage.setItem(sessionKey, 'true');
                     }
                 });
             }
         });
 
-        // 1. Logo Fade In + Scale Up (Elegáns)
+        // Logo és vonal animáció
         tl.to(logo, {
             opacity: 1,
             scale: 1,
             duration: 1,
             ease: "power2.out"
         })
-        // 2. Vonal kirajzolódása (Loading érzet)
         .to(line, {
-            width: "100px", // Vagy amennyit szeretnél
+            width: "100px",
             duration: 0.8,
             ease: "power1.inOut"
-        }, "-=0.5") // Félig fedésben az előzővel
+        }, "-=0.5")
         .to(line, {
-            width: "0px", // Eltűnik a vonal
-            x: "100px", // Jobbra kicsúszik
+            width: "0px",
+            x: "100px",
             opacity: 0,
             duration: 0.4,
             ease: "power2.in"
         });
     }
+
+    // Csak egyszer futtatjuk le, amikor a komponens létrejön
+    runPreloader();
+
 </script>

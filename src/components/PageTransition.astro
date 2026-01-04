@@ -1,0 +1,108 @@
+---
+/* src/components/PageTransition.astro - Ultimate Branded Version */
+---
+<div 
+    id="pt-overlay-text" 
+    class="fixed inset-0 z-[9995] flex items-center justify-center pointer-events-none opacity-0 translate-y-8 will-change-transform"
+>
+    <h2 class="text-2xl md:text-4xl font-black uppercase tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">
+        Prometheus Digital
+    </h2>
+</div>
+
+<div class="transition-curtain fixed inset-0 z-[9992] bg-[#0B1120] pointer-events-none translate-y-full will-change-transform"></div>
+<div class="transition-curtain fixed inset-0 z-[9991] bg-gray-900 pointer-events-none translate-y-full will-change-transform"></div>
+<div class="transition-curtain fixed inset-0 z-[9990] bg-gray-800 pointer-events-none translate-y-full will-change-transform"></div>
+
+
+<script>
+    import { gsap } from "gsap";
+
+    const curtainSelector = '.transition-curtain';
+    const textSelector = '#pt-overlay-text';
+
+    // Easing görbék a prémium érzethez
+    const expoInOut = "expo.inOut"; // Nagyon drámai, gyors indulás/érkezés
+    const power3Out = "power3.out"; // Finomabb lassulás a szövegnek
+
+    // --- 1. INDULÁS (Kattintáskor: Takarás + Szöveg be) ---
+    document.addEventListener('astro:before-preparation', (event) => {
+        const curtains = document.querySelectorAll(curtainSelector);
+        const text = document.querySelector(textSelector);
+        
+        if (curtains.length === 0 || !text) return;
+
+        const originalLoader = event.loader;
+        event.loader = async () => {
+            const tl = gsap.timeline();
+
+            // Párhuzamosan fut a függöny felhúzás és a szöveg megjelenés
+            tl.to(curtains, {
+                y: '0%', 
+                duration: 0.8,
+                ease: expoInOut,
+                stagger: 0.05
+            }, 0) // A "0" a timeline elejére teszi
+            
+            // Szöveg beúszik (opacity 0->1, y 32px->0px)
+            .to(text, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                ease: power3Out
+            }, 0.3); // Kis késleltetéssel indul, hogy a sötétre érkezzen
+
+            // Megvárjuk az animációt ÉS a betöltést
+            await Promise.all([tl, originalLoader()]);
+        };
+    });
+
+    // --- 2. ÉRKEZÉS (Swap után: Felfedés + Szöveg ki) ---
+    document.addEventListener('astro:after-swap', () => {
+        const curtains = document.querySelectorAll(curtainSelector);
+        const text = document.querySelector(textSelector);
+        
+        if (curtains.length > 0 && text) {
+            // AZONNALI POZÍCIONÁLÁS (Reset az új oldalon)
+            // A függönyök fedésben, a szöveg láthatóan középen
+            gsap.set(curtains, { y: '0%' });
+            gsap.set(text, { opacity: 1, y: 0 });
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    // RESET A KÖVETKEZŐ KÖRRE (Mindent vissza a pincébe)
+                    gsap.set(curtains, { y: '100%' });
+                    gsap.set(text, { opacity: 0, y: 32 }); // Tailwind translate-y-8 = 32px
+                }
+            });
+
+            // Párhuzamosan fut a függöny továbbhúzás és a szöveg eltűnés
+            tl.to(curtains, {
+                y: '-100%', 
+                duration: 0.8,
+                ease: expoInOut,
+                stagger: 0.05
+            }, 0)
+            
+            // Szöveg kiúszik (opacity 1->0, y 0px -> -32px felfelé)
+            .to(text, {
+                opacity: 0,
+                y: -32, 
+                duration: 0.5,
+                ease: "power2.in"
+            }, 0); // Azonnal indul a függönyökkel együtt
+        }
+    });
+</script>
+
+<style>
+    /* Alapállapotok a Tailwind osztályokban vannak kezelve,
+       de a biztonság kedvéért itt is definiálhatjuk. */
+    .transition-curtain {
+        transform: translateY(100%);
+    }
+    #pt-overlay-text {
+        opacity: 0;
+        transform: translateY(2rem); /* translate-y-8 */
+    }
+</style>

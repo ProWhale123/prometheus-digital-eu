@@ -8,6 +8,7 @@ import { ClientRouter } from 'astro:transitions';
 import GlobalSpotlight from '../components/GlobalSpotlight.astro';
 import HapticFeedback from '../components/HapticFeedback.astro'
 import LogoPreloader from '../components/LogoPreloader.astro';
+import PageTransition from '../components/PageTransition.astro'
 
 interface Props {
     title: string;
@@ -90,6 +91,7 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
     </head>
     <body class="bg-gray-900 text-gray-200 font-sans leading-relaxed selection:bg-sky-500 selection:text-white">
                 <LogoPreloader />
+                <PageTransition />
         <slot />
         
         <BackToTop />
