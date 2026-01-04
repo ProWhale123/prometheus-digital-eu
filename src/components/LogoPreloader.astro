@@ -1,0 +1,69 @@
+---
+/* src/components/LogoPreloader.astro */
+import { Image } from 'astro:assets';
+import logoImage from '../assets/images/logo.jpg'; 
+---
+
+<div id="preloader" class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0B1120]">
+    <div class="relative flex flex-col items-center justify-center overflow-hidden">
+        
+        <div id="preloader-logo" class="opacity-0 scale-90">
+            <Image src={logoImage} alt="Prometheus Digital Logó" class="h-20 md:h-30 w-auto" quality="high" />
+        </div>
+
+        <div class="mt-8 h-[2px] w-0 bg-sky-500" id="loader-line"></div>
+    </div>
+</div>
+
+<script>
+    import { gsap } from "gsap";
+
+    const preloader = document.getElementById('preloader');
+    const logo = document.getElementById('preloader-logo');
+    const line = document.getElementById('loader-line');
+
+    const sessionKey = 'prometheus_intro_shown';
+    const isVisited = sessionStorage.getItem(sessionKey);
+
+    if (isVisited) {
+        // Ha már látta, azonnal kuka
+        if(preloader) preloader.style.display = 'none';
+    } else {
+        // ANIMÁCIÓ
+        const tl = gsap.timeline({
+            onComplete: () => {
+                // Függöny felhúzása (Preloader eltűnése)
+                gsap.to(preloader, {
+                    yPercent: -100,
+                    duration: 0.8,
+                    ease: "power3.inOut",
+                    onComplete: () => {
+                        if(preloader) preloader.style.display = 'none';
+                        sessionStorage.setItem(sessionKey, 'true');
+                    }
+                });
+            }
+        });
+
+        // 1. Logo Fade In + Scale Up (Elegáns)
+        tl.to(logo, {
+            opacity: 1,
+            scale: 1,
+            duration: 1,
+            ease: "power2.out"
+        })
+        // 2. Vonal kirajzolódása (Loading érzet)
+        .to(line, {
+            width: "100px", // Vagy amennyit szeretnél
+            duration: 0.8,
+            ease: "power1.inOut"
+        }, "-=0.5") // Félig fedésben az előzővel
+        .to(line, {
+            width: "0px", // Eltűnik a vonal
+            x: "100px", // Jobbra kicsúszik
+            opacity: 0,
+            duration: 0.4,
+            ease: "power2.in"
+        });
+    }
+</script>
