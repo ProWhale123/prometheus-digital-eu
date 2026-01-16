@@ -115,24 +115,23 @@ const contactDetails = [
                 </div>
 
                 <div class="mt-8">
-                    <MagneticButton client:idle>
-                        <button
-                            type="submit"
-                            class="w-full bg-white text-gray-900 font-bold py-4 px-10 rounded-full text-lg shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(14,165,233,0.4)] hover:scale-[1.02] transition-all duration-300 flex justify-center items-center gap-2"
+                    <MagneticButton
+                        type="submit"
+                        client:idle
+                        className="w-full bg-white text-gray-900 font-bold py-4 px-10 rounded-full text-lg shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(14,165,233,0.4)] hover:scale-[1.02] transition-all duration-300 flex justify-center items-center gap-2"
+                    >
+                        <span>Send Message</span>
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg
                         >
-                            <span>Send Message</span>
-                            <svg
-                                class="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg
-                            >
-                        </button>
                     </MagneticButton>
                 </div>
             </form>

@@ -1,20 +1,20 @@
 ---
 // src/components/Testimonials.astro
 
-// Helykitöltő adatok. Ezeket később lecserélhetitek a saját ügyfeleitek véleményére.
+// Placeholder data. You can replace these later with your own customers' opinions.
 const testimonials = [
     {
-        quote: "A Prometheus Digital csapata nem csak egy weboldalt adott nekünk, hanem egy digitális stratégiát. A forgalmunk már az első hónapban 30%-kal nőtt. Elképesztő!",
-        author: "Nagy Anna",
-        company: "Innovatív Startup Zrt.",
-        avatarUrl: "https://placehold.co/100x100/1e293b/ffffff?text=NA"
+        quote: "The Prometheus Digital team didn't just give us a website, but a digital strategy. Our traffic grew by 30% in the first month. Amazing!",
+        author: "Anna Nagy",
+        company: "Innovative Startup Ltd.",
+        avatarUrl: "https://placehold.co/100x100/1e293b/ffffff?text=NA",
     },
     {
-        quote: "Profi, gyors és kreatív csapat. Pontosan azt kaptuk, amit ígértek, sőt, még annál is többet. Mindenkinek csak ajánlani tudom őket.",
-        author: "Kiss Géza",
-        company: "Kézműves Műhely",
-        avatarUrl: "https://placehold.co/100x100/1e293b/ffffff?text=KG"
-    }
+        quote: "Professional, fast, and creative team. We got exactly what they promised, even more. I can only recommend them to everyone.",
+        author: "Géza Kiss",
+        company: "Craft Workshop",
+        avatarUrl: "https://placehold.co/100x100/1e293b/ffffff?text=GK",
+    },
 ];
 ---
 
@@ -22,31 +22,56 @@ const testimonials = [
     <div class="container mx-auto px-6">
         <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
             <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
-                Mit <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Mondanak Rólunk?</span>
+                What They Say <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+                    >About Us</span
+                >
             </h2>
             <p class="text-lg text-gray-300">
-                Büszkék vagyunk partnereink sikereire. Olvasd el, hogyan segítettünk nekik a digitális céljaik elérésében.
+                We are proud of our partners' successes. Read about how we
+                helped them achieve their digital goals.
             </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
-            {testimonials.map(testimonial => (
-                 <div class="animate-on-scroll">
-                    <div class="bg-gray-900/50 border border-white/10 rounded-2xl p-8 h-full flex flex-col transform transition-all duration-300 hover:border-sky-500/80 hover:shadow-2xl hover:-translate-y-2" style="will-change: transform;">
-                        <div class="flex-grow mb-6">
-                            <svg class="w-12 h-12 text-sky-600 mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z"></path></svg>
-                            <p class="text-xl italic text-gray-300">"{testimonial.quote}"</p>
-                        </div>
-                        <div class="flex items-center mt-auto pt-6 border-t border-white/10">
-                            <img class="w-12 h-12 rounded-full object-cover mr-4" src={testimonial.avatarUrl} alt={testimonial.author} />
-                            <div>
-                                <p class="font-bold text-white text-lg">{testimonial.author}</p>
-                                <p class="text-gray-300">{testimonial.company}</p>
+            {
+                testimonials.map((testimonial) => (
+                    <div class="animate-on-scroll">
+                        <div
+                            class="bg-gray-900/50 border border-white/10 rounded-2xl p-8 h-full flex flex-col transform transition-all duration-300 hover:border-sky-500/80 hover:shadow-2xl hover:-translate-y-2"
+                            style="will-change: transform;"
+                        >
+                            <div class="flex-grow mb-6">
+                                <svg
+                                    class="w-12 h-12 text-sky-600 mb-4"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z" />
+                                </svg>
+                                <p class="text-xl italic text-gray-300">
+                                    "{testimonial.quote}"
+                                </p>
+                            </div>
+                            <div class="flex items-center mt-auto pt-6 border-t border-white/10">
+                                <img
+                                    class="w-12 h-12 rounded-full object-cover mr-4"
+                                    src={testimonial.avatarUrl}
+                                    alt={testimonial.author}
+                                />
+                                <div>
+                                    <p class="font-bold text-white text-lg">
+                                        {testimonial.author}
+                                    </p>
+                                    <p class="text-gray-300">
+                                        {testimonial.company}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                ))
+            }
         </div>
     </div>
 </section>

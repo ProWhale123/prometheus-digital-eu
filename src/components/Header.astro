@@ -99,24 +99,23 @@ const navLinks = [
             </div>
 
             <div class="ml-4">
-                <MagneticButton client:idle>
-                    <a
-                        href="/contact"
-                        class="bg-white text-gray-900 font-bold py-2.5 px-6 rounded-full transition-all duration-300 hover:bg-sky-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 flex items-center gap-2"
+                <MagneticButton
+                    href="/contact"
+                    client:idle
+                    className="bg-white text-gray-900 font-bold py-2.5 px-6 rounded-full transition-all duration-300 hover:bg-sky-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 flex items-center gap-2"
+                >
+                    Contact
+                    <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg
                     >
-                        Contact
-                        <svg
-                            class="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg
-                        >
-                    </a>
                 </MagneticButton>
             </div>
         </nav>

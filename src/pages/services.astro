@@ -25,11 +25,11 @@ const serviceCategories = [
         icon: WebsiteIcon,
         category: "1. STRUCTURE & FOUNDATION",
         title: "The Core & Pages",
-        price: "From €590",
+        price: "From €799",
         description:
-            "The mandatory technological foundation. Everything is built on this. Stable, fast, and SEO-friendly.",
+            "The mandatory technological foundation. Includes premium English support & EU regulatory compliance.",
         features: [
-            { name: "Base Landing Module", detail: "€590 (Mandatory)" },
+            { name: "Base Landing Module", detail: "€799 (Mandatory)" },
             { name: "Content Subpages", detail: "€75 / page" },
             { name: "Extra Sales Page", detail: "€180 (High-impact)" },
             { name: "Tech Pages", detail: "€45 (404, Thank You)" },
@@ -43,7 +43,7 @@ const serviceCategories = [
         description: "From clean standard to award-winning custom design.",
         features: [
             { name: "Standard Design", detail: "€0 (In Base Package)" },
-            { name: "Custom UX/UI Design", detail: "€860 (High-Ticket)" },
+            { name: "Custom UX/UI Design", detail: "€850 (High-Ticket)" },
             { name: "Premium Animations", detail: "€240 (GSAP, Framer)" },
             { name: "Dark Mode", detail: "€150" },
         ],
@@ -193,11 +193,11 @@ const businessLogicModules = [
                             1
                         </div>
                         <h3 class="text-white font-bold mb-2">
-                            Base Module (€590)
+                            Base Module (€799)
                         </h3>
                         <p class="text-sm text-gray-400">
-                            The entry level. One-page landing, 90+ speed, SEO
-                            basics. This is required for everything.
+                            The entry level. Includes English support & EU
+                            compliance. Required for everything.
                         </p>
                     </div>
                     <div
@@ -523,13 +523,12 @@ const businessLogicModules = [
                     interactive price calculator and build your own package in
                     minutes.
                 </p>
-                <MagneticButton client:visible>
-                    <a
-                        href="/pricing"
-                        class="inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-sky-500 to-cyan-400 text-white font-bold rounded-full text-lg hover:shadow-[0_0_30px_rgba(14,165,233,0.4)] hover:scale-105 transition-all duration-300"
-                    >
-                        Start Price Calculator
-                    </a>
+                <MagneticButton
+                    href="/pricing"
+                    client:visible
+                    className="inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-sky-500 to-cyan-400 text-white font-bold rounded-full text-lg hover:shadow-[0_0_30px_rgba(14,165,233,0.4)] hover:scale-105 transition-all duration-300"
+                >
+                    Start Price Calculator
                 </MagneticButton>
             </div>
         </section>
