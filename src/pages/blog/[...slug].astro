@@ -7,7 +7,7 @@ import Header from "../../components/Header.astro";
 import { Image } from "astro:assets";
 import FloatingElement from "../../components/FloatingElement.astro";
 import SpotlightCard from "../../components/react/SpotlightCard.jsx";
-import authorImage from "../../../public/images/arpad-bretz.JPG";
+import authorImage from "../../assets/images/arpad-bretz.JPG";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -180,7 +180,6 @@ const { Content } = await post.render();
                   </div>
                 </div>
               </div>
-              SpotlightCard>
             </SpotlightCard>
           </div>
         </div>
@@ -330,5 +329,5 @@ const { Content } = await post.render();
       padding: 1.5em;
       overflow-x: auto;
     }
-  </style></Layout
->
+  </style>
+</Layout>
