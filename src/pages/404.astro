@@ -1,33 +1,41 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import MagneticButton from '../components/react/MagneticButton.jsx';
-import SpotlightHeroBackground from '../components/react/SpotlightHeroBackground.jsx';
+// src/pages/404.astro
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import MagneticButton from "../components/react/MagneticButton.jsx";
+import SpotlightHeroBackground from "../components/react/SpotlightHeroBackground.jsx";
+import CookieBanner from "../components/CookieBanner.astro";
 ---
 
 <Layout title="404 - Not Found" description="This page is lost in space.">
     <Header />
-    <main class="h-screen flex items-center justify-center text-center bg-gray-950 overflow-hidden relative">
-        
+    <main
+        class="h-screen flex items-center justify-center text-center bg-gray-950 overflow-hidden relative"
+    >
         <SpotlightHeroBackground client:visible />
-        
+
         <div class="absolute inset-0 bg-gray-950/30 pointer-events-none"></div>
 
         <div class="relative z-10 px-6">
-            <h1 class="text-[10rem] md:text-[12rem] font-black text-transparent bg-clip-text bg-gradient-to-b from-gray-800 to-gray-950 select-none animate-pulse">
+            <h1
+                class="text-[10rem] md:text-[12rem] font-black text-transparent bg-clip-text bg-gradient-to-b from-gray-800 to-gray-950 select-none animate-pulse"
+            >
                 404
             </h1>
-            
+
             <div class="-mt-12 relative">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Oops! The flame is out.</h2>
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+                    Oops! The flame went out.
+                </h2>
                 <p class="text-gray-400 text-lg mb-10 max-w-md mx-auto">
-                    It seems this page doesn't exist, or we moved it to another dimension.
+                    It seems this page does not exist or was moved to another
+                    dimension.
                 </p>
-                
-                <MagneticButton 
-                    client:load 
-                    href="/" 
+
+                <MagneticButton
+                    client:load
+                    href="/"
                     className="bg-sky-500 text-white font-bold py-3 px-8 rounded-full hover:bg-sky-600 shadow-lg hover:shadow-sky-500/30"
                 >
                     Back to Home
@@ -36,4 +44,5 @@ import SpotlightHeroBackground from '../components/react/SpotlightHeroBackground
         </div>
     </main>
     <Footer />
+    <CookieBanner />
 </Layout>

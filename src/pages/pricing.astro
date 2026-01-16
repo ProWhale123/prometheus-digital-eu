@@ -1,255 +1,214 @@
 ---
-// src/pages/pricing.astro (ENGLISH VERSION)
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import Contact from '../components/Contact.astro';
-import { Image } from 'astro:assets';
-import SeoIcon from '../components/icons/SeoIcon.astro';
-import DesignIcon from '../components/icons/DesignIcon.astro';
-import ShieldIcon from '../components/icons/ShieldIcon.astro';
+// src/pages/pricing.astro
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Contact from "../components/Contact.astro";
+import { Image } from "astro:assets";
+import pricingImage from "../../public/images/araink-background.jpg"; // If image missing, use hero
+import CookieBanner from "../components/CookieBanner.astro";
 
-// React components
-import PriceCalculator from '../components/react/PriceCalculator.jsx';
-import TiltCard from '../components/react/TiltCard.jsx';
-import TextScramble from '../components/react/TextScramble.jsx';
-
-// Image import
-import pricingImage from '../assets/images/araink-background.jpg'; // Ellenőrizd a fájlnevet!
-
-const pricingPlans = [
-  {
-    name: 'Starter Package',
-    oneTimePrice: '€750', // Átírtam EUR-ra
-    monthlyPrice: '€160 / month',
-    description: 'Perfect choice for startups needing a modern and fast introduction site.',
-    features: [ 'Custom, responsive design', '1-5 pages', 'SEO basics', 'Lightning fast loading (Astro)', 'Hosting and domain management', 'Business email setup', 'Contact form' ],
-    monthlyFeatures: [ 'Monthly backups', 'Technical maintenance' ],
-    isPopular: false,
-    cta: { text: 'I\'m interested', href: '/contact?package=starter' }
-  },
-  {
-    name: 'Growth Package',
-    oneTimePrice: '€1,000', // Átírtam EUR-ra
-    monthlyPrice: '€210 / month',
-    description: 'Our most popular option for companies actively looking to acquire customers with a dynamic, content-focused website.',
-    features: [ 'Everything in Starter', 'Professional Blog engine', 'Multi-language capability', 'Newsletter subscription module', 'Advanced SEO settings' ],
-    monthlyFeatures: [ 'Weekly backups', 'Premium technical maintenance' ],
-    isPopular: true,
-    cta: { text: 'Select This', href: '/contact?package=growth' }
-  },
-  {
-    name: 'Premium Package',
-    oneTimePrice: 'From €1,800', // Átírtam EUR-ra
-    monthlyPrice: '€370 / month',
-    description: 'For complex needs, webshops, or companies wanting to get the maximum out of their online presence.',
-    features: [ 'Everything in Growth', 'Webshop functionality (basic)', 'Payment gateway integration (e.g., Stripe)', 'CMS integration (self-editing)', 'Priority support' ],
-    monthlyFeatures: [ 'Daily backups', 'Continuous technical maintenance' ],
-    isPopular: false,
-    cta: { text: 'Start Premium', href: '/contact?package=premium' }
-  }
-];
-
-const standaloneServices = [
-    {
-        icon: SeoIcon,
-        title: "Monthly SEO Package",
-        price: "From €160 / month",
-        description: "Continuous search engine optimization to keep your website at the top of Google search results and constantly bring in new customers.",
-        features: [ "Technical SEO audit and fixes", "Keyword research and content strategy", "Monthly reporting and analysis", "Link building consultation" ],
-        cta: { text: "Interested in SEO", href: "/contact?service=seo" }
-    },
-    {
-        icon: DesignIcon,
-        title: "Strategic UI/UX Design",
-        price: "Custom Quote",
-        description: "Whether it's redesigning an existing site or a brand new app concept, we help create a user-friendly and aesthetic interface.",
-        features: [ "User research and wireframing", "Interactive prototyping (Figma)", "Complete design system", "Development-ready assets" ],
-        cta: { text: "Get a Quote", href: "/contact?service=design" }
-    },
-    {
-        icon: ShieldIcon,
-        title: "Monthly Maintenance",
-        price: "From €55 / month",
-        description: "We ensure your website stays secure, fast, and up-to-date, so you can focus on your business.",
-        features: [ 'Monthly security updates', 'Weekly full backups', 'Uptime monitoring', '5 hours of developer support / month' ],
-        cta: { text: "Request Maintenance", href: "/contact?service=maintenance" }
-    }
-];
+// The Calculator
+import PriceCalculator from "../components/react/PriceCalculator.jsx";
+import SpotlightHeroBackground from "../components/react/SpotlightHeroBackground.jsx";
 ---
 
-<Layout 
-    title="Pricing & Services - Prometheus Digital" 
-    description="Explore our web development packages and standalone services. Transparent pricing, flexible solutions tailored to your business needs."
+<Layout
+    title="Pricing - Prometheus Digital"
+    description="Transparent, modular pricing. Plan your website costs with our interactive calculator."
 >
     <Header />
 
     <main>
-        <section class="relative flex items-center justify-center text-center min-h-[50vh] overflow-hidden">
-             <div class="absolute inset-0 z-0">
-                <Image 
-                    src={pricingImage}
-                    alt="Prometheus Digital - Pricing Background"
-                    widths={[400, 800, 1200, 1920]}
-                    sizes="(max-width: 800px) 100vw, 1920px"
-                    quality="mid"
-                    class="w-full h-full object-cover"
-                    loading="eager"
-                />
-             </div>
-            <div class="absolute inset-0 bg-black/70"></div>
-            <div class="container mx-auto px-6 relative z-10">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
-                    Transparent Pricing, <br class="lg:hidden" />
-                    <TextScramble 
-                        client:load 
-                        text="Flexible Solutions" 
-                        className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+        <section
+            class="relative h-[50vh] min-h-[400px] flex items-center justify-center text-center overflow-hidden"
+        >
+            <div class="absolute inset-0 z-0">
+                <div
+                    class="parallax-bg w-full h-[120%] -translate-y-[10%] will-change-transform"
+                >
+                    <Image
+                        src={pricingImage}
+                        alt="Prometheus Digital Pricing"
+                        class="w-full h-full object-cover opacity-50"
+                        quality="high"
                     />
+                </div>
+            </div>
+            <div
+                class="absolute inset-0 bg-[#0B1120]/70 backdrop-blur-[2px] z-10"
+            >
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10 pt-10">
+                <h1
+                    class="font-black text-white uppercase tracking-tighter mb-4"
+                >
+                    <div class="overflow-hidden py-4">
+                        <span
+                            class="reveal-text block text-4xl md:text-6xl text-gray-300 translate-y-20 opacity-0 mb-2"
+                        >
+                            TRANSPARENT
+                        </span>
+                    </div>
+                    <div class="overflow-hidden py-4">
+                        <span
+                            class="reveal-text block text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 translate-y-20 opacity-0 pb-3"
+                        >
+                            INVESTMENT
+                        </span>
+                    </div>
                 </h1>
-                <p class="max-w-3xl mx-auto text-lg text-gray-300">Choose between one-time fees or convenient monthly plans. We can tailor any package to your needs.</p>
+                <p
+                    class="reveal-desc max-w-2xl mx-auto text-lg md:text-xl text-gray-300 font-light translate-y-10 opacity-0"
+                >
+                    No hidden costs. Plan your project budget with exactly the
+                    elements you need.
+                </p>
             </div>
         </section>
 
-        <section class="py-12 md:py-32 pricing-section">
-            <div class="container mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Website & Webshop Packages</h2>
-                    <p class="text-lg text-gray-300">Complete solutions for building a new online presence, from basics to premium features.</p>
-                </div>
+        <section class="py-20 md:py-32 bg-[#0B1120] relative">
+            <div
+                class="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:50px_50px] opacity-[0.03] pointer-events-none"
+            >
+            </div>
 
-                <div class="flex justify-center items-center mb-16">
-                    <span class="font-semibold text-white mr-4 transition-colors duration-300" data-pricing-label="onetime">One-time fee</span>
-                    <label for="pricing-toggle" class="relative inline-block w-14 h-8 bg-gray-700 rounded-full cursor-pointer"><input type="checkbox" id="pricing-toggle" class="peer sr-only"><span class="absolute left-1 top-1 w-6 h-6 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-6"></span></label>
-                    <span class="font-semibold text-gray-300 ml-4 transition-colors duration-300" data-pricing-label="monthly">Monthly plan (6 months)</span>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto items-start">
-                    {pricingPlans.map(plan => (
-                        <TiltCard client:visible className="h-full">
-                            <div class:list={["bg-gray-900/50 border rounded-2xl p-8 flex flex-col h-full transform transition-all duration-300", plan.isPopular ? "border-sky-500/80 shadow-2xl scale-105" : "border-white/10 hover:-translate-y-2"]}>
-                                {plan.isPopular && <div class="absolute top-0 right-8 -mt-4"><span class="bg-gradient-to-r from-sky-400 to-cyan-300 text-zinc-900 text-xs font-bold px-4 py-1 rounded-full uppercase">Most Popular</span></div>}
-                                <h3 class="text-2xl font-bold text-white mb-2">{plan.name}</h3>
-                                <p class="text-gray-300 text-sm mb-6 flex-grow">{plan.description}</p>
-                                
-                                <div class="price-onetime">
-                                    <div class="text-4xl font-bold text-white mb-2">{plan.oneTimePrice}</div>
-                                    <div class="text-xs text-gray-500 mb-6">One-time development fee</div>
-                                </div>
-                                <div class="price-monthly hidden">
-                                    <div class="text-4xl font-bold text-white mb-2">{plan.monthlyPrice}</div>
-                                    <div class="text-xs text-gray-500 mb-6">With 6-month contract</div>
-                                </div>
-                                
-                                <ul class="space-y-4 text-gray-300 mb-8 flex-grow">
-                                    {plan.features.map(feature => ( <li class="flex items-start"><svg class="w-5 h-5 mr-3 mt-1 text-sky-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>{feature}</span></li> ))}
-                                    <div class="price-monthly hidden">
-                                        <li class="flex items-start font-bold text-sky-300"><svg class="w-5 h-5 mr-3 mt-1 text-sky-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>+ Monthly maintenance</span></li>
-                                    </div>
-                                </ul>
-
-                                <a href={plan.cta.href} class:list={["w-full text-center font-bold py-3 px-6 rounded-lg transition-all duration-300", plan.isPopular ? "bg-gradient-to-r from-sky-400 to-cyan-300 text-zinc-900 hover:shadow-2xl hover:shadow-sky-500/50" : "bg-gray-700/50 text-white hover:bg-gray-600/80"]}>{plan.cta.text}</a>
-                            </div>
-                        </TiltCard>
-                    ))}
+            <div class="container mx-auto px-4 md:px-6 relative z-10">
+                <div class="max-w-6xl mx-auto">
+                    <PriceCalculator client:visible />
                 </div>
             </div>
         </section>
 
-        <section class="py-12 md:py-24 border-t border-white/10 bg-gray-900/40">
-            <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-8 reveal">Plan Your Costs</h2>
-                {/* A PriceCalculator.jsx-t is át kell majd írni angolra/EUR-ra, ha használod! */}
-                <PriceCalculator client:idle />
-            </div>
-        </section> 
+        <section class="py-20 border-t border-white/10 bg-gray-900/30">
+            <div class="container mx-auto px-6 max-w-4xl text-center">
+                <h2 class="text-3xl font-bold text-white mb-8">
+                    What about maintenance?
+                </h2>
+                <div
+                    class="bg-gray-900 border border-sky-500/30 p-8 rounded-2xl relative overflow-hidden"
+                >
+                    <div
+                        class="absolute top-0 right-0 bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg"
+                    >
+                        RECOMMENDED
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">
+                        Annual "Peace of Mind" Package
+                    </h3>
+                    <div class="text-4xl font-black text-sky-400 mb-6">
+                        €120 <span class="text-lg text-gray-500 font-normal"
+                            >/ year</span>
+                    </div>
 
-        <section class="py-12 md:py-24 border-t border-white/10 bg-gray-900/40">
-            <div class="container mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Standalone Services</h2>
-                    <p class="text-lg text-gray-300">Don't need a full website, just want to improve in a specific area? Choose from our targeted solutions.</p>
+                    <ul
+                        class="text-gray-300 space-y-3 mb-8 text-left max-w-sm mx-auto"
+                    >
+                        <li class="flex items-center">
+                            <svg
+                                class="w-5 h-5 text-green-400 mr-3"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path></svg
+                            >Premium Hosting & Domain
+                        </li>
+                        <li class="flex items-center">
+                            <svg
+                                class="w-5 h-5 text-green-400 mr-3"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path></svg
+                            >SSL Certificate
+                        </li>
+                        <li class="flex items-center">
+                            <svg
+                                class="w-5 h-5 text-green-400 mr-3"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path></svg
+                            >8-Year Operation Warranty
+                        </li>
+                        <li class="flex items-center">
+                            <svg
+                                class="w-5 h-5 text-green-400 mr-3"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"></path></svg
+                            >1 Hour Monthly Modification
+                        </li>
+                    </ul>
+                    <p class="text-sm text-gray-500 italic">
+                        *Warranty valid only with active subscription. If you
+                        use your own hosting, we cannot provide the warranty.
+                    </p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-                    {standaloneServices.map((service, index) => {
-                        const Icon = service.icon;
-                        const isLastAndOdd = standaloneServices.length % 2 !== 0 && index === standaloneServices.length - 1;
-                        
-                        return (
-                            <TiltCard client:idle className={`h-full ${isLastAndOdd ? 'md:col-span-2 lg:col-span-1' : ''}`}>
-                                <div class="bg-gray-900/50 border border-white/10 rounded-2xl p-8 flex flex-col h-full">
-                                    <div class="flex items-center mb-4">
-                                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-sky-500/10 text-sky-400 mr-4">
-                                            <Icon />
-                                        </div>
-                                        <h3 class="text-2xl font-bold text-white">{service.title}</h3>
-                                    </div>
-                                    <p class="text-gray-400 text-sm mb-6 flex-grow">{service.description}</p>
-                                    <div class="text-3xl font-bold text-white mb-6">{service.price}</div>
-                                    <ul class="space-y-3 text-gray-300 mb-8 flex-grow">
-                                        {service.features.map(feature => ( <li class="flex items-center"><svg class="w-4 h-4 mr-3 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>{feature}</li> ))}
-                                    </ul>
-                                    <a href={service.cta.href} class="block w-full text-center font-bold py-3 px-6 rounded-lg bg-gray-700/50 text-white hover:bg-gray-600/80 transition-colors">
-                                        {service.cta.text}
-                                    </a>
-                                </div>
-                            </TiltCard>
-                        )
-                    })}
-                </div>
-            </div>
-        </section>
-
-        <section class="py-20 text-center">
-            <div class="container mx-auto px-6 max-w-3xl">
-                <h2 class="text-3xl md:text-4xl font-bold text-white">Can't Find the Perfect Package?</h2>
-                <p class="text-gray-300 mt-4 max-w-2xl mx-auto">Maybe you only need a single feature from a higher package. We are flexible! Combine features or request a completely custom quote.</p>
-                <a href="/contact?package=custom" class="inline-block mt-8 font-bold py-3 px-8 rounded-lg bg-gradient-to-r from-sky-400 to-cyan-300 text-zinc-900 hover:shadow-2xl hover:shadow-sky-500/50 transition-all duration-300 transform hover:-translate-y-1">Get a Custom Quote</a>
             </div>
         </section>
 
         <Contact />
     </main>
+
     <Footer />
+    <CookieBanner />
 </Layout>
 
-<style>
-  .pricing-section.show-monthly .price-monthly { display: block; }
-  .pricing-section.show-monthly .price-onetime { display: none; }
-  .price-monthly.hidden { display: none; }
-</style>
-
 <script>
-  function initPricingToggle() {
-    const toggle = document.getElementById('pricing-toggle');
-    const pricingSection = document.querySelector('.pricing-section');
-    const onetimeLabel = document.querySelector('[data-pricing-label="onetime"]');
-    const monthlyLabel = document.querySelector('[data-pricing-label="monthly"]');
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
 
-    if (!toggle || !pricingSection || !onetimeLabel || !monthlyLabel) return;
+    function animatePricing() {
+        const tl = gsap.timeline({ delay: 0.2 });
+        tl.to(".reveal-text", {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.15,
+            ease: "power4.out",
+        }).to(
+            ".reveal-desc",
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out",
+            },
+            "-=0.8",
+        );
 
-    const updateUI = () => {
-      // @ts-ignore
-      const isChecked = toggle.checked;
-      
-      pricingSection.classList.toggle('show-monthly', isChecked);
+        gsap.to(".parallax-bg", {
+            yPercent: 20,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "header",
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+            },
+        });
+    }
 
-      if (isChecked) {
-        monthlyLabel.classList.remove('text-gray-300');
-        monthlyLabel.classList.add('text-white', 'font-semibold');
-        onetimeLabel.classList.remove('text-white', 'font-semibold');
-        onetimeLabel.classList.add('text-gray-300');
-      } else {
-        onetimeLabel.classList.remove('text-gray-300');
-        onetimeLabel.classList.add('text-white', 'font-semibold');
-        monthlyLabel.classList.remove('text-white', 'font-semibold');
-        monthlyLabel.classList.add('text-gray-300');
-      }
-    };
-
-    toggle.addEventListener('change', updateUI);
-    updateUI();
-  }
-
-  document.addEventListener('astro:page-load', initPricingToggle);
+    animatePricing();
+    document.addEventListener("astro:page-load", animatePricing);
 </script>

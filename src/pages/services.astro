@@ -1,188 +1,536 @@
 ---
-// src/pages/services.astro (ENGLISH VERSION)
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import Contact from '../components/Contact.astro';
-import { Image } from 'astro:assets';
-import servicesImage from '../../public/images/services-background.jpg';
+// src/pages/services.astro
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Contact from "../components/Contact.astro";
+import { Image } from "astro:assets";
+import servicesImage from "../../public/images/services-background.jpg";
+import CookieBanner from "../components/CookieBanner.astro";
 
-// Icon imports
-import WebsiteIcon from '../components/icons/WebsiteIcon.astro';
-import CartIcon from '../components/icons/CartIcon.astro';
-import DesignIcon from '../components/icons/DesignIcon.astro';
-import SeoIcon from '../components/icons/SeoIcon.astro';
+// Icons
+import WebsiteIcon from "../components/icons/WebsiteIcon.astro";
+import DesignIcon from "../components/icons/DesignIcon.astro";
+import CartIcon from "../components/icons/CartIcon.astro";
+import SeoIcon from "../components/icons/SeoIcon.astro";
 
-// React Interactions
-import SpotlightCard from '../components/react/SpotlightCard.jsx';
-import TextScramble from '../components/react/TextScramble.jsx';
+// Interactive elements
+import SpotlightCard from "../components/react/SpotlightCard.jsx";
+import FloatingElement from "../components/FloatingElement.astro";
+import MagneticButton from "../components/react/MagneticButton.jsx";
 
-const services = [
+// DATA BASED ON NEW PRICING LOGIC
+const serviceCategories = [
     {
         icon: WebsiteIcon,
-        title: "Conversion-Optimized Websites",
-        description: "We don't just generate traffic; we generate customers. Our lightning-fast, Astro-based websites focus on user experience and measurable results.",
-        whoFor: [
-            "Startups looking for a strong online foundation.",
-            "Established companies with outdated sites looking to level up.",
-            "Personal brands and experts wanting to showcase themselves."
+        category: "1. STRUCTURE & FOUNDATION",
+        title: "The Core & Pages",
+        price: "From €590",
+        description:
+            "The mandatory technological foundation. Everything is built on this. Stable, fast, and SEO-friendly.",
+        features: [
+            { name: "Base Landing Module", detail: "€590 (Mandatory)" },
+            { name: "Content Subpages", detail: "€75 / page" },
+            { name: "Extra Sales Page", detail: "€180 (High-impact)" },
+            { name: "Tech Pages", detail: "€45 (404, Thank You)" },
         ],
-        includes: [
-            "Strategic consultation and planning",
-            "Custom, responsive UI/UX design",
-            "Lightning-fast Astro development",
-            "Search Engine Optimization (SEO) basics",
-            "Content Management System (CMS) integration",
-            "Training and project handover"
-        ]
-    },
-    {
-        icon: CartIcon,
-        title: "Growth-Oriented Webshops",
-        description: "We build online stores that increase revenue by maximizing the shopping experience. From simple product management to secure payments, we handle everything.",
-        whoFor: [
-            "Crafters and creators wanting to sell online.",
-            "Retailers looking to expand into the digital space.",
-            "Sellers of digital products (e.g., courses)."
-        ],
-        includes: [
-            "Platform consultation (e.g., Shopify, custom solution)",
-            "Product structure and database design",
-            "Secure payment gateway integration (Stripe, etc.)",
-            "Logistics and invoicing system connection",
-            "User-friendly administration interface",
-            "Conversion tracking and analytics setup"
-        ]
     },
     {
         icon: DesignIcon,
-        title: "Strategic UI/UX Design",
-        description: "Design is not self-serving for us. We create intuitive and aesthetic interfaces that build trust and convert visitors into satisfied customers.",
-        whoFor: [
-            "Companies wanting to improve their existing site's UX.",
-            "Startups needing a clean application design.",
-            "Development teams needing professional designs."
+        category: "2. DESIGN & ANIMATION",
+        title: "Appearance",
+        price: "Modular",
+        description: "From clean standard to award-winning custom design.",
+        features: [
+            { name: "Standard Design", detail: "€0 (In Base Package)" },
+            { name: "Custom UX/UI Design", detail: "€860 (High-Ticket)" },
+            { name: "Premium Animations", detail: "€240 (GSAP, Framer)" },
+            { name: "Dark Mode", detail: "€150" },
         ],
-        includes: [
-            "User research and persona creation",
-            "Wireframes and user journeys",
-            "Interactive prototyping (Figma)",
-            "Complete Design System creation",
-            "Responsive designs for all screen sizes",
-            "Assets prepared for developer handover"
-        ]
     },
     {
         icon: SeoIcon,
-        title: "Long-Term SEO Strategy",
-        description: "We ensure potential customers find YOU, not just your competitors. Our technical and content solutions guarantee sustainable organic growth.",
-        whoFor: [
-            "New website owners wanting to start strong.",
-            "Existing sites not performing well in search engines.",
-            "Companies wanting to acquire customers through content marketing."
+        category: "3. CONTENT MANAGEMENT",
+        title: "CMS & Blog",
+        price: "From €180",
+        description:
+            "Edit your website without a developer. Essential for blogging.",
+        features: [
+            { name: "Basic CMS", detail: "€180 (Keystatic)" },
+            { name: "Complex CMS", detail: "€350 (Sanity.io)" },
+            { name: "Blog Module", detail: "€180 (+ Mandatory Basic CMS)" },
+            { name: "Admin Interface", detail: "User-friendly handling" },
         ],
-        includes: [
-            "Comprehensive technical SEO audit",
-            "Keyword research and competitor analysis",
-            "On-page SEO (meta data, internal links, structure)",
-            "Content strategy development",
-            "Regular reporting and fine-tuning"
-        ]
-    }
+    },
+    {
+        icon: CartIcon,
+        title: "Webshop Systems",
+        category: "4. E-COMMERCE",
+        price: "From €1,050",
+        description:
+            "Automated sales. The Complex CMS module is required for the webshop.",
+        features: [
+            { name: "Webshop Lite", detail: "€1,050 (Max 20 products)" },
+            { name: "Webshop Pro", detail: "€1,800 - €6,000 (Scalable)" },
+            { name: "Invoicing Integration", detail: "€240 (Billingo/Equiv)" },
+            { name: "Payment Gateway", detail: "Stripe / SimplePay" },
+        ],
+    },
 ];
 
-const processSteps = [
-    { title: "Discovery & Strategic Planning", description: "Our cooperation starts with an in-depth conversation where we understand your business goals, target audience, and market environment." },
-    { title: "User Experience (UX) & Design (UI)", description: "Based on the strategy, we design wireframes and user journeys. This is followed by creating a modern visual design that fits your brand." },
-    { title: "Development & Implementation", description: "We write clean, fast, and future-proof code from the approved designs using the Astro framework, guaranteeing excellent performance." },
-    { title: "Content Upload & SEO", description: "We populate the finished framework with the provided content and perform critical basic search engine optimization settings." },
-    { title: "Quality Assurance & Launch", description: "Before going live, we meticulously test everything for a flawless, smooth launch." },
-    { title: "Handover, Training & Support", description: "After a successful launch, we hand over the keys, and with our optional maintenance packages, we continue to take care of your site if needed." },
-]
+const analyticsModules = [
+    { title: "Google Analytics 4", price: "€75", desc: "Basic event tracking" },
+    {
+        title: "Google Tag Manager",
+        price: "€75",
+        desc: "Tracking code container",
+    },
+    { title: "Facebook Pixel (CAPI)", price: "€60", desc: "Ad tracking" },
+    { title: "Google Search Console", price: "€45", desc: "Search statistics" },
+];
+
+const businessLogicModules = [
+    {
+        title: "Multilingual",
+        price: "€270 / language",
+        desc: "Full technical duplication",
+    },
+    { title: "Booking System", price: "€135", desc: "Not just a simple form" },
+    {
+        title: "Marketing Integration (CRM)",
+        price: "€190",
+        desc: "MiniCRM, MailerLite, ActiveCampaign",
+    },
+    {
+        title: "Newsletter Subscription",
+        price: "€120",
+        desc: "API connection (Mailchimp, etc.)",
+    },
+    {
+        title: "AI Chatbot Development",
+        price: "€450",
+        desc: "Personalized assistant",
+    },
+];
 ---
 
-<Layout 
-    title="Services - Prometheus Digital" 
-    description="Learn in detail how we help your business grow with modern website creation, webshop development, and SEO."
+<Layout
+    title="Services - Prometheus Digital"
+    description="Discover our modular web development system. Build your website exactly as your business needs it."
 >
     <Header />
 
-    <main>
-        <section class="relative flex items-center justify-center text-center min-h-[50vh] overflow-hidden">
+    <main class="overflow-hidden">
+        <section
+            class="relative h-[60vh] min-h-[500px] flex items-center justify-center text-center overflow-hidden"
+        >
             <div class="absolute inset-0 z-0">
-                <Image
-                    src={servicesImage} 
-                    alt="Prometheus Digital - Services Background" 
-                    widths={[400, 800, 1200, 1920]}
-                    sizes="(max-width: 800px) 100vw, 1920px"
-                    quality="mid" 
-                    class="w-full h-full object-cover"
-                />
-            </div>
-            <div class="absolute inset-0 bg-black/70"></div>
-            <div class="container mx-auto px-6 relative z-10">
-                <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
-                    Digital Tools <br class="md:hidden" />
-                    <TextScramble 
-                        client:load 
-                        text="For Growth" 
-                        className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+                <div
+                    class="parallax-bg w-full h-[120%] -translate-y-[10%] will-change-transform"
+                >
+                    <Image
+                        src={servicesImage}
+                        alt="Prometheus Digital Services"
+                        class="w-full h-full object-cover opacity-60"
+                        quality="high"
                     />
+                </div>
+            </div>
+            <div
+                class="absolute inset-0 bg-[#0B1120]/70 backdrop-blur-[2px] z-10"
+            >
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10 pt-20">
+                <h1
+                    class="font-black text-white uppercase tracking-tighter mb-6"
+                >
+                    <div class="overflow-hidden py-4">
+                        <span
+                            class="reveal-text block text-4xl md:text-6xl text-gray-300 translate-y-20 opacity-0 mb-2"
+                        >
+                            MODULAR
+                        </span>
+                    </div>
+                    <div class="overflow-hidden py-4">
+                        <span
+                            class="reveal-text block text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 translate-y-20 opacity-0 pb-3"
+                        >
+                            FREEDOM
+                        </span>
+                    </div>
                 </h1>
-                <p class="max-w-3xl mx-auto text-lg text-gray-300">We offer more than a simple website: we deliver strategic solutions that bring real business results.</p>
+                <p
+                    class="reveal-desc max-w-2xl mx-auto text-lg md:text-xl text-gray-300 font-light translate-y-10 opacity-0"
+                >
+                    Forget inflexible packages. Build your project from exactly
+                    the modules your business needs.
+                </p>
             </div>
         </section>
 
-        <section class="py-12 md:py-32">
-            <div class="container mx-auto px-6 space-y-24">
-                {services.map((service, index) => {
-                    const Icon = service.icon;
-                    const isReversed = index % 2 !== 0; 
-                    return (
-                        <div class:list={["grid grid-cols-1 lg:grid-cols-2 gap-12 items-center", { "lg:grid-flow-col-dense": isReversed }]}>
-                            
-                            {/* Text Part */}
-                            <div class:list={["text-center lg:text-left", { "lg:order-last": isReversed }]}>
-                                <div class="inline-flex items-center justify-center h-20 w-20 rounded-full bg-sky-500/10 text-sky-400 mx-auto lg:mx-0 mb-6"><Icon /></div>
-                                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">{service.title}</h2>
-                                <p class="text-lg text-gray-300">{service.description}</p>
-                            </div>
-                            
-                            {/* Card Part */}
-                            <SpotlightCard client:visible className="h-full">
-                                <div class="p-8 h-full"> 
-                                    <h4 class="font-semibold text-sky-400 mb-3 uppercase tracking-wider text-sm">Who is it for?</h4>
-                                    <ul class="text-gray-300 space-y-2 mb-8">{service.whoFor.map(item => <li class="flex items-start"><span class="mr-2 mt-1.5 text-sky-500">&rarr;</span>{item}</li>)}</ul>
-                                    <h4 class="font-semibold text-sky-400 mb-3 uppercase tracking-wider text-sm">What's included?</h4>
-                                    <ul class="text-gray-300 space-y-2">{service.includes.map(item => <li class="flex items-center"><svg class="w-4 h-4 mr-3 text-green-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>{item}</li>)}</ul>
+        <section class="py-20 bg-[#0B1120] relative border-b border-white/5">
+            <div class="container mx-auto px-6 text-center max-w-4xl">
+                <h2 class="text-3xl font-bold text-white mb-6">
+                    Why is the Modular System Good for You?
+                </h2>
+                <p class="text-gray-400 text-lg leading-relaxed mb-10">
+                    Most agencies either sell fixed packages with unnecessary
+                    features or use opaque custom pricing. We believe in <strong
+                        >transparency</strong
+                    >. There is a mandatory base (The Core), to which you can
+                    select features (Blog, Webshop, Design) just like from a
+                    menu.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                    <div
+                        class="bg-gray-900/50 p-6 rounded-xl border border-white/10 relative group hover:border-sky-500/30 transition-colors"
+                    >
+                        <div
+                            class="absolute -top-3 -left-3 w-8 h-8 bg-sky-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg shadow-sky-500/20"
+                        >
+                            1
+                        </div>
+                        <h3 class="text-white font-bold mb-2">
+                            Base Module (€590)
+                        </h3>
+                        <p class="text-sm text-gray-400">
+                            The entry level. One-page landing, 90+ speed, SEO
+                            basics. This is required for everything.
+                        </p>
+                    </div>
+                    <div
+                        class="bg-gray-900/50 p-6 rounded-xl border border-white/10 relative group hover:border-sky-500/30 transition-colors"
+                    >
+                        <div
+                            class="absolute -top-3 -left-3 w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-white font-bold border border-white/20"
+                        >
+                            2
+                        </div>
+                        <h3 class="text-white font-bold mb-2">
+                            Expand as Needed
+                        </h3>
+                        <p class="text-sm text-gray-400">
+                            Need 3 more subpages? A blog? Or webshop function?
+                            Just tick it off.
+                        </p>
+                    </div>
+                    <div
+                        class="bg-gray-900/50 p-6 rounded-xl border border-white/10 relative group hover:border-sky-500/30 transition-colors"
+                    >
+                        <div
+                            class="absolute -top-3 -left-3 w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-white font-bold border border-white/20"
+                        >
+                            3
+                        </div>
+                        <h3 class="text-white font-bold mb-2">
+                            Pay Realistically
+                        </h3>
+                        <p class="text-sm text-gray-400">
+                            No hidden costs. Our calculator shows the exact
+                            total to the penny.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 md:py-32 relative">
+            <div
+                class="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:50px_50px] opacity-[0.03] pointer-events-none"
+            >
+            </div>
+            <FloatingElement speed={0.2} class="top-40 -left-20 z-0 opacity-10">
+                <div class="w-96 h-96 rounded-full bg-sky-600 blur-[120px]">
+                </div>
+            </FloatingElement>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                    {
+                        serviceCategories.map((mod, index) => {
+                            const Icon = mod.icon;
+                            return (
+                                <div class="h-full">
+                                    <SpotlightCard
+                                        client:visible
+                                        className="h-full bg-gray-900/40 backdrop-blur-sm border border-white/10 group"
+                                    >
+                                        <div class="p-8 md:p-10 h-full flex flex-col">
+                                            <div class="flex items-center justify-between mb-6">
+                                                <div class="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-sky-500/10 text-sky-400 group-hover:scale-110 transition-transform duration-300">
+                                                    <Icon />
+                                                </div>
+                                                <span class="text-[10px] font-bold tracking-widest text-gray-500 uppercase border border-white/10 px-3 py-1 rounded-full">
+                                                    {mod.category}
+                                                </span>
+                                            </div>
+
+                                            <h3 class="text-2xl font-bold text-white mb-4">
+                                                {mod.title}
+                                            </h3>
+                                            <p class="text-gray-400 mb-8 leading-relaxed text-sm h-12">
+                                                {mod.description}
+                                            </p>
+
+                                            <div class="space-y-4 mb-8 flex-grow">
+                                                {mod.features.map((feat) => (
+                                                    <div class="flex items-start justify-between border-b border-white/5 pb-2 last:border-0">
+                                                        <span class="text-gray-300 text-sm flex items-center">
+                                                            <svg
+                                                                class="w-4 h-4 text-sky-500 mr-2"
+                                                                fill="none"
+                                                                stroke="currentColor"
+                                                                viewBox="0 0 24 24"
+                                                            >
+                                                                <path
+                                                                    stroke-linecap="round"
+                                                                    stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M5 13l4 4L19 7"
+                                                                />
+                                                            </svg>
+                                                            {feat.name}
+                                                        </span>
+                                                        <span class="text-xs text-gray-500 font-mono text-right">
+                                                            {feat.detail}
+                                                        </span>
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            <div class="pt-6 border-t border-white/10 flex items-center justify-between">
+                                                <div class="text-white font-bold text-lg">
+                                                    {mod.price}
+                                                </div>
+                                                <a
+                                                    href="/pricing"
+                                                    class="text-sm font-bold text-sky-400 hover:text-white transition-colors flex items-center gap-1"
+                                                >
+                                                    Calculator{" "}
+                                                    <span class="group-hover:translate-x-1 transition-transform">
+                                                        →
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </SpotlightCard>
                                 </div>
-                            </SpotlightCard>
-
-                        </div>
-                    )
-                })}
+                            );
+                        })
+                    }
+                </div>
             </div>
         </section>
 
-        <section class="py-12 md:py-32 border-t border-white/10 bg-gray-900/40 animate-on-scroll">
+        <section class="py-24 bg-gray-900/30 border-y border-white/5">
             <div class="container mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
-                        <TextScramble client:visible text="Steps of Our Cooperation" />
-                    </h2>
-                    <p class="text-lg text-gray-300">A well-structured, transparent process is the key to a successful project. With us, you will know exactly what is happening and why.</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                    <div>
+                        <h2
+                            class="text-2xl font-bold text-white mb-8 flex items-center"
+                        >
+                            <span class="w-2 h-8 bg-sky-500 rounded-full mr-4"
+                            ></span>
+                            Analytics Modules
+                        </h2>
+                        <div class="space-y-4">
+                            {
+                                analyticsModules.map((item) => (
+                                    <div class="bg-gray-800/40 p-4 rounded-xl border border-white/5 flex justify-between items-center hover:border-white/10 transition-colors">
+                                        <div>
+                                            <div class="text-white font-bold text-sm">
+                                                {item.title}
+                                            </div>
+                                            <div class="text-gray-500 text-xs">
+                                                {item.desc}
+                                            </div>
+                                        </div>
+                                        <div class="text-sky-400 font-mono text-sm">
+                                            {item.price}
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2
+                            class="text-2xl font-bold text-white mb-8 flex items-center"
+                        >
+                            <span
+                                class="w-2 h-8 bg-purple-500 rounded-full mr-4"
+                            ></span>
+                            Business Extras
+                        </h2>
+                        <div class="space-y-4">
+                            {
+                                businessLogicModules.map((item) => (
+                                    <div class="bg-gray-800/40 p-4 rounded-xl border border-white/5 flex justify-between items-center hover:border-white/10 transition-colors">
+                                        <div>
+                                            <div class="text-white font-bold text-sm">
+                                                {item.title}
+                                            </div>
+                                            <div class="text-gray-500 text-xs">
+                                                {item.desc}
+                                            </div>
+                                        </div>
+                                        <div class="text-purple-400 font-mono text-sm">
+                                            {item.price}
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
                 </div>
-                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
-                    {processSteps.map((step, index) => (
-                        <div class="flex items-start space-x-6">
-                            <div class="text-sky-400 font-black text-4xl">0{index+1}</div>
-                            <div>
-                                <h3 class="text-xl font-bold text-white mb-2">{step.title}</h3>
-                                <p class="text-gray-300">{step.description}</p>
+            </div>
+        </section>
+
+        <section class="py-24 relative overflow-hidden">
+            <div class="container mx-auto px-6">
+                <div
+                    class="bg-gradient-to-br from-gray-900 to-black border border-white/10 rounded-3xl p-8 md:p-12 relative overflow-hidden"
+                >
+                    <div
+                        class="absolute top-0 right-0 w-64 h-64 bg-green-500/10 rounded-full blur-[80px] pointer-events-none"
+                    >
+                    </div>
+
+                    <div
+                        class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10"
+                    >
+                        <div>
+                            <span
+                                class="text-green-400 font-bold tracking-widest text-xs uppercase mb-2 block"
+                                >Peace of Mind</span
+                            >
+                            <h2
+                                class="text-3xl md:text-4xl font-black text-white mb-6"
+                            >
+                                Annual Maintenance & Warranty
+                            </h2>
+                            <p class="text-gray-400 leading-relaxed mb-8">
+                                We don't leave you alone after handover. Our
+                                annual fee includes technical background and
+                                continuous security.
+                            </p>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-4xl font-black text-white"
+                                    >€120</span
+                                >
+                                <span class="text-gray-500">/ year</span>
                             </div>
                         </div>
-                    ))}
+
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 text-gray-300">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 shrink-0"
+                                >
+                                    <svg
+                                        class="w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path></svg
+                                    >
+                                </div>
+                                <div>
+                                    <div class="font-bold text-white">
+                                        Premium Hosting & Domain
+                                    </div>
+                                    <div class="text-xs text-gray-500">
+                                        Fast server, domain management
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 text-gray-300">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 shrink-0"
+                                >
+                                    <svg
+                                        class="w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                                        ></path></svg
+                                    >
+                                </div>
+                                <div>
+                                    <div class="font-bold text-white">
+                                        8-Year Operation Warranty
+                                    </div>
+                                    <div class="text-xs text-gray-500">
+                                        If anything breaks, we fix it for free*
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 text-gray-300">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 shrink-0"
+                                >
+                                    <svg
+                                        class="w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        ></path></svg
+                                    >
+                                </div>
+                                <div>
+                                    <div class="font-bold text-white">
+                                        1 Hour Monthly Development
+                                    </div>
+                                    <div class="text-xs text-gray-500">
+                                        Text replacement, images, small tweaks
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </section>
+
+        <section class="py-24 text-center relative overflow-hidden">
+            <div
+                class="absolute inset-0 bg-gradient-to-t from-[#0B1120] to-transparent pointer-events-none"
+            >
+            </div>
+            <div class="container mx-auto px-6 relative z-10">
+                <h2 class="text-3xl md:text-5xl font-black text-white mb-6">
+                    Let's See the Numbers!
+                </h2>
+                <p class="max-w-2xl mx-auto text-xl text-gray-400 mb-10">
+                    Curious how much your dream website would cost? Use our
+                    interactive price calculator and build your own package in
+                    minutes.
+                </p>
+                <MagneticButton client:visible>
+                    <a
+                        href="/pricing"
+                        class="inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-sky-500 to-cyan-400 text-white font-bold rounded-full text-lg hover:shadow-[0_0_30px_rgba(14,165,233,0.4)] hover:scale-105 transition-all duration-300"
+                    >
+                        Start Price Calculator
+                    </a>
+                </MagneticButton>
             </div>
         </section>
 
@@ -190,4 +538,48 @@ const processSteps = [
     </main>
 
     <Footer />
+    <CookieBanner />
 </Layout>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
+    function animateServices() {
+        const tl = gsap.timeline({ delay: 0.2 });
+        tl.to(".reveal-text", {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.15,
+            ease: "power4.out",
+        }).to(
+            ".reveal-desc",
+            {
+                y: 0,
+                opacity: 1,
+                duration: 1,
+                ease: "power3.out",
+            },
+            "-=0.8",
+        );
+
+        gsap.to(".parallax-bg", {
+            yPercent: 20,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "header",
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+            },
+        });
+    }
+
+    // Run animation on page load
+    animateServices();
+
+    // Run on view transition navigation
+    document.addEventListener("astro:page-load", animateServices);
+</script>
