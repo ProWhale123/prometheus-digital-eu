@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+    src: any;
+    alt: string;
+    class?: string;
+    height?: string; // Pl. 'h-64' vagy 'h-[500px]'
+}
+
+const { src, alt, class: className = "", height = "h-96" } = Astro.props;
+---
+
+<div class={`parallax-container relative overflow-hidden rounded-2xl ${height} ${className}`}>
+    <div class="parallax-inner w-full h-full scale-125 origin-center will-change-transform">
+        <Image 
+            src={src} 
+            alt={alt} 
+            class="w-full h-full object-cover"
+            quality="mid"
+        />
+    </div>
+</div>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    function initParallax() {
+        const containers = document.querySelectorAll('.parallax-container');
+
+        containers.forEach(container => {
+            const img = container.querySelector('.parallax-inner');
+            
+            // A kép "y" pozícióját mozgatjuk a scroll függvényében
+            gsap.fromTo(img, 
+                { yPercent: -15 }, // Honnan indul (felfelé eltolva)
+                {
+                    yPercent: 15,  // Hova érkezik (lefelé eltolva)
+                    ease: "none",  // Lineáris mozgás
+                    scrollTrigger: {
+                        trigger: container,
+                        start: "top bottom", // Amikor a konténer teteje eléri a képernyő alját
+                        end: "bottom top",   // Amikor a konténer alja eléri a képernyő tetejét
+                        scrub: true          // A görgetéshez kötjük (nem időhöz)
+                    }
+                }
+            );
+        });
+    }
+
+    // View Transitions támogatás
+    initParallax();
+    document.addEventListener('astro:page-load', initParallax);
+</script>

@@ -1,68 +1,140 @@
 ---
-// src/components/Services.astro (ENGLISH VERSION)
-import WebsiteIcon from './icons/WebsiteIcon.astro';
-import CartIcon from './icons/CartIcon.astro';
-import DesignIcon from './icons/DesignIcon.astro';
-import SeoIcon from './icons/SeoIcon.astro';
-import SpotlightCard from './react/SpotlightCard.jsx';
+// src/components/Services.astro
+import WebsiteIcon from "./icons/WebsiteIcon.astro";
+import CartIcon from "./icons/CartIcon.astro";
+import DesignIcon from "./icons/DesignIcon.astro";
+import SeoIcon from "./icons/SeoIcon.astro";
+import SpotlightCard from "./react/SpotlightCard.jsx";
+import FloatingElement from "./FloatingElement.astro";
 
 const services = [
     {
         icon: WebsiteIcon,
-        title: "Conversion-Optimized Websites",
-        description: "We don't just generate traffic; we generate customers. Our lightning-fast, Astro-based websites focus on user experience and measurable results."
-    },
-    {
-        icon: CartIcon,
-        title: "Growth-Oriented Webshops",
-        description: "We build online stores that increase revenue by maximizing the shopping experience. From simple product management to secure payments, we handle everything."
+        title: "Landing & Websites",
+        description:
+            "The rock-solid foundation. Astro framework starting from €590, lightning fast and secure.",
     },
     {
         icon: DesignIcon,
-        title: "Strategic UI/UX Design",
-        description: "Design is not self-serving for us. We create intuitive interfaces that build trust and convert visitors into satisfied customers."
+        title: "Custom Design",
+        description:
+            "Choose from a clean standard look or a fully custom, award-winning visual experience.",
     },
     {
         icon: SeoIcon,
-        title: "Long-Term SEO Strategy",
-        description: "We ensure potential customers find YOU, not just your competitors. Our technical and content solutions guarantee sustainable organic growth."
-    }
-]
+        title: "Smart Functions",
+        description:
+            "Blog, booking, multilingual? With our modular system, you only pay for what you need.",
+    },
+    {
+        icon: CartIcon,
+        title: "Webshop Solutions",
+        description:
+            "Launch a webshop without compromises. Fast, secure, and automated systems.",
+    },
+];
 ---
 
-<section id="services" class="py-12 md:py-32 bg-gray-900/40">
-    <div class="container mx-auto px-6">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
-                How Can We <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Help You?</span>
+<section id="services" class="relative py-24 md:py-32 overflow-hidden">
+    <FloatingElement speed={1.5} class="top-20 -left-20 z-0 opacity-20">
+        <div
+            class="w-64 h-64 rounded-full bg-gradient-to-r from-sky-500 to-transparent blur-3xl"
+        >
+        </div>
+    </FloatingElement>
+
+    <FloatingElement speed={-1.5} class="bottom-40 -right-10 z-0 opacity-30">
+        <div class="w-32 h-32 rounded-full bg-cyan-400 blur-2xl"></div>
+    </FloatingElement>
+
+    <div
+        class="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:40px_40px] opacity-[0.03] pointer-events-none"
+    >
+    </div>
+
+    <div class="container mx-auto px-6 relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-20">
+            <h2
+                class="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight"
+            >
+                How Can We <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+                    >Help You?</span
+                >
             </h2>
-            <p class="text-lg text-gray-300">
-                We turn your digital goals into business results. We use the latest technologies to ensure you get not just a website, but an effective tool for customer acquisition.
+            <p
+                class="text-base md:text-xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed"
+            >
+                Scalable solutions from simple websites to complex web
+                applications. Everything is modular, so it grows with your
+                business.
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {services.map(service => {
-                const Icon = service.icon;
-                return (
-                    /* client:media - Mobilon nem töltjük be a JS-t a jobb teljesítményért */
-                    <SpotlightCard client:media="(min-width: 768px)" className="h-full">
-                        <div class="p-8 text-center h-full flex flex-col items-center">
-                            <div class="flex items-center justify-center h-16 w-16 rounded-full bg-sky-500/10 text-sky-400 mb-6">
-                               <Icon />
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto"
+        >
+            {
+                services.map((service) => {
+                    const Icon = service.icon;
+                    return (
+                        <SpotlightCard client:visible className="h-full">
+                            <div class="p-8 text-center h-full flex flex-col items-center justify-between group">
+                                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0B1120] to-gray-900 border border-white/5 flex items-center justify-center mb-6 shadow-lg group-hover:scale-110 group-hover:border-sky-500/30 transition-all duration-300">
+                                    <div class="text-sky-400">
+                                        <Icon />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-sky-400 transition-colors">
+                                        {service.title}
+                                    </h3>
+                                    <p class="text-gray-400 text-sm leading-relaxed">
+                                        {service.description}
+                                    </p>
+                                </div>
+
+                                <a
+                                    href="/contact"
+                                    class="mt-8 text-xs font-bold uppercase tracking-widest text-gray-600 hover:text-white transition-colors flex items-center gap-2"
+                                >
+                                    Learn More
+                                    <svg
+                                        class="w-3 h-3 text-sky-500"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 5l7 7-7 7"
+                                        />
+                                    </svg>
+                                </a>
                             </div>
-                            <h3 class="text-2xl font-bold text-white mb-3">{service.title}</h3>
-                            <p class="text-gray-300">{service.description}</p>
-                        </div>
-                    </SpotlightCard>
-                )
-            })}
+                        </SpotlightCard>
+                    );
+                })
+            }
         </div>
-        
-        <div class="text-center mt-16">
-            <a href="/services" class="inline-block bg-gray-700/50 text-white font-bold py-3 px-8 rounded-full text-base transition-colors duration-300 hover:bg-gray-600/80">
-                More about our services
-            </a>
+
+        <div class="mt-16 text-center">
+            <div
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-sm font-mono"
+            >
+                <span class="relative flex h-2 w-2">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"
+                    ></span>
+                    <span
+                        class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"
+                    ></span>
+                </span>
+                Not sure what you need? We'll help you figure it out for free.
+            </div>
         </div>
     </div>
 </section>

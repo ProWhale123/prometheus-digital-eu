@@ -1,99 +1,282 @@
 ---
 // src/pages/privacy-policy.astro
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import CookieBanner from "../components/CookieBanner.astro";
 ---
 
-<Layout 
-    title="Privacy Policy - Prometheus Digital" 
+<Layout
+    title="Privacy Policy - Prometheus Digital"
     description="Learn how we handle and protect your personal data at Prometheus Digital."
 >
     <Header />
 
     <main class="py-32 md:py-40">
         <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto prose prose-invert lg:prose-xl prose-headings:text-transparent prose-headings:bg-clip-text prose-headings:bg-gradient-to-r prose-headings:from-sky-400 prose-headings:to-cyan-300 prose-a:text-sky-400 hover:prose-a:text-sky-500">
-                
-                <h1>Privacy Policy</h1>
+            <div
+                class="max-w-4xl mx-auto prose prose-invert lg:prose-xl prose-headings:text-white prose-a:text-sky-400 hover:prose-a:text-sky-300 prose-strong:text-white"
+            >
+                <h1
+                    class="text-4xl md:text-5xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+                >
+                    Privacy Policy
+                </h1>
+
                 <p><strong>Effective Date:</strong> September 28, 2025</p>
-                <p class="lead">
-                    This Privacy Policy (hereinafter: <strong>Policy</strong>) governs the data processing activities carried out by Prometheus Digital Kft. (hereinafter: <strong>Data Controller</strong>) on the website `https://www.prometheusdigital.eu` (hereinafter: <strong>Website</strong>).
+                <p class="lead text-gray-300">
+                    This Privacy Policy (hereinafter: <strong>Policy</strong>)
+                    governs the data processing activities carried out by
+                    Prometheus Digital Kft. (hereinafter: <strong
+                        >Data Controller</strong
+                    >) on the website `https://www.prometheusdigital.eu`
+                    (hereinafter: <strong>Website</strong>). We are committed to
+                    ensuring that all data processing related to our activities
+                    complies with the requirements set out in this policy and in
+                    applicable national and EU legislation.
                 </p>
+
+                <hr class="border-white/10 my-12" />
 
                 <h2>1. Data Controller Details</h2>
-                <p>
-                    <strong>Name:</strong> Prometheus Digital Kft.<br>
-                    <strong>Registered Seat:</strong> 1125 Budapest, Hableány utca 6/A, Hungary<br>
-                    <strong>Tax Number:</strong> 32910128-2-43<br>
-                    <strong>Email:</strong> info@prometheusdigital.hu<br>
-                    <strong>Phone:</strong> +36 30 922 2042<br>
-                    <strong>Representative:</strong> Árpád Bretz, Managing Director
-                </p>
-                
-                <h2>2. Scope, Purpose, Legal Basis, and Duration of Data Processing</h2>
-                
+                <div
+                    class="bg-gray-900/50 p-6 rounded-2xl border border-white/10 not-prose text-gray-300 text-base"
+                >
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div><strong>Company Name:</strong></div>
+                        <div>Prometheus Digital Kft.</div>
+
+                        <div><strong>Registered Seat:</strong></div>
+                        <div>1125 Budapest, Hableány utca 6/A, Hungary</div>
+
+                        <div><strong>Registration Number:</strong></div>
+                        <div>01-09-434076</div>
+
+                        <div><strong>Tax Number:</strong></div>
+                        <div>32910128-2-43</div>
+
+                        <div><strong>Representative:</strong></div>
+                        <div>Árpád Bretz, Managing Director</div>
+
+                        <div><strong>Email:</strong></div>
+                        <div>
+                            <a
+                                href="mailto:info@prometheusdigital.hu"
+                                class="text-sky-400 hover:text-white"
+                                >info@prometheusdigital.hu</a>
+                        </div>
+
+                        <div><strong>Phone:</strong></div>
+                        <div>+36 30 922 2042</div>
+                    </div>
+                </div>
+
+                <h2>
+                    2. Scope, Purpose, Legal Basis, and Duration of Data
+                    Processing
+                </h2>
+
                 <h3>2.1. Contact via the Website</h3>
-                <p>
-                    <strong>Scope of data processed:</strong> Name, email address, phone number (optional), and any other personal data provided in the message.<br>
-                    <strong>Purpose of processing:</strong> Answering your message, contacting you, providing a quote.<br>
-                    <strong>Legal basis for processing:</strong> Your consent [Article 6(1)(a) of Regulation (EU) 2016/679 of the European Parliament and of the Council (hereinafter: <strong>GDPR</strong>)].<br>
-                    <strong>Duration of processing:</strong> Until the purpose is fulfilled or until you withdraw your consent. In the case of a request for a quote, data will be retained for 8 years in accordance with accounting laws.
-                </p>
+                <div
+                    class="not-prose bg-gray-900/30 rounded-lg overflow-hidden border border-white/10 mb-8 text-sm"
+                >
+                    <div class="p-4 border-b border-white/10">
+                        <strong class="text-sky-400 block mb-1"
+                            >Scope of Data</strong
+                        >
+                        <span class="text-gray-300"
+                            >Name, email address, phone number (optional), and
+                            any other personal data provided in the message.</span
+                        >
+                    </div>
+                    <div class="p-4 border-b border-white/10">
+                        <strong class="text-sky-400 block mb-1">Purpose</strong>
+                        <span class="text-gray-300"
+                            >Answering your message, contacting you, providing a
+                            quote.</span
+                        >
+                    </div>
+                    <div class="p-4 border-b border-white/10">
+                        <strong class="text-sky-400 block mb-1"
+                            >Legal Basis</strong
+                        >
+                        <span class="text-gray-300"
+                            >Your consent, or steps prior to entering into a
+                            contract [GDPR Article 6(1)(a) and (b)].</span
+                        >
+                    </div>
+                    <div class="p-4">
+                        <strong class="text-sky-400 block mb-1">Duration</strong
+                        >
+                        <span class="text-gray-300"
+                            >Until the purpose is fulfilled or until you
+                            withdraw your consent. In case of a quote request, 1
+                            year after expiration. In case of contract, 8 years
+                            (accounting laws).</span
+                        >
+                    </div>
+                </div>
 
                 <h3>2.2. Use of Cookies</h3>
-                <p>The Website uses cookies to improve user experience and analyze traffic. Your prior explicit consent is required for the use of cookies, which you can provide on the cookie banner appearing upon your first visit to the website (except for strictly necessary cookies).</p>
+                <div
+                    class="not-prose bg-gray-900/30 rounded-lg overflow-hidden border border-white/10 mb-8 text-sm"
+                >
+                    <div class="p-4 border-b border-white/10">
+                        <strong class="text-sky-400 block mb-1"
+                            >Scope of Data</strong
+                        >
+                        <span class="text-gray-300"
+                            >IP address (anonymized), browser type, pages
+                            visited, location (country/city level).</span
+                        >
+                    </div>
+                    <div class="p-4 border-b border-white/10">
+                        <strong class="text-sky-400 block mb-1">Purpose</strong>
+                        <span class="text-gray-300"
+                            >Website statistics (Google Analytics 4), improving
+                            user experience.</span
+                        >
+                    </div>
+                    <div class="p-4 border-b border-white/10">
+                        <strong class="text-sky-400 block mb-1"
+                            >Legal Basis</strong
+                        >
+                        <span class="text-gray-300"
+                            >Your explicit consent (accepting the Cookie
+                            banner).</span
+                        >
+                    </div>
+                    <div class="p-4">
+                        <strong class="text-sky-400 block mb-1">Duration</strong
+                        >
+                        <span class="text-gray-300"
+                            >GA4 cookie lifespan (default 2-14 months), or until
+                            consent is withdrawn.</span
+                        >
+                    </div>
+                </div>
 
                 <h3>2.3. Server Logging</h3>
-                <p>
-                    <strong>Scope of data processed:</strong> IP address, time of visit, pages visited, browser and operating system type.<br>
-                    <strong>Purpose of processing:</strong> Guaranteeing the security of the service, troubleshooting technical errors, detecting attacks against the website.<br>
-                    <strong>Legal basis for processing:</strong> Legitimate interest of the Data Controller [GDPR Article 6(1)(f)].<br>
-                    <strong>Duration of processing:</strong> 30 days.
+                <p class="text-sm">
+                    <strong>Scope:</strong> IP address, time of visit, pages, browser/OS
+                    type.<br />
+                    <strong>Purpose:</strong> Security, troubleshooting, attack detection.<br
+                    />
+                    <strong>Legal Basis:</strong> Legitimate interest [GDPR Article
+                    6(1)(f)].<br />
+                    <strong>Duration:</strong> 30 days.
                 </p>
 
                 <h2>3. Data Processors</h2>
-                <p>The Data Controller uses the following data processors in the course of its activities:</p>
-                <ul>
-                    <li><strong>Hosting Provider:</strong> Netlify, Inc. (2325 3rd Street, Suite 296, San Francisco, CA 94107, USA).</li>
-                    <li><strong>Email Provider:</strong> Google LLC (Google Workspace). (1600 Amphitheatre Parkway, Mountain View, CA 94043, USA).</li>
-                    <li><strong>Analytics Provider:</strong> Google LLC (Google Analytics).</li>
-                </ul>
-                <p>Data transfer to the USA takes place based on the EU-US Data Privacy Framework, ensuring an adequate level of data protection.</p>
+                <p>The Data Controller uses the following data processors:</p>
 
-                <h2>4. Your Rights (Data Subject Rights)</h2>
-                <p>You are entitled to the following rights regarding the processing of your personal data at any time via the contact details provided above:</p>
-                 <ul>
-                    <li><strong>Right to access:</strong> You may request information about the processing of your personal data.</li>
-                    <li><strong>Right to rectification:</strong> You may request the correction of your personal data if it is inaccurate.</li>
-                    <li><strong>Right to erasure ("Right to be forgotten"):</strong> You may request the deletion of your personal data, except in cases of mandatory data processing prescribed by law.</li>
-                    <li><strong>Right to restriction of processing:</strong> You may request the restriction of processing in certain cases.</li>
-                    <li><strong>Right to object:</strong> You may object to the processing of your personal data if the processing is based on legitimate interest.</li>
-                    <li><strong>Right to data portability:</strong> You have the right to receive the personal data concerning you, which you have provided to us, in a structured, commonly used and machine-readable format.</li>
-                </ul>
-                
-                <h2>5. Legal Remedies</h2>
-                <p>If you believe that the Data Controller has violated your rights regarding the protection of personal data, we suggest that you first contact us to settle the situation peacefully.</p>
-                <p>If this does not lead to a result, you are entitled to lodge a complaint with the supervisory authority or turn to a court.</p>
-                <p>
-                    <strong>Supervisory Authority:</strong><br>
-                    National Authority for Data Protection and Freedom of Information (NAIH)<br>
-                    <strong>Address:</strong> 1055 Budapest, Falk Miksa utca 9-11, Hungary<br>
-                    <strong>Postal Address:</strong> 1363 Budapest, Pf.: 9.<br>
-                    <strong>Website:</strong> <a href="http://www.naih.hu" target="_blank" rel="noopener noreferrer">http://www.naih.hu</a>
+                <div class="not-prose overflow-x-auto">
+                    <table
+                        class="w-full text-left border-collapse text-sm text-gray-300"
+                    >
+                        <thead class="bg-gray-800 text-white uppercase text-xs">
+                            <tr>
+                                <th class="p-3 border border-white/10">Name</th>
+                                <th class="p-3 border border-white/10"
+                                    >Activity</th
+                                >
+                                <th class="p-3 border border-white/10"
+                                    >Location</th
+                                >
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-3 border border-white/10"
+                                    >Netlify, Inc.</td
+                                >
+                                <td class="p-3 border border-white/10"
+                                    >Hosting Service</td
+                                >
+                                <td class="p-3 border border-white/10">USA</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 border border-white/10"
+                                    >Google Ireland Ltd.</td
+                                >
+                                <td class="p-3 border border-white/10"
+                                    >Email, Analytics</td
+                                >
+                                <td class="p-3 border border-white/10"
+                                    >EU / USA</td
+                                >
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-sm mt-2">
+                    Data transfer to the USA takes place based on the <em
+                        >EU-U.S. Data Privacy Framework</em
+                    >, ensuring an adequate level of data protection.
                 </p>
-                
+
+                <h2>4. Your Rights</h2>
+                <p>
+                    You may request information, correction, deletion,
+                    restriction, objection, or data portability regarding your
+                    personal data processing at any time via the contact details
+                    provided.
+                </p>
+
+                <h2>5. Legal Remedies</h2>
+                <p>
+                    If you believe your rights have been violated, please
+                    contact us first at <a
+                        href="mailto:info@prometheusdigital.hu"
+                        >info@prometheusdigital.hu</a
+                    >.
+                </p>
+                <p>
+                    If this does not lead to a result, you may turn to the
+                    Supervisory Authority:
+                </p>
+                <div
+                    class="bg-gray-800 p-4 rounded-lg border-l-4 border-sky-500 not-prose text-gray-300 text-sm"
+                >
+                    <strong
+                        >National Authority for Data Protection and Freedom of
+                        Information (NAIH)</strong
+                    ><br />
+                    Address: 1055 Budapest, Falk Miksa utca 9-11, Hungary<br />
+                    Postal Address: 1363 Budapest, Pf.: 9.<br />
+                    Website: <a
+                        href="http://www.naih.hu"
+                        target="_blank"
+                        class="text-sky-400">www.naih.hu</a
+                    >
+                </div>
             </div>
         </div>
     </main>
 
     <Footer />
+    <CookieBanner />
 </Layout>
 
 <style>
-    .prose.prose-invert {
-        --tw-prose-body: #d1d5db; /* gray-300 */
-        --tw-prose-bold: #ffffff; /* white */
-        --tw-prose-links: #38bdf8; /* sky-400 */
+    /* Custom overrides for Tailwind Prose to match dark theme */
+    .prose {
+        max-width: none;
+    }
+    .prose h2 {
+        color: white;
+        margin-top: 3em;
+        padding-bottom: 0.5em;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .prose h3 {
+        color: #38bdf8; /* sky-400 */
+        margin-top: 2em;
+    }
+    .prose strong {
+        color: white;
+    }
+    .prose ul li::marker {
+        color: #38bdf8;
     }
 </style>

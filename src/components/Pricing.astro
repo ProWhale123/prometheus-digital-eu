@@ -1,54 +1,127 @@
 ---
-// src/components/Pricing.astro (ENGLISH VERSION)
-
+// src/components/Pricing.astro
 const coreValues = [
-    { text: "Lightning-Fast Astro Technology" },
-    { text: "SEO Basics in Every Package" },
+    { text: "Blazing Fast Astro Technology" },
+    { text: "SEO Essentials in Every System" },
     { text: "No Hidden Costs" },
-    { text: "Completely Custom Design" }
+    { text: "Modular Scalability" },
 ];
 ---
 
-<section class="py-12 md:py-32">
+<section class="py-24 md:py-32 relative">
     <div class="container mx-auto px-6">
-        
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            
-            <div class="animate-on-scroll text-center lg:text-left">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
-                    Transparent Pricing, <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Flexible Solutions</span>
+            <div class="text-center lg:text-left">
+                <h2
+                    class="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight"
+                >
+                    Transparent Pricing,<br />
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+                        >No Hidden Costs</span
+                    >
                 </h2>
-                <p class="text-lg text-gray-300 mb-8">
-                    We believe in clean and clear pricing. Every project is different, which is why we offer flexible packages and payment structures so you get exactly the solution your business needs – without hidden costs.
+                <p class="text-lg text-gray-400 mb-8 leading-relaxed">
+                    Every project is different, which is why we offer a
+                    flexible, modular system. We believe a quality website is
+                    not an expense, but an investment that pays off multiple
+                    times over.
                 </p>
-                <ul class="space-y-4">
-                    {coreValues.map(value => (
-                        <li class="flex items-center justify-center lg:justify-start">
-                            <svg class="w-6 h-6 text-sky-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span class="text-lg text-gray-200">{value.text}</span>
-                        </li>
-                    ))}
-                </ul>
-            </div>
 
-            <div class="animate-on-scroll">
-                <div class="bg-gray-900/50 border border-white/10 rounded-2xl p-8 text-center transform transition-all duration-300 hover:border-sky-500/50 hover:shadow-2xl">
-                    <h3 class="text-2xl font-bold text-white mb-4">Ready for the next step?</h3>
-                    <p class="text-gray-300 mb-6">
-                        Check out our detailed packages, compare features, and choose the construction that suits you best.
-                    </p>
-                    <p class="text-gray-200 mb-8">
-                        Website packages starting from <span class="font-bold text-white">290 000 Ft</span>.
-                    </p>
-                    <a href="/pricing" class="block w-full text-center font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 bg-gradient-to-r from-sky-400 to-cyan-300 text-zinc-900 hover:shadow-2xl hover:shadow-sky-500/50 transform hover:-translate-y-1">
-                        View Detailed Pricing
-                    </a>
-                    <a href="/contact?package=custom" class="block mt-4 text-sm text-gray-300 hover:text-white transition-colors">
-                        Or request a completely custom quote
-                    </a>
+                <div class="space-y-4 inline-block text-left">
+                    {
+                        coreValues.map((value) => (
+                            <div class="flex items-center group">
+                                <div class="flex-shrink-0 w-8 h-8 rounded-full bg-sky-500/10 flex items-center justify-center mr-4 group-hover:bg-sky-500/20 transition-colors">
+                                    <svg
+                                        class="w-4 h-4 text-sky-400"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 13l4 4L19 7"
+                                        />
+                                    </svg>
+                                </div>
+                                <span class="text-gray-300 font-medium">
+                                    {value.text}
+                                </span>
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
 
+            <div class="relative group">
+                <div
+                    class="absolute -inset-1 bg-gradient-to-r from-sky-500 to-cyan-300 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"
+                >
+                </div>
+
+                <div
+                    class="relative bg-gray-900 border border-white/10 rounded-2xl p-8 md:p-12 text-center backdrop-blur-xl"
+                >
+                    <div
+                        class="absolute top-0 right-0 -mt-4 -mr-4 w-20 h-20 bg-sky-500/20 rounded-full blur-2xl pointer-events-none"
+                    >
+                    </div>
+
+                    <h3 class="text-2xl font-bold text-white mb-4">
+                        Ready for Growth?
+                    </h3>
+                    <p class="text-gray-400 mb-8 text-sm md:text-base">
+                        Use our interactive price calculator and configure your
+                        package in minutes.
+                    </p>
+
+                    <div class="mb-8">
+                        <span
+                            class="text-sm text-gray-500 uppercase tracking-widest"
+                            >Systems Starting From</span
+                        >
+                        <div
+                            class="text-4xl md:text-5xl font-bold text-white mt-2"
+                        >
+                            €590
+                        </div>
+                    </div>
+
+                    <a
+                        href="/pricing"
+                        class="group relative block w-full text-center font-bold py-4 px-8 rounded-full text-lg overflow-hidden bg-white text-gray-900 shadow-[0_0_20px_rgba(255,255,255,0.1)] transition-transform hover:scale-[1.02]"
+                    >
+                        <span
+                            class="relative z-10 flex items-center justify-center gap-2"
+                        >
+                            Start Price Calculator
+                            <svg
+                                class="w-4 h-4 transition-transform group-hover:translate-x-1"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg
+                            >
+                        </span>
+                    </a>
+
+                    <div class="mt-6 pt-6 border-t border-white/5">
+                        <a
+                            href="/contact"
+                            class="text-sm text-gray-400 hover:text-white transition-colors flex items-center justify-center gap-2"
+                        >
+                            <span>Or request a custom consultation</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

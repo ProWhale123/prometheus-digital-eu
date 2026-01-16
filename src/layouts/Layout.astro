@@ -6,9 +6,11 @@ import Schema from '../components/Schema.astro';
 import BackToTop from '../components/BackToTop.astro';
 import { ClientRouter } from 'astro:transitions'; 
 import GlobalSpotlight from '../components/GlobalSpotlight.astro';
-import HapticFeedback from '../components/HapticFeedback.astro'
+import HapticFeedback from '../components/HapticFeedback.astro';
 import LogoPreloader from '../components/LogoPreloader.astro';
-import PageTransition from '../components/PageTransition.astro'
+import PageTransition from '../components/PageTransition.astro';
+import NoiseOverlay from '../components/NoiseOverlay.astro';
+import CookieBanner from '../components/CookieBanner.astro';
 
 interface Props {
     title: string;
@@ -18,12 +20,11 @@ interface Props {
 
 const { title, description, image } = Astro.props;
 
-// EU SPECIFIC ID
 const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
 ---
 
 <!doctype html>
-<html lang="hu">
+<html lang="en">
     <head>
         <SEO title={title} description={description} image={image} />
         <Schema title={title} description={description} url={Astro.url} image={image || '/images/og-image.jpg'} />
@@ -37,8 +38,9 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
         </noscript>
     
         <script define:vars={{ GA_MEASUREMENT_ID }}>
-            // 1. Load Google Analytics
+            // 1. Load Google Analytics (Call only)
             function initAnalytics() {
+                // If already loaded, do nothing
                 if (window.gtag) return;
 
                 const script = document.createElement('script');
@@ -46,7 +48,7 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
                 script.async = true;
                 
                 script.onerror = function() {
-                    console.error("CSP ERROR: Browser blocked GA4 script. Check netlify.toml!");
+                    console.error("CSP Error: Google Analytics script blocked by browser!");
                 };
 
                 document.head.appendChild(script);
@@ -57,7 +59,7 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
 
                 gtag('js', new Date());
                 gtag('config', GA_MEASUREMENT_ID);
-                console.log('✅ Google Analytics (EU) started.');
+                console.log('✅ Google Analytics started.');
             }
 
             // 2. Handle Consent
@@ -84,32 +86,40 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
             });
 
             // 4. Event Listeners
+            // Run immediately on load
             document.addEventListener('DOMContentLoaded', handleConsent);
+            // On page transition
             document.addEventListener('astro:page-load', handleConsent);
+            // On consent update
             window.addEventListener('cookie-consent-updated', handleConsent);
         </script>
     </head>
     <body class="bg-gray-900 text-gray-200 font-sans leading-relaxed selection:bg-sky-500 selection:text-white">
-                <LogoPreloader />
-                <PageTransition />
+        <LogoPreloader />
+        <PageTransition />
         <slot />
         
         <BackToTop />
         <HapticFeedback />
 
+                <CookieBanner />
+<NoiseOverlay />
+
         <script>
             import Lenis from 'lenis'
 
+            // Singleton pattern: create only once
             let lenis;
 
             const initLenis = () => {
-                if (lenis) return; // Prevent duplicates
+                // If exists, don't create new (Important for View Transitions)
+                if (lenis) return;
 
                 lenis = new Lenis({
-                    duration: 1.2, 
-                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
+                    duration: 1.2, // Slightly slower, "premium" feel
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Classic "mobile-like" scroll math
                     smoothWheel: true,
-                    wheelMultiplier: 1, 
+                    wheelMultiplier: 1, // Scroll speed
                 })
 
                 function raf(time) {
@@ -118,21 +128,23 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
                 }
 
                 requestAnimationFrame(raf)
-                window.lenis = lenis; // Expose globally if needed
+                
+                // Make global if needed for GSAP (e.g., ScrollTrigger)
+                window.lenis = lenis;
             }
 
+            // Start
             initLenis();
 
-            // Handle anchor links with Lenis (optional but recommended)
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    lenis.scrollTo(this.getAttribute('href'));
-                });
+            // ClientRouter support: No need to restart Lenis on page change,
+            // script ran, but if specific reset needed, add here.
+            document.addEventListener('astro:page-load', () => {
+                // Ensure scroll position is correct, though Router handles it
             });
         </script>
-
+        
         <script>
+            // Animation logic - Consolidated setup functions for cleaner code
             function setupAnimations() {
                 const observerOptions = {
                     root: null,
@@ -142,7 +154,7 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {
-                            // Support both class naming conventions
+                            // Support both class names: 'animate-on-scroll' and 'reveal'
                             if (entry.target.classList.contains('animate-on-scroll')) {
                                 entry.target.classList.add("is-visible");
                             }
@@ -154,25 +166,43 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
                     });
                 }, observerOptions);
 
+                // Select both types of elements
                 const elements = document.querySelectorAll(".animate-on-scroll, .reveal");
                 elements.forEach((el) => observer.observe(el));
             }
 
+            // Initialize
             setupAnimations();
             document.addEventListener("astro:page-load", setupAnimations);
         </script>
+
+
     </body>
 </html>
 
 <style is:global>
-    /* LENIS CSS */
-    html.lenis, html.lenis body { height: auto; }
-    .lenis.lenis-smooth { scroll-behavior: auto !important; }
-    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
-    .lenis.lenis-stopped { overflow: hidden; }
-    .lenis.lenis-scrolling iframe { pointer-events: none; }
+    /* --- LENIS REQUIRED CSS --- */
+    html.lenis, html.lenis body {
+        height: auto;
+    }
 
-    /* EXISTING CSS */
+    .lenis.lenis-smooth {
+        scroll-behavior: auto !important; /* Overrides native smooth scroll */
+    }
+
+    .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+    }
+
+    .lenis.lenis-stopped {
+        overflow: hidden;
+    }
+
+    .lenis.lenis-scrolling iframe {
+        pointer-events: none; /* Performance improvement during scroll */
+    }
+
+    /* --- YOUR EXISTING STYLES --- */
     body {
         font-family: 'Inter', sans-serif;
         background-color: #0B1120;
@@ -180,11 +210,12 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
             radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
         background-size: 2rem 2rem;
     }
+    
     .animate-on-scroll {
         opacity: 0;
         transform: translateY(30px);
         transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        will-change: opacity, transform;
+        will-change: opacity, transform; /* Performance optimization */
     }
     .animate-on-scroll.is-visible {
         opacity: 1;

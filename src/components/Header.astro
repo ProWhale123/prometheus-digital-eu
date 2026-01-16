@@ -1,94 +1,184 @@
 ---
-// [EU PROJEKT] src/components/Header.astro
-import { Image } from 'astro:assets';
-import logoImage from '../assets/images/logo.jpg'; 
-import MagneticButton from './react/MagneticButton.jsx';
+// src/components/Header.astro
+import { Image } from "astro:assets";
+// Ensure logo path is correct
+import logoImage from "../assets/images/logo.jpg";
+import MagneticButton from "./react/MagneticButton.jsx";
 
 const { pathname } = Astro.url;
 
-// === KONFIGURÁCIÓ ===
+// === CONFIGURATION ===
 const HU_DOMAIN = "https://www.prometheusdigital.hu";
 
-// Útvonal Térkép (Bal: Magyar, Jobb: Angol)
+// Route Map (Left: English, Right: Hungarian)
 const pathMapping = {
     "/": "/",
-    "/szolgaltatasok": "/services",
-    "/araink": "/pricing",
-    "/munkaink": "/works",
-    "/rolunk": "/about",
+    "/services": "/szolgaltatasok",
+    "/pricing": "/araink",
+    "/works": "/munkaink",
+    "/about": "/rolunk",
     "/blog": "/blog",
-    "/kapcsolat": "/contact"
+    "/contact": "/kapcsolat",
 };
 
-// === LOGIKA: Mi a magyar megfelelője a mostani oldalnak? ===
-// Levágjuk a perjelet a végéről
 const cleanPath = pathname.replace(/\/$/, "") || "/";
-// Visszafelé keresünk: megkeressük azt a kulcsot (magyar), amihez a jelenlegi érték (angol) tartozik
-const foundEntry = Object.entries(pathMapping).find(([hu, en]) => en === cleanPath);
-const targetPath = foundEntry ? foundEntry[0] : "/"; // Ha nem találja, magyar főoldal
+const targetPath = pathMapping[cleanPath] || "/";
 const targetUrl = `${HU_DOMAIN}${targetPath}`;
 
-// Angol Menüpontok
 const navLinks = [
     { name: "Home", href: "/" },
     { name: "Services", href: "/services" },
     { name: "Pricing", href: "/pricing" },
     { name: "Works", href: "/works" },
     { name: "About", href: "/about" },
+    { name: "Blog", href: "/blog" },
     { name: "Contact", href: "/contact" },
 ];
 ---
 
-<header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out">
+<header
+    id="main-header"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b border-transparent"
+>
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="/" class="block flex-shrink-0">
-            <Image src={logoImage} alt="Prometheus Digital Logo" class="h-8 md:h-10 w-auto" quality="high" />
+        <a href="/" class="block flex-shrink-0 relative z-50 group">
+            <Image
+                src={logoImage}
+                alt="Prometheus Digital Logo"
+                class="h-10 md:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
+                quality="high"
+            />
         </a>
-        
-        <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8">
-            {navLinks.filter(link => link.name !== 'Contact').map(link => (
-                <a 
-                    href={link.href} 
-                    class:list={[
-                        "text-base xl:text-lg font-semibold transition-colors duration-300 relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-sky-400 after:transition-all after:duration-300 hover:text-white hover:after:w-full",
-                        pathname === link.href || pathname === link.href + '/' ? 'text-sky-400 after:w-full' : 'text-gray-300'
-                    ]}
-                >
-                    {link.name}
-                </a>
-            ))}
 
-            <div class="flex items-center gap-2 border-l border-white/20 pl-6 ml-2 h-6">
-                <a href={targetUrl} class="text-sm font-bold text-gray-500 hover:text-white transition-colors">HU</a>
-                <span class="text-gray-600">|</span>
-                <span class="text-sm font-bold text-sky-400 cursor-default">EN</span>
+        <nav class="hidden lg:flex items-center space-x-8">
+            {
+                navLinks
+                    .filter((link) => link.name !== "Contact")
+                    .map((link) => {
+                        const isActive =
+                            pathname === link.href ||
+                            (link.href !== "/" &&
+                                pathname.startsWith(link.href));
+                        return (
+                            <a
+                                href={link.href}
+                                class:list={[
+                                    "text-base font-medium transition-all duration-300 relative py-2 group",
+                                    isActive
+                                        ? "text-white"
+                                        : "text-gray-400 hover:text-white",
+                                ]}
+                            >
+                                {link.name}
+                                {/* Hover & Active Underline Animation */}
+                                <span
+                                    class:list={[
+                                        "absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-sky-400 to-cyan-300 transition-all duration-300 ease-out",
+                                        isActive
+                                            ? "w-full"
+                                            : "w-0 group-hover:w-full",
+                                    ]}
+                                />
+                            </a>
+                        );
+                    })
+            }
+
+            <div
+                class="flex items-center gap-3 border-l border-white/10 pl-8 ml-4 h-6"
+            >
+                <a
+                    href={targetUrl}
+                    class="text-sm font-bold text-gray-500 hover:text-white transition-colors duration-300"
+                    >HU</a
+                >
+                <span
+                    class="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 cursor-default"
+                    >EN</span
+                >
             </div>
 
-            <div class="ml-2">
-                <MagneticButton client:load href="/contact" className="bg-sky-500 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 hover:bg-sky-600 hover:shadow-lg hover:shadow-sky-500/30">
-                    Contact Us
+            <div class="ml-4">
+                <MagneticButton client:idle>
+                    <a
+                        href="/contact"
+                        class="bg-white text-gray-900 font-bold py-2.5 px-6 rounded-full transition-all duration-300 hover:bg-sky-50 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 flex items-center gap-2"
+                    >
+                        Contact
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg
+                        >
+                    </a>
                 </MagneticButton>
             </div>
         </nav>
 
-        <button id="mobile-menu-btn" class="lg:hidden z-50 flex flex-col justify-center items-center w-8 h-8 focus:outline-none" aria-label="Open Menu">
-            <span class="line line-1 block w-6 h-0.5 bg-white transition-transform duration-300 ease-in-out"></span>
-            <span class="line line-2 block w-6 h-0.5 bg-white mt-1.5 transition-transform duration-300 ease-in-out"></span>
-            <span class="line line-3 block w-6 h-0.5 bg-white mt-1.5 transition-transform duration-300 ease-in-out"></span>
+        <button
+            id="mobile-menu-btn"
+            class="lg:hidden z-50 flex flex-col justify-center items-center w-10 h-10 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm transition-colors hover:bg-white/10 focus:outline-none"
+            aria-label="Open Menu"
+        >
+            <span
+                class="line line-1 block w-5 h-0.5 bg-white transition-transform duration-300 ease-in-out origin-center"
+            ></span>
+            <span
+                class="line line-2 block w-5 h-0.5 bg-white mt-1.5 transition-transform duration-300 ease-in-out origin-center"
+            ></span>
         </button>
     </div>
 </header>
 
-<div id="mobile-menu-panel" class="fixed inset-0 h-[100dvh] bg-gray-900/95 backdrop-blur-xl z-40 transform -translate-x-full transition-transform duration-300 ease-in-out lg:hidden flex flex-col justify-center">
-    <nav class="flex flex-col items-center justify-center space-y-8">
-        {navLinks.map(link => (
-            <a href={link.href} class:list={["mobile-link text-3xl font-bold transition-colors duration-300", pathname === link.href || pathname === link.href + '/' ? 'text-sky-400' : 'text-gray-300']}>
-                {link.name}
-            </a>
-        ))}
-        <div class="mobile-link flex items-center gap-6 mt-8 pt-8 border-t border-white/10 w-40 justify-center">
-            <a href={targetUrl} class="text-2xl font-bold text-gray-500 hover:text-white">HU</a>
-            <span class="text-gray-600 text-2xl">|</span>
+<div
+    id="mobile-menu-panel"
+    class="fixed inset-0 bg-[#0B1120] z-40 transform translate-x-full transition-transform duration-500 cubic-bezier(0.7, 0, 0.3, 1) lg:hidden flex flex-col"
+>
+    <div
+        class="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:40px_40px] opacity-5 pointer-events-none"
+    >
+    </div>
+    <div
+        class="absolute bottom-0 right-0 w-64 h-64 bg-sky-500/10 rounded-full blur-[80px] pointer-events-none"
+    >
+    </div>
+
+    <nav
+        class="flex-1 flex flex-col justify-center items-center space-y-6 relative z-10 px-6"
+    >
+        {
+            navLinks.map((link, index) => (
+                <a
+                    href={link.href}
+                    class:list={[
+                        "mobile-link text-4xl font-black uppercase tracking-tight hover:text-sky-400 transition-colors duration-300",
+                        pathname === link.href ||
+                        (link.href !== "/" && pathname.startsWith(link.href))
+                            ? "text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+                            : "text-gray-400",
+                    ]}
+                    style={`transition-delay: ${100 + index * 50}ms`}
+                >
+                    {link.name}
+                </a>
+            ))
+        }
+
+        <div
+            class="mobile-link mt-8 pt-8 w-full max-w-xs border-t border-white/10 flex justify-center gap-8"
+            style="transition-delay: 450ms"
+        >
+            <a
+                href={targetUrl}
+                class="text-2xl font-bold text-gray-600 hover:text-white transition-colors"
+                >HU</a
+            >
             <span class="text-2xl font-bold text-sky-400">EN</span>
         </div>
     </nav>
@@ -96,61 +186,91 @@ const navLinks = [
 
 <script>
     function initHeader() {
-        const header = document.getElementById('main-header');
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenuPanel = document.getElementById('mobile-menu-panel');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-        
+        const header = document.getElementById("main-header");
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        const mobileMenuPanel = document.getElementById("mobile-menu-panel");
+        const mobileLinks = document.querySelectorAll(".mobile-link");
+        let isMenuOpen = false;
+
         if (!header || !mobileMenuBtn || !mobileMenuPanel) return;
 
-        mobileMenuBtn.classList.remove('is-open');
-        mobileMenuPanel.classList.add('-translate-x-full');
-        mobileMenuPanel.classList.remove('menu-active');
-        document.body.classList.remove('overflow-hidden');
+        // Reset state
+        mobileMenuBtn.classList.remove("is-open");
+        mobileMenuPanel.classList.add("translate-x-full");
+        mobileMenuPanel.classList.remove("menu-active");
+        document.body.style.overflow = "";
 
         const toggleMenu = () => {
-            mobileMenuBtn.classList.toggle('is-open');
-            mobileMenuPanel.classList.toggle('-translate-x-full');
-            mobileMenuPanel.classList.toggle('menu-active'); 
-            document.body.classList.toggle('overflow-hidden');
-        }
+            isMenuOpen = !isMenuOpen;
+            mobileMenuBtn.classList.toggle("is-open");
+            mobileMenuPanel.classList.toggle("translate-x-full"); // Tailwind translate class
+            mobileMenuPanel.classList.toggle("menu-active");
+
+            // Disable scroll on mobile if menu is open
+            document.body.style.overflow = isMenuOpen ? "hidden" : "";
+        };
 
         mobileMenuBtn.onclick = toggleMenu;
-        mobileLinks.forEach(link => {
+
+        // Close on link click
+        mobileLinks.forEach((link) => {
             link.onclick = () => {
-                const href = link.getAttribute('href');
-                if (href && href.startsWith('/') && mobileMenuBtn.classList.contains('is-open')) {
-                    toggleMenu();
-                }
+                if (isMenuOpen) toggleMenu();
             };
         });
 
+        // Scroll Effect (Glassmorphism)
         const handleScroll = () => {
-            if (window.scrollY > 50) header.classList.add('bg-gray-900/80', 'backdrop-blur-sm', 'shadow-lg');
-            else header.classList.remove('bg-gray-900/80', 'backdrop-blur-sm', 'shadow-lg');
+            if (window.scrollY > 20) {
+                header.classList.add(
+                    "bg-[#0B1120]/80",
+                    "backdrop-blur-md",
+                    "shadow-lg",
+                    "border-white/5",
+                );
+                header.classList.remove("py-4", "border-transparent");
+                header.classList.add("py-3"); // Shrink slightly
+            } else {
+                header.classList.remove(
+                    "bg-[#0B1120]/80",
+                    "backdrop-blur-md",
+                    "shadow-lg",
+                    "border-white/5",
+                    "py-3",
+                );
+                header.classList.add("py-4", "border-transparent");
+            }
         };
 
-        window.removeEventListener('scroll', handleScroll);
-        window.addEventListener('scroll', handleScroll);
-        handleScroll();
+        window.removeEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll);
+        handleScroll(); // Init check
     }
+
+    // View Transitions support
     initHeader();
-    document.addEventListener('astro:page-load', initHeader);
+    document.addEventListener("astro:page-load", initHeader);
 </script>
 
 <style>
-.line { transform-origin: center; }
-.is-open .line-1 { transform: translateY(8px) rotate(45deg); }
-.is-open .line-2 { transform: scaleX(0); }
-.is-open .line-3 { transform: translateY(-8px) rotate(-45deg); }
-.mobile-link { opacity: 0; transform: translateX(50px); transition: all 0.4s ease-out; }
-#mobile-menu-panel.menu-active .mobile-link { opacity: 1; transform: translateX(0); }
-#mobile-menu-panel.menu-active .mobile-link:nth-child(1) { transition-delay: 0.1s; }
-#mobile-menu-panel.menu-active .mobile-link:nth-child(2) { transition-delay: 0.15s; }
-#mobile-menu-panel.menu-active .mobile-link:nth-child(3) { transition-delay: 0.2s; }
-#mobile-menu-panel.menu-active .mobile-link:nth-child(4) { transition-delay: 0.25s; }
-#mobile-menu-panel.menu-active .mobile-link:nth-child(5) { transition-delay: 0.3s; }
-#mobile-menu-panel.menu-active .mobile-link:nth-child(6) { transition-delay: 0.35s; }
-#mobile-menu-panel.menu-active .mobile-link:nth-child(7) { transition-delay: 0.4s; }
-#mobile-menu-panel.menu-active .mobile-link:nth-child(8) { transition-delay: 0.45s; }
+    /* Hamburger animation */
+    .is-open .line-1 {
+        transform: translateY(4px) rotate(45deg);
+    }
+    .is-open .line-2 {
+        transform: translateY(-4px) rotate(-45deg);
+    }
+
+    /* Staggered animation for mobile menu items */
+    .mobile-link {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+            opacity 0.4s ease-out,
+            transform 0.4s ease-out;
+    }
+    #mobile-menu-panel.menu-active .mobile-link {
+        opacity: 1;
+        transform: translateY(0);
+    }
 </style>

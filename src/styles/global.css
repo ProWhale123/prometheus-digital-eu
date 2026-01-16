@@ -1,20 +1,50 @@
 @import "tailwindcss";
 
-/* ... a reveal kódod maradhat ... */
+/* PRÉMIUM BETŰ RENDERELÉS */
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+    /* Sötét háttér fixálása a "rugózásnál" (overscroll) is */
+    background-color: #0B1120; 
+    overflow-x: hidden;
+}
+
+/* KIVÁLASZTÁS SZÍNE (SELECTION) */
+::selection {
+    background-color: #0ea5e9; /* Sky-500 */
+    color: #ffffff;
+}
+
+/* GÖRGETŐSÁV ELTÜNTETÉSE (De a görgetés működik) */
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none;    /* Firefox */
+    }
+}
+
+/* REVEAL ANIMÁCIÓ (Meglévő kódod, kicsit finomítva) */
 .reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+    transform: translateY(40px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); /* Ultra-smooth ease */
+    will-change: transform, opacity;
 }
 .reveal.active {
     opacity: 1;
     transform: translateY(0);
 }
-/* Eltünteti a csúnya görgetősávot, de a funkció marad */
-.no-scrollbar::-webkit-scrollbar {
-    display: none;
-}
-.no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+
+/* FONTOS: A Lenis miatt a html-nek auto-nak kell lennie */
+html.lenis, html.lenis body {
+  height: auto;
 }

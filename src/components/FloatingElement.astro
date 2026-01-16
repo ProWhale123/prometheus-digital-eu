@@ -1,0 +1,68 @@
+---
+interface Props {
+    speed?: number; // 1 = nagyon gyors, 0.2 = lassú, -0.5 = felfelé úszik
+    class?: string;
+}
+
+const { speed = 0.2, class: className = "" } = Astro.props;
+---
+
+<div 
+    class={`floating-element absolute pointer-events-none will-change-transform ${className}`}
+    data-speed={speed}
+>
+    <slot />
+</div>
+
+<script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    // FONTOS: Regisztráljuk a plugint
+    gsap.registerPlugin(ScrollTrigger);
+
+    function initFloating() {
+        // Először takarítunk (ha esetleg már futna korábbi ScrollTrigger)
+        ScrollTrigger.getAll().forEach(t => {
+            if (t.vars && t.vars.trigger === 'body' && t.vars.id === 'floating-parallax') {
+                t.kill();
+            }
+        });
+
+        const elements = document.querySelectorAll('.floating-element');
+
+        if (elements.length === 0) return;
+
+        elements.forEach((el) => {
+            // Adat attribútum kiolvasása
+            const speedAttr = el.getAttribute('data-speed');
+            const speed = speedAttr ? parseFloat(speedAttr) : 0.2;
+            
+            // Mozgás távolsága:
+            // Ha a speed 1, akkor 500px-t mozdul el a görgetés teljes hossza alatt.
+            // Ha a speed -0.5, akkor 250px-t mozdul el FELFELÉ.
+            const movementY = 500 * speed; 
+
+            gsap.to(el, {
+                y: movementY,
+                ease: "none", // Lineáris mozgás (fontos a parallaxhoz)
+                scrollTrigger: {
+                    id: 'floating-parallax', // Egyedi azonosító a takarításhoz
+                    trigger: document.body,  // Az egész oldalhoz kötjük
+                    start: "top top",        // Amikor az oldal teteje fent van
+                    end: "bottom bottom",    // Amikor az oldal alja lent van
+                    scrub: 1                 // Smooth követés (1mp késleltetés)
+                }
+            });
+        });
+        
+        // Frissítjük a ScrollTriggert, hogy biztosan lássa a magasságot
+        ScrollTrigger.refresh();
+    }
+
+    // Indítás
+    initFloating();
+    
+    // View Transitions támogatás
+    document.addEventListener('astro:page-load', initFloating);
+</script>
