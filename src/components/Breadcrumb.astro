@@ -1,0 +1,74 @@
+---
+// src/components/Breadcrumb.astro
+// Renders visible breadcrumb navigation + BreadcrumbList JSON-LD schema
+
+interface BreadcrumbItem {
+    name: string;
+    url: string;
+}
+
+interface Props {
+    items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+
+const siteUrl = "https://www.prometheusdigital.eu";
+
+// Always start with home
+const fullItems = [{ name: "Home", url: "/" }, ...items];
+
+const schema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: fullItems.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        item: `${siteUrl}${item.url}`,
+    })),
+};
+---
+
+<nav
+    aria-label="Breadcrumb"
+    class="container mx-auto px-6 pt-28 pb-4 relative z-20"
+>
+    <ol class="flex flex-wrap items-center gap-2 text-sm text-gray-500">
+        {
+            fullItems.map((item, index) => (
+                <li class="flex items-center gap-2">
+                    {index > 0 && (
+                        <svg
+                            class="w-3 h-3 text-gray-600 flex-shrink-0"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"
+                            />
+                        </svg>
+                    )}
+                    {index === fullItems.length - 1 ? (
+                        <span class="text-gray-400 truncate max-w-[200px] md:max-w-none">
+                            {item.name}
+                        </span>
+                    ) : (
+                        <a
+                            href={item.url}
+                            class="text-gray-500 hover:text-sky-400 transition-colors whitespace-nowrap"
+                        >
+                            {item.name}
+                        </a>
+                    )}
+                </li>
+            ))
+        }
+    </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

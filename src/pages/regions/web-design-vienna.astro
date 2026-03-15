@@ -1,0 +1,513 @@
+---
+// src/pages/regions/web-design-vienna.astro
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Contact from "../../components/Contact.astro";
+import { Image } from "astro:assets";
+import CookieBanner from "../../components/CookieBanner.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import LocalBusinessSchema from "../../components/LocalBusinessSchema.astro";
+import ServiceSchema from "../../components/ServiceSchema.astro";
+import SpotlightCard from "../../components/SpotlightCard.astro";
+import FloatingElement from "../../components/FloatingElement.astro";
+import FAQSchema from "../../components/FAQSchema.astro";
+
+import project1Image from "../../assets/images/project-1.jpg";
+import project2Image from "../../assets/images/project-2.jpg";
+import project3Image from "../../assets/images/project-3.jpg";
+
+const serviceFeatures = [
+    {
+        icon: "🎯",
+        title: "Local SEO Tailored for Vienna",
+        description:
+            "Targeted keyword research for the Viennese and Austrian market. We optimize for the exact phrases your local customers use — whether it's 'Zahnarzt Wien' or 'Rechtsanwalt 1010 Wien'. We help you dominate local search results.",
+    },
+    {
+        icon: "⚡",
+        title: "Astro Technology — 100/100 PageSpeed",
+        description:
+            "The Astro framework generates static HTML that loads lightning-fast, even on mobile. While an average WordPress site loads in 3-5 seconds, our sites load in under 1 second — a massive advantage for Google rankings.",
+    },
+    {
+        icon: "📊",
+        title: "Conversion-Optimized Pages",
+        description:
+            "For every Viennese project, we apply our Sales Page methodology: strategic visual hierarchy, persuasive copy, and carefully placed CTAs. The goal is not just beautiful design, but real customer acquisition.",
+    },
+    {
+        icon: "🔧",
+        title: "Technical SEO & Structured Data",
+        description:
+            "Schema.org structured data (LocalBusiness, FAQ, Service), optimized meta tags, fast hosting, and mobile-first design. We set up everything needed for your Vienna business to appear at the top of search results.",
+    },
+    {
+        icon: "🌐",
+        title: "Google Business Profile Integration",
+        description:
+            "A website alone is not enough in the local market. We help optimize your Google Business profile so you appear in map searches too — driving customers to where they actually convert.",
+    },
+    {
+        icon: "📱",
+        title: "Responsive, Mobile-First Design",
+        description:
+            "The majority of searches in Vienna come from mobile devices. Every page we build follows a mobile-first approach, ensuring a perfect experience on smaller screens — whether browsing a menu, gallery, or contact form.",
+    },
+];
+
+const faqItems = [
+    {
+        question: "Do we need to meet in person in Vienna?",
+        answer: "Not necessarily. We work with 100% online processes: video calls (Google Meet, Zoom), shared design platforms, and continuous email communication. This allows us to deliver the same high-quality technology to our Austrian clients — without travel costs or delays. Of course, if you prefer an in-person meeting, we are happy to arrange one.",
+    },
+    {
+        question: "How long does it take to build a website for a Vienna business?",
+        answer: "A landing page or simpler presentation site typically takes 2-3 weeks, while a more complex multi-page marketing site (with blog, CMS) takes 4-6 weeks. The timeline always depends on how quickly client feedback is provided.",
+    },
+    {
+        question: "Do you help with local SEO in Austria?",
+        answer: "Yes, this is one of our core strengths. LocalBusiness schema markup, local keywords, Google Business optimization, and citation building advice are all part of our service. The goal is for your business to appear at the top of relevant searches in Vienna and across Austria.",
+    },
+    {
+        question: "Why should I choose an agency outside of Austria?",
+        answer: "Because the technical quality of a website is not determined by physical proximity, but by expertise. Online collaboration is more efficient and faster than in-person meetings. Additionally, we offer competitive European pricing — no Austrian premium markup, just transparent value for your investment.",
+    },
+    {
+        question: "What industries do you build websites for in Vienna?",
+        answer: "We have experience with service providers (doctors, lawyers, hairdressers), hospitality (restaurants, hotels), local retail, and B2B companies alike. Our methodology is industry-agnostic — every project builds on local market specifics.",
+    },
+    {
+        question: "What if I already have a website but it's not bringing in customers?",
+        answer: "We offer a free SEO audit where we review your existing site: we check the technical health, content quality, and Google search positions. Then we make concrete recommendations — sometimes a redesign is needed, but often smaller optimizations can deliver dramatic results.",
+    },
+    {
+        question: "How does payment work?",
+        answer: "50% upfront when the project starts, and the remaining 50% upon successful delivery. There are no hidden costs. Annual maintenance packages (hosting, domain, SSL, warranty) are optional.",
+    },
+];
+
+const processSteps = [
+    {
+        step: "01",
+        title: "Free Consultation",
+        description:
+            "A 30-minute video call where we learn about your Viennese business, your target audience, and your competitors. We assess which keywords are worth building on.",
+    },
+    {
+        step: "02",
+        title: "Strategy & Planning",
+        description:
+            "We create the website wireframe and content structure. You see exactly what you will get before we write a single line of code.",
+    },
+    {
+        step: "03",
+        title: "Development & Design",
+        description:
+            "We build the site with modern Astro technology. We continuously share progress, and you can provide feedback and request changes at any time.",
+    },
+    {
+        step: "04",
+        title: "Launch & SEO Setup",
+        description:
+            "After the site goes live, we set up Google Search Console, Analytics, and launch the local SEO campaign targeting Vienna-based searches.",
+    },
+];
+---
+
+<Layout
+    title="Web Design Vienna | SEO-Focused Development & Design - Prometheus Digital"
+    description="Professional web design for Vienna businesses. Lightning-fast Astro technology, local SEO strategy, and conversion-optimized design for Austrian SMEs. Request a free SEO audit!"
+>
+    <Header />
+
+    <ServiceSchema
+        services={[
+            {
+                name: "Web Design Vienna",
+                description:
+                    "Custom, SEO-optimized websites and landing pages for Viennese and Austrian businesses, built with modern Astro technology.",
+                url: "/regions/web-design-vienna",
+            },
+        ]}
+    />
+
+    <LocalBusinessSchema
+        pageName="Web Design Vienna"
+        pageUrl="/regions/web-design-vienna"
+        areaServed={[
+            { "@type": "City", name: "Vienna" },
+            { "@type": "AdministrativeArea", name: "Wien" },
+            { "@type": "Country", name: "Austria" },
+        ]}
+    />
+
+    <FAQSchema items={faqItems} />
+
+    <main id="main-content" class="overflow-hidden">
+        <!-- HERO -->
+        <section
+            class="relative pt-48 pb-24 md:pt-56 md:pb-40 flex items-center justify-center text-center overflow-hidden"
+        >
+            <div class="absolute inset-0 bg-[#0B1120]"></div>
+            <div
+                class="absolute inset-0 bg-gradient-to-b from-sky-500/10 via-transparent to-transparent"
+            >
+            </div>
+
+            <FloatingElement speed={0.1} class="top-20 -left-20 z-0 opacity-20">
+                <div class="w-96 h-96 rounded-full bg-sky-500 blur-[100px]">
+                </div>
+            </FloatingElement>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <Breadcrumb
+                    items={[
+                        { name: "Regions", url: "#" },
+                        {
+                            name: "Web Design Vienna",
+                            url: "/regions/web-design-vienna",
+                        },
+                    ]}
+                />
+
+                <h1
+                    class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8 uppercase tracking-tighter leading-tight"
+                >
+                    Professional <br />
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+                    >
+                        Web Design in Vienna
+                    </span>
+                </h1>
+
+                <p
+                    class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 mb-12 font-light leading-relaxed"
+                >
+                    Vienna is Austria's economic powerhouse, and digital competition is
+                    fierce. We help your Viennese business stand out with an
+                    <strong>SEO-optimized, lightning-fast website</strong> that not only
+                    looks stunning but actually brings in customers.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-6">
+                    <a
+                        href="/contact"
+                        class="px-10 py-5 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-600 transition-all hover:scale-105 shadow-[0_0_30px_rgba(14,165,233,0.3)]"
+                    >
+                        Request a Free SEO Audit
+                    </a>
+                    <a
+                        href="/portfolio"
+                        class="px-10 py-5 bg-white/5 text-white font-bold rounded-full border border-white/10 hover:bg-white/10 transition-all"
+                    >
+                        View Our Work
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIENNA INTRO -->
+        <section class="py-20 bg-gray-900/20 border-t border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto">
+                    <h2
+                        class="text-3xl md:text-4xl font-black text-white mb-6 uppercase tracking-tight"
+                    >
+                        Why <span class="text-sky-400">digital presence</span> matters in Vienna
+                    </h2>
+                    <div class="space-y-4 text-gray-400 leading-relaxed">
+                        <p>
+                            Vienna's economy is thriving: international corporations, a booming
+                            startup scene, and a growing service sector make it one of Europe's
+                            most dynamic business hubs. With that growth comes intensifying
+                            online competition among Viennese businesses.
+                        </p>
+                        <p>
+                            A <strong class="text-white">professional website</strong> is no
+                            longer a luxury — it's a necessity. Local customers — whether looking
+                            for a dentist near Stephansplatz or a renovation company in
+                            Favoriten — search Google first. If your site isn't on the first page,
+                            your competitors will win those customers.
+                        </p>
+                        <p>
+                            Our job is to make sure that never happens. We build websites that are
+                            <strong class="text-white">optimized for Viennese searches</strong>,
+                            load lightning-fast, and convince visitors to choose you over the
+                            competition.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section class="py-24 bg-gray-900/40 relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-20">
+                    <h2
+                        class="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight"
+                    >
+                        What you get with your <span class="text-sky-400">Vienna</span> website
+                    </h2>
+                    <p class="text-gray-400 text-lg">
+                        Web design in Vienna with us is never a cookie-cutter approach.
+                        Every project starts with a unique strategy, tailored to the
+                        Austrian market.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    {
+                        serviceFeatures.map((f) => (
+                            <SpotlightCard class="p-8 h-full bg-gray-900/50">
+                                <div class="text-3xl mb-4">{f.icon}</div>
+                                <h3 class="text-xl font-bold text-white mb-4">
+                                    {f.title}
+                                </h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">
+                                    {f.description}
+                                </p>
+                            </SpotlightCard>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- PROCESS -->
+        <section class="py-24 border-t border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-20">
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight">
+                        How we <span class="text-sky-400">work</span> together
+                    </h2>
+                    <p class="text-gray-400 text-lg">
+                        A transparent, step-by-step process — you always know exactly where your project stands.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    {
+                        processSteps.map((s) => (
+                            <div class="relative">
+                                <div class="text-6xl font-black text-sky-500/10 mb-4">
+                                    {s.step}
+                                </div>
+                                <h3 class="text-lg font-bold text-white mb-3">
+                                    {s.title}
+                                </h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">
+                                    {s.description}
+                                </p>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- TRUST SECTION -->
+        <section class="py-24 bg-gray-900/40 border-t border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col lg:flex-row items-center gap-16">
+                    <div class="lg:w-1/2">
+                        <h2
+                            class="text-3xl md:text-5xl font-black text-white mb-8 uppercase tracking-tight leading-tight"
+                        >
+                            Why choose us for your <br />
+                            <span class="text-sky-400">Vienna business?</span>
+                        </h2>
+                        <div class="space-y-6">
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0 font-bold"
+                                >
+                                    1
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-1">
+                                        European technology, Viennese focus
+                                    </h4>
+                                    <p class="text-gray-400 text-sm">
+                                        We use the most modern development technologies
+                                        (Astro, Tailwind, React), but always tailor our
+                                        strategy to the local market. We understand
+                                        Austrian search behavior and consumer expectations.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0 font-bold"
+                                >
+                                    2
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-1">
+                                        Measurable results, not empty promises
+                                    </h4>
+                                    <p class="text-gray-400 text-sm">
+                                        We start with Google Analytics and Search Console
+                                        setup. You see exactly how many people visit your
+                                        site, where they come from, and which pages perform
+                                        best.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0 font-bold"
+                                >
+                                    3
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-1">
+                                        Transparent pricing, no surprises
+                                    </h4>
+                                    <p class="text-gray-400 text-sm">
+                                        We work with fixed-price projects, not hourly rates.
+                                        50% upfront, 50% on delivery. No hidden costs, no
+                                        mandatory monthly fees.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0 font-bold"
+                                >
+                                    4
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-1">
+                                        Your website, your property
+                                    </h4>
+                                    <p class="text-gray-400 text-sm">
+                                        The finished website is 100% yours. No vendor
+                                        lock-in, no mandatory annual contracts. If you wish,
+                                        you can take it over and continue with any developer.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                        <div class="space-y-4">
+                            <Image
+                                src={project1Image}
+                                alt="Vienna web design project - Prometheus Digital"
+                                class="rounded-2xl border border-white/10"
+                                loading="eager"
+                                fetchpriority="high"
+                            />
+                            <div
+                                class="bg-sky-500/10 border border-sky-500/20 p-6 rounded-2xl"
+                            >
+                                <div class="text-3xl font-black text-sky-400">
+                                    100/100
+                                </div>
+                                <div
+                                    class="text-xs text-gray-400 uppercase tracking-widest mt-1"
+                                >
+                                    PageSpeed Score
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4 pt-12">
+                            <div
+                                class="bg-gray-800/30 border border-white/10 p-6 rounded-2xl"
+                            >
+                                <div class="text-3xl font-black text-white">
+                                    2-4 weeks
+                                </div>
+                                <div
+                                    class="text-xs text-gray-400 uppercase tracking-widest mt-1"
+                                >
+                                    Average Delivery Time
+                                </div>
+                            </div>
+                            <Image
+                                src={project3Image}
+                                alt="SEO optimization for Vienna businesses"
+                                class="rounded-2xl border border-white/10"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIENNA INDUSTRIES -->
+        <section class="py-24 border-t border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight">
+                        Who we build <span class="text-sky-400">websites</span> for in Vienna
+                    </h2>
+                    <p class="text-gray-400 text-lg">
+                        We have experience across Vienna's most diverse industries.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                    {
+                        [
+                            "Medical practices",
+                            "Law firms",
+                            "Hair salons",
+                            "Restaurants & cafes",
+                            "Auto repair shops",
+                            "Construction companies",
+                            "Hotels & accommodation",
+                            "E-commerce stores",
+                            "Educational institutions",
+                            "Real estate agencies",
+                            "Beauty salons",
+                            "Consulting firms",
+                        ].map((industry) => (
+                            <div class="bg-gray-900/30 border border-white/5 rounded-xl p-4 text-center hover:border-sky-500/20 transition-colors">
+                                <span class="text-sm text-gray-300 font-medium">
+                                    {industry}
+                                </span>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-24 bg-gray-950">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2
+                    class="text-3xl md:text-5xl font-black text-white mb-16 text-center uppercase tracking-tight"
+                >
+                    Frequently Asked <span class="text-sky-400">Questions</span>
+                </h2>
+                <div class="space-y-4">
+                    {
+                        faqItems.map((faq) => (
+                            <details class="group bg-gray-900/30 border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-colors">
+                                <summary class="p-6 text-white font-bold cursor-pointer list-none flex justify-between items-center">
+                                    {faq.question}
+                                    <span class="text-sky-400 group-open:rotate-45 transition-transform text-xl">
+                                        +
+                                    </span>
+                                </summary>
+                                <div class="px-6 pb-6 text-gray-400 leading-relaxed text-sm">
+                                    {faq.answer}
+                                </div>
+                            </details>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <Contact />
+    </main>
+
+    <Footer />
+    <CookieBanner />
+</Layout>

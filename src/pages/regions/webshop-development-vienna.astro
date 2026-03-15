@@ -1,0 +1,511 @@
+---
+// src/pages/regions/webshop-development-vienna.astro
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Contact from "../../components/Contact.astro";
+import { Image } from "astro:assets";
+import CookieBanner from "../../components/CookieBanner.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import LocalBusinessSchema from "../../components/LocalBusinessSchema.astro";
+import ServiceSchema from "../../components/ServiceSchema.astro";
+import SpotlightCard from "../../components/SpotlightCard.astro";
+import FloatingElement from "../../components/FloatingElement.astro";
+import FAQSchema from "../../components/FAQSchema.astro";
+
+import project1Image from "../../assets/images/project-1.jpg";
+import project2Image from "../../assets/images/project-2.jpg";
+import project3Image from "../../assets/images/project-3.jpg";
+
+const serviceFeatures = [
+    {
+        icon: "🛒",
+        title: "Conversion-Focused E-commerce Design",
+        description:
+            "A webshop has one goal: to sell. We subordinate every design decision and function to this — from product pages to the checkout flow. Every element is designed to maximize conversions for your Viennese audience.",
+    },
+    {
+        icon: "⚡",
+        title: "Lightning-Fast Product Pages",
+        description:
+            "Every second of delay means a lost customer. Our Astro-based webshops guarantee market-leading loading speeds, dramatically reducing cart abandonment rates. Speed is not optional — it's our standard.",
+    },
+    {
+        icon: "💳",
+        title: "Secure Austrian Payment Integration",
+        description:
+            "We integrate the payment methods Austrian shoppers trust: Klarna, EPS, Sofort, credit cards, and PayPal. Seamless, secure checkout that builds customer confidence and maximizes completed purchases.",
+    },
+    {
+        icon: "🔍",
+        title: "Local SEO for Vienna E-commerce",
+        description:
+            "We optimize your webshop for Vienna-specific search queries. Whether customers search for 'Geschenke kaufen Wien' or product-specific terms, your store appears where it matters most.",
+    },
+    {
+        icon: "📱",
+        title: "Mobile-First Shopping Experience",
+        description:
+            "Over 70% of Viennese shoppers browse on mobile. We design every webshop mobile-first, ensuring a frictionless shopping experience from product discovery to checkout on any device.",
+    },
+    {
+        icon: "📊",
+        title: "Analytics & Growth Strategy",
+        description:
+            "We set up comprehensive e-commerce tracking from day one. You will see exactly which products sell, where customers drop off, and what drives conversions — enabling data-driven decisions for growth.",
+    },
+];
+
+const faqItems = [
+    {
+        question: "What e-commerce platforms do you work with?",
+        answer: "We specialize in headless e-commerce architectures using Astro as the frontend with Shopify, Snipcart, or custom solutions as the backend. This approach delivers dramatically faster loading times compared to traditional monolithic platforms like WooCommerce or Magento, while maintaining full e-commerce functionality.",
+    },
+    {
+        question: "Can you integrate Austrian payment methods?",
+        answer: "Yes. We integrate all payment methods popular in Austria: EPS (online banking), Klarna (buy now, pay later), Sofort, credit cards (Visa, Mastercard), PayPal, and Apple Pay. We ensure the checkout process feels familiar and trustworthy to Austrian shoppers.",
+    },
+    {
+        question: "How long does it take to build a webshop for a Vienna business?",
+        answer: "A standard webshop with up to 50 products typically takes 4-6 weeks. More complex stores with custom features, multiple payment integrations, or inventory management may take 6-10 weeks. We provide a clear timeline during our initial consultation.",
+    },
+    {
+        question: "Do you handle shipping integration for Austrian logistics?",
+        answer: "Yes, we can integrate with Austrian shipping providers including Post AG, DPD, GLS, and DHL. We set up real-time shipping calculations, tracking notifications, and flexible delivery options tailored to the Austrian market.",
+    },
+    {
+        question: "What about GDPR and Austrian e-commerce regulations?",
+        answer: "All our webshops are built GDPR-compliant from the ground up: cookie consent management, data processing agreements, proper privacy policies, and the right-to-deletion functionality. We also ensure compliance with Austrian consumer protection laws (Konsumentenschutzgesetz) including proper Impressum and Widerrufsrecht information.",
+    },
+    {
+        question: "Can you migrate my existing webshop?",
+        answer: "Absolutely. We handle migrations from WooCommerce, Shopify, Magento, and other platforms. We preserve your product data, customer information, and SEO rankings during the transition, ensuring zero downtime and no lost search visibility.",
+    },
+    {
+        question: "How does payment work for the project?",
+        answer: "50% upfront when the project starts, and the remaining 50% upon successful delivery. No hidden costs. Ongoing maintenance and hosting packages are optional and transparently priced.",
+    },
+];
+
+const processSteps = [
+    {
+        step: "01",
+        title: "E-commerce Strategy Call",
+        description:
+            "A 45-minute consultation where we analyze your product range, target market in Vienna, competitors, and business goals. We define the optimal tech stack and feature set.",
+    },
+    {
+        step: "02",
+        title: "UX Design & Architecture",
+        description:
+            "We create the store architecture, user flows, and wireframes. You see exactly how customers will navigate from homepage to checkout before any development begins.",
+    },
+    {
+        step: "03",
+        title: "Development & Integration",
+        description:
+            "We build the webshop with Astro, integrate payment systems, set up product management, and implement shipping logic. Continuous progress sharing and feedback loops.",
+    },
+    {
+        step: "04",
+        title: "Launch, Training & Growth",
+        description:
+            "After launch, we set up analytics, train you on product management, and configure the local SEO campaign. We ensure you can run your store independently from day one.",
+    },
+];
+---
+
+<Layout
+    title="Webshop Development Vienna | Conversion-Optimized E-commerce - Prometheus Digital"
+    description="Launch a high-converting webshop in Vienna. Lightning-fast Astro technology, Austrian payment integration, and conversion-optimized design for Viennese businesses. Request a free consultation!"
+>
+    <Header />
+
+    <ServiceSchema
+        services={[
+            {
+                name: "Webshop Development Vienna",
+                description:
+                    "Custom, conversion-optimized e-commerce solutions for Viennese businesses. Astro-based webshop development with Austrian payment integration.",
+                url: "/regions/webshop-development-vienna",
+            },
+        ]}
+    />
+
+    <LocalBusinessSchema
+        pageName="Webshop Development Vienna"
+        pageUrl="/regions/webshop-development-vienna"
+        areaServed={[
+            { "@type": "City", name: "Vienna" },
+            { "@type": "AdministrativeArea", name: "Wien" },
+            { "@type": "Country", name: "Austria" },
+        ]}
+    />
+
+    <FAQSchema items={faqItems} />
+
+    <main id="main-content" class="overflow-hidden">
+        <!-- HERO -->
+        <section
+            class="relative pt-48 pb-24 md:pt-56 md:pb-40 flex items-center justify-center text-center overflow-hidden"
+        >
+            <div class="absolute inset-0 bg-[#0B1120]"></div>
+            <div
+                class="absolute inset-0 bg-gradient-to-b from-sky-500/10 via-transparent to-transparent"
+            >
+            </div>
+
+            <FloatingElement speed={0.1} class="top-20 -left-20 z-0 opacity-20">
+                <div class="w-96 h-96 rounded-full bg-sky-500 blur-[100px]">
+                </div>
+            </FloatingElement>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <Breadcrumb
+                    items={[
+                        { name: "Regions", url: "#" },
+                        {
+                            name: "Webshop Development Vienna",
+                            url: "/regions/webshop-development-vienna",
+                        },
+                    ]}
+                />
+
+                <h1
+                    class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8 uppercase tracking-tighter leading-tight"
+                >
+                    Webshop Development <br />
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"
+                    >
+                        in Vienna That Sells
+                    </span>
+                </h1>
+
+                <p
+                    class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 mb-12 font-light leading-relaxed"
+                >
+                    Vienna is Austria's largest e-commerce market, and online competition
+                    is intensifying every day. We build <strong>conversion-optimized,
+                    lightning-fast webshops</strong> that turn Viennese visitors into loyal
+                    customers.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-6">
+                    <a
+                        href="/contact"
+                        class="px-10 py-5 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-600 transition-all hover:scale-105 shadow-[0_0_30px_rgba(14,165,233,0.3)]"
+                    >
+                        Request a Free E-commerce Consultation
+                    </a>
+                    <a
+                        href="/portfolio"
+                        class="px-10 py-5 bg-white/5 text-white font-bold rounded-full border border-white/10 hover:bg-white/10 transition-all"
+                    >
+                        View Our Work
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIENNA E-COMMERCE INTRO -->
+        <section class="py-20 bg-gray-900/20 border-t border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto">
+                    <h2
+                        class="text-3xl md:text-4xl font-black text-white mb-6 uppercase tracking-tight"
+                    >
+                        Why <span class="text-sky-400">e-commerce</span> is booming in Vienna
+                    </h2>
+                    <div class="space-y-4 text-gray-400 leading-relaxed">
+                        <p>
+                            Austria's e-commerce market is growing rapidly, and Vienna sits at
+                            the center of it all. With a tech-savvy population of nearly 2 million
+                            and high purchasing power, the city offers enormous potential for
+                            online retailers.
+                        </p>
+                        <p>
+                            But opportunity brings competition. A <strong class="text-white">professional
+                            webshop</strong> is no longer optional — it's the foundation of your
+                            digital business. Austrian consumers expect fast loading times,
+                            trusted payment options, and a seamless mobile experience. Anything
+                            less, and they will go to your competitor.
+                        </p>
+                        <p>
+                            We build webshops that meet and exceed these expectations. From
+                            <strong class="text-white">Austrian payment integrations</strong> to
+                            local SEO optimization, every aspect is tailored for the Vienna market.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES -->
+        <section class="py-24 bg-gray-900/40 relative">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-20">
+                    <h2
+                        class="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight"
+                    >
+                        What your <span class="text-sky-400">Vienna webshop</span> includes
+                    </h2>
+                    <p class="text-gray-400 text-lg">
+                        E-commerce development in Vienna with us means a strategy-first
+                        approach. Every store is built for the Austrian market, optimized
+                        for conversions, and designed to scale.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    {
+                        serviceFeatures.map((f) => (
+                            <SpotlightCard class="p-8 h-full bg-gray-900/50">
+                                <div class="text-3xl mb-4">{f.icon}</div>
+                                <h3 class="text-xl font-bold text-white mb-4">
+                                    {f.title}
+                                </h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">
+                                    {f.description}
+                                </p>
+                            </SpotlightCard>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- PROCESS -->
+        <section class="py-24 border-t border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-20">
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight">
+                        How we <span class="text-sky-400">build</span> your webshop
+                    </h2>
+                    <p class="text-gray-400 text-lg">
+                        A transparent, step-by-step process — you always know exactly where your project stands.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    {
+                        processSteps.map((s) => (
+                            <div class="relative">
+                                <div class="text-6xl font-black text-sky-500/10 mb-4">
+                                    {s.step}
+                                </div>
+                                <h3 class="text-lg font-bold text-white mb-3">
+                                    {s.title}
+                                </h3>
+                                <p class="text-gray-400 text-sm leading-relaxed">
+                                    {s.description}
+                                </p>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- TRUST SECTION -->
+        <section class="py-24 bg-gray-900/40 border-t border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col lg:flex-row items-center gap-16">
+                    <div class="lg:w-1/2">
+                        <h2
+                            class="text-3xl md:text-5xl font-black text-white mb-8 uppercase tracking-tight leading-tight"
+                        >
+                            Why choose us for your <br />
+                            <span class="text-sky-400">Vienna webshop?</span>
+                        </h2>
+                        <div class="space-y-6">
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0 font-bold"
+                                >
+                                    1
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-1">
+                                        Austrian market expertise
+                                    </h4>
+                                    <p class="text-gray-400 text-sm">
+                                        We understand Austrian consumer behavior, payment
+                                        preferences, and legal requirements. Your webshop
+                                        will feel native to Viennese shoppers from the
+                                        first click.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0 font-bold"
+                                >
+                                    2
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-1">
+                                        Performance that drives sales
+                                    </h4>
+                                    <p class="text-gray-400 text-sm">
+                                        Our Astro-based stores load 3-5x faster than
+                                        WordPress/WooCommerce shops. Faster pages mean
+                                        higher conversion rates and better Google rankings.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0 font-bold"
+                                >
+                                    3
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-1">
+                                        GDPR & Austrian law compliant
+                                    </h4>
+                                    <p class="text-gray-400 text-sm">
+                                        Every webshop we build includes proper Impressum,
+                                        AGB, Widerrufsrecht, cookie consent, and full
+                                        GDPR compliance out of the box.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0 font-bold"
+                                >
+                                    4
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold mb-1">
+                                        Full ownership, no lock-in
+                                    </h4>
+                                    <p class="text-gray-400 text-sm">
+                                        The finished webshop is 100% yours. No vendor
+                                        lock-in, no mandatory annual contracts. You own
+                                        your store and can continue with any developer.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 grid grid-cols-2 gap-4">
+                        <div class="space-y-4">
+                            <Image
+                                src={project2Image}
+                                alt="Vienna webshop development project - Prometheus Digital"
+                                class="rounded-2xl border border-white/10"
+                                loading="eager"
+                                fetchpriority="high"
+                            />
+                            <div
+                                class="bg-sky-500/10 border border-sky-500/20 p-6 rounded-2xl"
+                            >
+                                <div class="text-3xl font-black text-sky-400">
+                                    100/100
+                                </div>
+                                <div
+                                    class="text-xs text-gray-400 uppercase tracking-widest mt-1"
+                                >
+                                    PageSpeed Score
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4 pt-12">
+                            <div
+                                class="bg-gray-800/30 border border-white/10 p-6 rounded-2xl"
+                            >
+                                <div class="text-3xl font-black text-white">
+                                    4-6 weeks
+                                </div>
+                                <div
+                                    class="text-xs text-gray-400 uppercase tracking-widest mt-1"
+                                >
+                                    Average Delivery Time
+                                </div>
+                            </div>
+                            <Image
+                                src={project1Image}
+                                alt="E-commerce optimization Vienna"
+                                class="rounded-2xl border border-white/10"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIENNA INDUSTRIES -->
+        <section class="py-24 border-t border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight">
+                        Who we build <span class="text-sky-400">webshops</span> for in Vienna
+                    </h2>
+                    <p class="text-gray-400 text-lg">
+                        We have experience building e-commerce stores across Vienna's most important sectors.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                    {
+                        [
+                            "Fashion & apparel",
+                            "Food & beverages",
+                            "Home & garden",
+                            "Health & beauty",
+                            "Electronics",
+                            "Gifts & souvenirs",
+                            "Books & media",
+                            "Sports & outdoor",
+                            "Art & crafts",
+                            "Pet supplies",
+                            "Specialty goods",
+                            "B2B wholesale",
+                        ].map((industry) => (
+                            <div class="bg-gray-900/30 border border-white/5 rounded-xl p-4 text-center hover:border-sky-500/20 transition-colors">
+                                <span class="text-sm text-gray-300 font-medium">
+                                    {industry}
+                                </span>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-24 bg-gray-950">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2
+                    class="text-3xl md:text-5xl font-black text-white mb-16 text-center uppercase tracking-tight"
+                >
+                    Frequently Asked <span class="text-sky-400">Questions</span>
+                </h2>
+                <div class="space-y-4">
+                    {
+                        faqItems.map((faq) => (
+                            <details class="group bg-gray-900/30 border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-colors">
+                                <summary class="p-6 text-white font-bold cursor-pointer list-none flex justify-between items-center">
+                                    {faq.question}
+                                    <span class="text-sky-400 group-open:rotate-45 transition-transform text-xl">
+                                        +
+                                    </span>
+                                </summary>
+                                <div class="px-6 pb-6 text-gray-400 leading-relaxed text-sm">
+                                    {faq.answer}
+                                </div>
+                            </details>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <Contact />
+    </main>
+
+    <Footer />
+    <CookieBanner />
+</Layout>

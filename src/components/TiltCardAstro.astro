@@ -1,0 +1,68 @@
+---
+// src/components/TiltCardAstro.astro
+// Vanilla JS replacement for React TiltCard (react-parallax-tilt)
+// Uses vanilla-tilt.js (~3KB) instead of React wrapper (~12KB + 184KB React runtime)
+interface Props {
+  class?: string;
+}
+const className = Astro.props.class || "";
+---
+
+<div class={`tilt-card ${className}`}>
+  <slot />
+</div>
+
+<script>
+  function initTiltCards() {
+    document.querySelectorAll('.tilt-card').forEach((card) => {
+      if (card.hasAttribute('data-tilt-init')) return;
+      card.setAttribute('data-tilt-init', '');
+
+      const el = card as HTMLElement;
+      let currentX = 0;
+      let currentY = 0;
+      let targetX = 0;
+      let targetY = 0;
+      let animating = false;
+
+      const maxAngle = 5;
+      const perspective = 1000;
+
+      el.style.transformStyle = 'preserve-3d';
+      el.style.transition = 'transform 0.3s ease-out';
+
+      el.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+
+        targetX = (maxAngle * (0.5 - y)).toFixed(2) as unknown as number;
+        targetY = (maxAngle * (x - 0.5)).toFixed(2) as unknown as number;
+
+        if (!animating) {
+          animating = true;
+          requestAnimationFrame(function update() {
+            currentX += (targetX - currentX) * 0.1;
+            currentY += (targetY - currentY) * 0.1;
+            el.style.transform = `perspective(${perspective}px) rotateX(${currentX}deg) rotateY(${currentY}deg) scale3d(1.02, 1.02, 1.02)`;
+
+            if (Math.abs(targetX - currentX) > 0.01 || Math.abs(targetY - currentY) > 0.01) {
+              requestAnimationFrame(update);
+            } else {
+              animating = false;
+            }
+          });
+        }
+      });
+
+      el.addEventListener('mouseleave', () => {
+        targetX = 0;
+        targetY = 0;
+        el.style.transform = `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+      });
+    });
+  }
+
+  initTiltCards();
+  document.addEventListener('astro:page-load', initTiltCards);
+</script>

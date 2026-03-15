@@ -1,0 +1,53 @@
+---
+// src/components/ServiceSchema.astro
+// JSON-LD Service schema for service landing pages — enables rich results in Google
+
+interface ServiceItem {
+    name: string;
+    description: string;
+    url?: string;
+}
+
+interface Props {
+    services: ServiceItem[];
+    priceRange?: string;
+}
+
+const { services, priceRange = "€799 - €6,000" } = Astro.props;
+
+const siteUrl = "https://www.prometheusdigital.eu";
+
+const schema = services.map((service) => ({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.name,
+    description: service.description,
+    url: service.url ? `${siteUrl}${service.url}` : siteUrl,
+    provider: {
+        "@type": "Organization",
+        name: "Prometheus Digital",
+        url: siteUrl,
+        logo: `${siteUrl}/logo.jpg`,
+    },
+    areaServed: {
+        "@type": "Place",
+        name: "Europe",
+    },
+    serviceType: service.name,
+    ...(priceRange && {
+        offers: {
+            "@type": "Offer",
+            priceSpecification: {
+                "@type": "PriceSpecification",
+                priceCurrency: "EUR",
+            },
+        },
+    }),
+}));
+---
+
+{
+    schema.map((s) => (
+        <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))
+}

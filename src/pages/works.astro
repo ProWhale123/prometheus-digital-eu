@@ -6,94 +6,134 @@ import Footer from "../components/Footer.astro";
 import { Image } from "astro:assets";
 import portfolioImage from "../assets/images/portfolio-background.jpg";
 import CookieBanner from "../components/CookieBanner.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
 
 // Interactive components
-import TiltCard from "../components/react/TiltCard.jsx";
+import TiltCardAstro from "../components/TiltCardAstro.astro";
 import ParallaxImage from "../components/ParallaxImage.astro";
 import FloatingElement from "../components/FloatingElement.astro";
-import MagneticButton from "../components/react/MagneticButton.jsx";
+import MagneticButtonAstro from "../components/MagneticButtonAstro.astro";
 
-// Images (from src/assets!)
+// Image imports
 import project1Image from "../assets/images/project-1.jpg";
 import project2Image from "../assets/images/project-2.jpg";
 import project3Image from "../assets/images/project-3.jpg";
 import project4Image from "../assets/images/project-4.jpg";
 import project5Image from "../assets/images/project-5.jpg";
-import project6Image from "../assets/images/project-6.jpg";
 import project7Image from "../assets/images/project-7.png";
 import project8Image from "../assets/images/project-8.png";
+import project9Image from "../assets/images/project-9.jpg";
+import project10Image from "../assets/images/project-10.jpg";
+import project11Image from "../assets/images/project-11.jpg";
+import project12Image from "../assets/images/project-12.jpg";
+import project13Image from "../assets/images/project-13.jpg";
 
-const projects = [
+const clientProjects = [
+    {
+        title: "MSM Chicken Goods",
+        description:
+            "Full website for a premium food manufacturing and wholesale company. Modern animations, product showcase and food truck section.",
+        tags: ["Food Industry", "B2B", "Astro"],
+        imageSrc: project12Image,
+        liveUrl: "https://msmchickengoods.com/",
+    },
+    {
+        title: "DOL Bt. — Travel Agency",
+        description:
+            "Clean and professional website for a travel agency specializing in the 'Hatartalanul!' program. Quote request system and program descriptions.",
+        tags: ["Tourism", "Lead Gen", "Responsive"],
+        imageSrc: project1Image,
+        liveUrl: "https://dolbt.eu/",
+    },
+];
+
+const showcaseProjects = [
     {
         title: "Nebula Motors",
         description:
-            "The electric mobility of the future. An immersive, cyberpunk aesthetic website where silence is the new loud. Stunning visual storytelling and motion design.",
-        tags: ["Automotive", "Cyberpunk", "Motion UI", "Astro"],
+            "The electric mobility of the future. An immersive, cyberpunk aesthetic website with stunning visual storytelling and motion design.",
+        tags: ["Automotive", "Motion UI", "Immersive"],
         imageSrc: project8Image,
         liveUrl: "https://nebula-motors.eu/",
     },
     {
         title: "LUX SECURE",
         description:
-            "Secure the Invisible. A high-end cybersecurity infrastructure provider's futuristic, terminal-style interface. The design suggests technological dominance and invulnerability.",
-        tags: ["Cybersecurity", "Terminal UI", "Tech", "Dark Mode"],
+            "Futuristic, terminal-style website for a cybersecurity provider. Live interceptor grid visualization and dark-themed UI.",
+        tags: ["Cybersecurity", "Dark Mode", "Animated"],
         imageSrc: project7Image,
         liveUrl: "https://luxsecure.eu/",
     },
     {
-        title: "Clean Travel Agency Website",
+        title: "Artisan Coffee Shop",
         description:
-            "A clean and modern website for DOL Bt. travel agency, specializing in the 'Határtalanul!' program.",
-        tags: ["Astro", "Travel", "Lead Gen"],
-        imageSrc: project1Image,
-        liveUrl: "https://dolbt.eu/",
+            "Elegant, dark-toned showcase site for a premium cafe. Drink menu, table reservation and gallery section.",
+        tags: ["Hospitality", "Premium", "Dark Mode"],
+        imageSrc: project9Image,
+        liveUrl: "https://coffee-shop-demo-six.vercel.app/",
     },
     {
-        title: "Elegant Fine Dining Website",
+        title: "Artisan Ice Cream Parlor",
         description:
-            "A clean and exclusive online presence for the 'Gastronomo' fine dining restaurant.",
-        tags: ["UI/UX", "Minimalist", "GSAP"],
+            "Cheerful, warm-colored website for an artisan ice cream shop. Flavor showcase, ordering and award-winning brand story.",
+        tags: ["Hospitality", "Light Theme", "Branding"],
+        imageSrc: project10Image,
+        liveUrl: "https://ice-cream-shop-eta.vercel.app/",
+    },
+    {
+        title: "Franzi Bavarian Restaurant",
+        description:
+            "Authentic Bavarian restaurant website with menu, table reservations and atmospheric photo gallery. Local business showcase.",
+        tags: ["Restaurant", "Next.js", "Local"],
+        imageSrc: project11Image,
+        liveUrl: "https://franzi-bajor-etterem.vercel.app/",
+    },
+    {
+        title: "Golden Wheat Bakery",
+        description:
+            "Narrative-design bakery website with three generations of tradition. Product catalog, breakfast menu and ordering.",
+        tags: ["Bakery", "Storytelling", "Clean"],
+        imageSrc: project13Image,
+        liveUrl: "https://pekseg-demo.vercel.app/",
+    },
+    {
+        title: "Gastronomo Fine Dining",
+        description:
+            "Exclusive fine dining restaurant website with interactive cursor effects, reservation system and premium visual appearance.",
+        tags: ["Fine Dining", "UI/UX", "Animated"],
         imageSrc: project2Image,
         liveUrl: "https://gastronomo.eu/",
     },
     {
-        title: "Modern Restaurant Website",
+        title: "Duna Rapszodia Restaurant",
         description:
-            "Cozy website for Duna Rapszódia restaurant, focusing on visual experience and the menu.",
-        tags: ["Responsive", "Gallery", "Design"],
+            "Atmospheric restaurant website with lightbox gallery, detailed menu and panoramic Budapest ambiance.",
+        tags: ["Restaurant", "Gallery", "Responsive"],
         imageSrc: project3Image,
         liveUrl: "https://duna-rapszodia.hu/",
     },
     {
-        title: "Construction & Renovation Website",
+        title: "Construction & Renovation Company",
         description:
-            "Trust-inspiring website placing quality work and expertise in the forefront.",
-        tags: ["Portfolio", "Lead Gen", "Corporate"],
+            "Trust-inspiring showcase site for a renovation and construction company. Reference gallery, process overview and quote request.",
+        tags: ["Construction", "Lead Gen", "Corporate"],
         imageSrc: project4Image,
         liveUrl: "https://renovation-company.netlify.app/",
     },
     {
-        title: "Law Firm Website",
+        title: "Kovacs Legal — Law Firm",
         description:
-            "Digital business card suggesting reliability, focusing on practice areas and contact.",
-        tags: ["Strategy", "Clean", "Trust"],
+            "Reliability-focused legal website with practice area introduction, team showcase and consultation booking.",
+        tags: ["Legal", "Professional", "Trust"],
         imageSrc: project5Image,
         liveUrl: "https://kovacslegal.hu/",
-    },
-    {
-        title: "Bistro Landing Page",
-        description:
-            "One-page introduction site built on visual storytelling for a traditional restaurant.",
-        tags: ["Landing", "Storytelling", "Astro"],
-        imageSrc: project6Image,
-        liveUrl: "https://bistrobudapest.hu/",
     },
 ];
 ---
 
 <Layout
-    title="Our Work - Prometheus Digital"
-    description="Check out the websites, webshops, and custom digital solutions created by Prometheus Digital."
+    title="Our Work — Client Projects and Demo Sites | Prometheus Digital"
+    description="Check out the custom websites built by Prometheus Digital: real client projects and industry demo sites showcasing our expertise."
 >
     <Header />
 
@@ -107,9 +147,11 @@ const projects = [
                 >
                     <Image
                         src={portfolioImage}
-                        alt="Prometheus Digital Portfolio"
+                        alt="Prometheus Digital website portfolio and references"
                         class="w-full h-full object-cover opacity-60"
                         quality="high"
+                        loading="eager"
+                        fetchpriority="high"
                     />
                 </div>
             </div>
@@ -120,19 +162,20 @@ const projects = [
             </div>
 
             <div class="container mx-auto px-6 relative z-20 pt-20">
+                <Breadcrumb items={[{ name: "Our Work", url: "/works" }]} />
                 <h1
                     class="font-black text-white uppercase tracking-tighter mb-6"
                 >
                     <div class="overflow-hidden py-4">
                         <span
-                            class="reveal-text block text-4xl md:text-7xl translate-y-20 opacity-0"
+                            class="reveal-text block text-4xl md:text-7xl"
                         >
                             WHAT WE ARE
                         </span>
                     </div>
                     <div class="overflow-hidden">
                         <span
-                            class="reveal-text block text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 translate-y-20 opacity-0 pb-2"
+                            class="reveal-text block text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 pb-2"
                         >
                             PROUD OF
                         </span>
@@ -140,10 +183,10 @@ const projects = [
                 </h1>
 
                 <p
-                    class="reveal-desc max-w-2xl mx-auto text-lg md:text-xl text-gray-300 font-light translate-y-10 opacity-0"
+                    class="reveal-desc max-w-2xl mx-auto text-lg md:text-xl text-gray-300 font-light"
                 >
-                    Every project is a new opportunity for excellence. Check out
-                    our selected works and find inspiration for yours!
+                    Real client projects and industry demos — see the websites
+                    we build, and find inspiration for yours!
                 </p>
             </div>
 
@@ -168,6 +211,7 @@ const projects = [
             </div>
         </section>
 
+        <!-- Client Projects -->
         <section class="relative py-24 md:py-32 bg-[#0B1120]">
             <FloatingElement speed={0.2} class="top-20 -left-20 z-0 opacity-20">
                 <div class="w-96 h-96 rounded-full bg-sky-500 blur-[100px]">
@@ -179,17 +223,21 @@ const projects = [
             </div>
 
             <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16">
+                    <span class="text-sm font-bold text-sky-400 uppercase tracking-widest mb-4 block">Real clients, real results</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tight">
+                        Client <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">Projects</span>
+                    </h2>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
                     {
-                        projects.map((project, index) => (
+                        clientProjects.map((project, index) => (
                             <div
                                 class={`project-card ${index % 2 !== 0 ? "md:translate-y-16" : ""}`}
                             >
-                                {" "}
-                                {/* Staggered Grid Layout */}
-                                <TiltCard
-                                    client:visible
-                                    className="h-full bg-transparent"
+                                <TiltCardAstro
+                                    class="h-full bg-transparent"
                                 >
                                     <a
                                         href={project.liveUrl}
@@ -209,6 +257,9 @@ const projects = [
 
                                         <div class="p-8">
                                             <div class="flex flex-wrap gap-2 mb-4">
+                                                <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+                                                    Client Project
+                                                </span>
                                                 {project.tags.map((tag) => (
                                                     <span class="text-xs font-bold text-sky-400 uppercase tracking-wider bg-sky-500/10 px-3 py-1 rounded-full border border-sky-500/20">
                                                         {tag}
@@ -241,7 +292,95 @@ const projects = [
                                             </div>
                                         </div>
                                     </a>
-                                </TiltCard>
+                                </TiltCardAstro>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- Showcase / Demo Sites -->
+        <section class="relative py-24 md:py-32 bg-[#0B1120]">
+            <FloatingElement speed={-0.3} class="top-40 -right-20 z-0 opacity-15">
+                <div class="w-96 h-96 rounded-full bg-cyan-500 blur-[100px]">
+                </div>
+            </FloatingElement>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16">
+                    <span class="text-sm font-bold text-purple-400 uppercase tracking-widest mb-4 block">This is what your website could look like</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tight">
+                        Industry <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">Templates & Demos</span>
+                    </h2>
+                    <p class="max-w-2xl mx-auto text-gray-400 mt-6 text-lg font-light">
+                        Websites designed for different industries that showcase what we are capable of. Every template is fully customizable to your brand.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
+                    {
+                        showcaseProjects.map((project, index) => (
+                            <div
+                                class={`project-card ${index % 2 !== 0 ? "md:translate-y-16" : ""}`}
+                            >
+                                <TiltCardAstro
+                                    class="h-full bg-transparent"
+                                >
+                                    <a
+                                        href={project.liveUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="group block relative rounded-3xl overflow-hidden bg-gray-900 border border-white/10 hover:border-purple-500/50 transition-colors duration-500"
+                                    >
+                                        <div class="h-64 md:h-80 w-full overflow-hidden relative">
+                                            <div class="absolute inset-0 bg-purple-900/0 group-hover:bg-purple-900/20 transition-colors duration-500 z-10" />
+                                            <ParallaxImage
+                                                src={project.imageSrc}
+                                                alt={project.title}
+                                                height="h-full"
+                                                class="transition-transform duration-700 group-hover:scale-105"
+                                            />
+                                        </div>
+
+                                        <div class="p-8">
+                                            <div class="flex flex-wrap gap-2 mb-4">
+                                                <span class="text-xs font-bold text-purple-400 uppercase tracking-wider bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">
+                                                    Template
+                                                </span>
+                                                {project.tags.map((tag) => (
+                                                    <span class="text-xs font-bold text-sky-400 uppercase tracking-wider bg-sky-500/10 px-3 py-1 rounded-full border border-sky-500/20">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                            <h3 class="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-purple-300 transition-colors">
+                                                {project.title}
+                                            </h3>
+                                            <p class="text-gray-400 leading-relaxed mb-6">
+                                                {project.description}
+                                            </p>
+                                            <div class="flex items-center text-white font-medium group/link">
+                                                <span class="mr-2 group-hover/link:mr-4 transition-all">
+                                                    View Live
+                                                </span>
+                                                <svg
+                                                    class="w-5 h-5 text-purple-400"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                                    />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </TiltCardAstro>
                             </div>
                         ))
                     }
@@ -277,7 +416,7 @@ const projects = [
                     we can help achieve your goals.
                 </p>
                 <div class="flex justify-center">
-                    <MagneticButton client:visible>
+                    <MagneticButtonAstro>
                         <a
                             href="/contact"
                             class="inline-flex items-center justify-center px-10 py-5 bg-white text-gray-900 font-bold rounded-full text-lg hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300 hover:scale-105"
@@ -295,7 +434,7 @@ const projects = [
                                     d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg
                             >
                         </a>
-                    </MagneticButton>
+                    </MagneticButtonAstro>
                 </div>
             </div>
         </section>
@@ -311,6 +450,13 @@ const projects = [
     gsap.registerPlugin(ScrollTrigger);
 
     function animateWorks() {
+        // Kill all page-level ScrollTriggers to prevent accumulation on View Transitions
+        ScrollTrigger.getAll().forEach(t => t.kill());
+
+        // GSAP sets initial hidden state (not CSS) — keeps LCP visible for Core Web Vitals
+        gsap.set(".reveal-text", { y: 80, opacity: 0 });
+        gsap.set(".reveal-desc", { y: 40, opacity: 0 });
+
         // 1. Header Reveal
         const tl = gsap.timeline({ delay: 0.2 });
         tl.to(".reveal-text", {
@@ -362,6 +508,6 @@ const projects = [
         });
     }
 
-    animateWorks();
+    // Only use astro:page-load (fires on initial load too) — prevents double init
     document.addEventListener("astro:page-load", animateWorks);
 </script>

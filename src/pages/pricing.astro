@@ -5,33 +5,144 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Contact from "../components/Contact.astro";
 import { Image } from "astro:assets";
-import pricingImage from "../../public/images/araink-background.jpg"; // If image missing, use hero
+import arainkImage from "../assets/images/araink-background.jpg";
 import CookieBanner from "../components/CookieBanner.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
 
 // The Calculator
 import PriceCalculator from "../components/react/PriceCalculator.jsx";
-import SpotlightHeroBackground from "../components/react/SpotlightHeroBackground.jsx";
+import FAQSchema from "../components/FAQSchema.astro";
+
+// All FAQ items in one place for the schema
+const allFaqItems = [
+    {
+        question: "Why is the pricing modular?",
+        answer: "Every business is different. A simple portfolio site doesn't need complex e-commerce features. With modular pricing, you only pay for what you actually use, while the technical foundation (Prometheus Core) always represents the highest quality.",
+    },
+    {
+        question: "Is there a monthly fee for the website?",
+        answer: "There is no mandatory monthly fee. The website remains your property. However, we recommend our annual 'Peace of Mind' package, which includes premium hosting, domain, SSL and warranty, but it is optional.",
+    },
+    {
+        question: "When should I request custom design?",
+        answer: "If your brand wants to visually stand out from competitors, or if you have specific UI/UX requirements. Our standard design is also premium and modern, but custom design allows for 100% translation of your brand DNA into the digital space.",
+    },
+    {
+        question: "Is installment payment possible?",
+        answer: "Yes. A 50% deposit is required at the start of the project, and the remaining 50% must be settled upon successful handover of the website, before going live.",
+    },
+    {
+        question: "How long does it take to complete a project?",
+        answer: "An average Business Landing Page takes 2-3 weeks, while a more complex business site (with CMS, blog) takes 4-6 weeks from the first meeting to going live.",
+    },
+    {
+        question: "What happens if I want to expand the site later?",
+        answer: "Our system is modular. We can add a blog, webshop or new subpages at any time without having to rebuild the whole thing. You only pay for the expansion.",
+    },
+    {
+        question: "How does payment work?",
+        answer: "A 50% deposit is required at the start of the project, and the remaining 50% must be settled upon successful handover of the website, before going live.",
+    },
+    {
+        question: "Are there hidden costs?",
+        answer: "None. The price fixed in our quote covers all development costs. The only annual fee is the €120 + VAT maintenance package (hosting, domain, SSL, warranty).",
+    },
+    {
+        question: "Why is this better than a free website builder?",
+        answer: "Our websites are not built on templates. We use a modern, code-based system that far surpasses the speed and security of WordPress or Wix. This means better Google rankings and more customers.",
+    },
+];
+
+// Offer schema for pricing packages
+const offerSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+                "@type": "Offer",
+                "name": "Business Landing",
+                "description": "Ideal for portfolios or simple business introductions. High-Impact Landing Page, 2 content subpages, basic technical SEO.",
+                "price": "799",
+                "priceCurrency": "EUR",
+                "priceSpecification": {
+                    "@type": "PriceSpecification",
+                    "valueAddedTaxIncluded": false,
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "Prometheus Digital",
+                },
+            },
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+                "@type": "Offer",
+                "name": "Business Authority",
+                "description": "For service providers and experts who want to dominate the market. Professional CMS & Blog, 5 subpages, Advanced SEO Setup, Google Search Console & GA4.",
+                "price": "1790",
+                "priceCurrency": "EUR",
+                "priceSpecification": {
+                    "@type": "PriceSpecification",
+                    "valueAddedTaxIncluded": false,
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "Prometheus Digital",
+                },
+            },
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+                "@type": "Offer",
+                "name": "Elite Digital",
+                "description": "Everything included. For international markets, with custom design. Custom UX/UI design, Cinematic animations, Multilingual (i18n) Support, full SEO & Analytics Stack.",
+                "price": "2990",
+                "priceCurrency": "EUR",
+                "priceSpecification": {
+                    "@type": "PriceSpecification",
+                    "valueAddedTaxIncluded": false,
+                },
+                "seller": {
+                    "@type": "Organization",
+                    "name": "Prometheus Digital",
+                },
+            },
+        },
+    ],
+};
 ---
 
 <Layout
-    title="Pricing - Prometheus Digital"
+    title="Website Pricing 2026 | Transparent Web Development Pricing - Prometheus Digital"
     description="Transparent, modular pricing. Plan your website costs with our interactive calculator."
 >
     <Header />
 
+    <FAQSchema items={allFaqItems} />
+    <script type="application/ld+json" set:html={JSON.stringify(offerSchema)} />
+
     <main id="main-content">
         <section
-            class="relative h-[50vh] min-h-[400px] flex items-center justify-center text-center overflow-hidden"
+            class="relative pt-40 pb-24 md:pt-48 md:pb-32 flex items-center justify-center text-center overflow-hidden"
         >
             <div class="absolute inset-0 z-0">
                 <div
                     class="parallax-bg w-full h-[120%] -translate-y-[10%] will-change-transform"
                 >
                     <Image
-                        src={pricingImage}
-                        alt="Prometheus Digital Pricing"
+                        src={arainkImage}
+                        alt="Prometheus Digital transparent website and webshop pricing"
                         class="w-full h-full object-cover opacity-50"
                         quality="high"
+                        loading="eager"
+                        fetchpriority="high"
                     />
                 </div>
             </div>
@@ -41,26 +152,27 @@ import SpotlightHeroBackground from "../components/react/SpotlightHeroBackground
             </div>
 
             <div class="container mx-auto px-6 relative z-10 pt-10">
+                <Breadcrumb items={[{ name: "Pricing", url: "/pricing" }]} />
                 <h1
                     class="font-black text-white uppercase tracking-tighter mb-4"
                 >
                     <div class="overflow-hidden py-4">
                         <span
-                            class="reveal-text block text-4xl md:text-6xl text-gray-300 translate-y-20 opacity-0 mb-2"
+                            class="reveal-text block text-4xl md:text-6xl text-gray-300 mb-2"
                         >
                             TRANSPARENT
                         </span>
                     </div>
                     <div class="overflow-hidden py-4">
                         <span
-                            class="reveal-text block text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 translate-y-20 opacity-0 pb-3"
+                            class="reveal-text block text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 pb-3"
                         >
                             INVESTMENT
                         </span>
                     </div>
                 </h1>
                 <p
-                    class="reveal-desc max-w-2xl mx-auto text-lg md:text-xl text-gray-300 font-light translate-y-10 opacity-0"
+                    class="reveal-desc max-w-2xl mx-auto text-lg md:text-xl text-gray-300 font-light"
                 >
                     No hidden costs. Plan your project budget with exactly the
                     elements you need.
@@ -75,7 +187,285 @@ import SpotlightHeroBackground from "../components/react/SpotlightHeroBackground
             </div>
 
             <div class="container mx-auto px-4 md:px-6 relative z-10">
-                <div class="max-w-6xl mx-auto">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-6">
+                        Popular Configurations
+                    </h2>
+                    <p class="text-gray-400">
+                        No time for configuration? Choose from our pre-built
+                        packages, or customize them with the calculator below.
+                    </p>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-24 max-w-6xl mx-auto"
+                >
+                    {/* STARTER */}
+                    <div
+                        class="bg-gray-900/50 border border-white/10 p-8 rounded-3xl flex flex-col hover:border-sky-500/50 transition-colors group"
+                    >
+                        <div
+                            class="text-sky-400 font-bold text-xs tracking-widest uppercase mb-4"
+                        >
+                            Starter
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            Business Landing
+                        </h3>
+                        <p class="text-gray-500 text-sm mb-6">
+                            Ideal for portfolios or simple business
+                            introductions.
+                        </p>
+                        <div class="text-3xl font-black text-white mb-8">
+                            €799 <span
+                                class="text-xs text-gray-500 font-normal"
+                                >+ VAT</span
+                            >
+                        </div>
+
+                        <ul class="space-y-4 mb-10 flex-grow">
+                            <li class="flex items-center text-sm text-gray-300">
+                                <svg
+                                    class="w-4 h-4 text-sky-400 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg
+                                >
+                                High-Impact Landing Page
+                            </li>
+                            <li class="flex items-center text-sm text-gray-300">
+                                <svg
+                                    class="w-4 h-4 text-sky-400 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg
+                                >
+                                2 Content Subpages
+                            </li>
+                            <li class="flex items-center text-sm text-gray-300">
+                                <svg
+                                    class="w-4 h-4 text-sky-400 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg
+                                >
+                                Basic Technical SEO
+                            </li>
+                        </ul>
+                        <a
+                            href="#calculator"
+                            class="block w-full py-3 text-center border border-white/20 text-white rounded-full hover:bg-white/5 transition-colors"
+                            >Customize →</a
+                        >
+                    </div>
+
+                    {/* GROWTH */}
+                    <div
+                        class="bg-sky-500/5 border border-sky-500/30 p-8 rounded-3xl flex flex-col relative scale-105 shadow-2xl shadow-sky-500/10"
+                    >
+                        <div
+                            class="absolute -top-4 left-1/2 -translate-x-1/2 bg-sky-500 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full"
+                        >
+                            Most Popular
+                        </div>
+                        <div
+                            class="text-sky-400 font-bold text-xs tracking-widest uppercase mb-4"
+                        >
+                            Growth
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            Business Authority
+                        </h3>
+                        <p class="text-gray-500 text-sm mb-6">
+                            For service providers and experts who want to
+                            dominate the market.
+                        </p>
+                        <div class="text-3xl font-black text-white mb-8">
+                            €1,790 <span
+                                class="text-xs text-gray-500 font-normal"
+                                >+ VAT</span
+                            >
+                        </div>
+
+                        <ul class="space-y-4 mb-10 flex-grow">
+                            <li class="flex items-center text-sm text-gray-300">
+                                <svg
+                                    class="w-4 h-4 text-sky-400 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg
+                                >
+                                Professional CMS & Blog
+                            </li>
+                            <li class="flex items-center text-sm text-gray-300">
+                                <svg
+                                    class="w-4 h-4 text-sky-400 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg
+                                >
+                                5 Subpages
+                            </li>
+                            <li class="flex items-center text-sm text-gray-300">
+                                <svg
+                                    class="w-4 h-4 text-sky-400 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg
+                                >
+                                Advanced SEO Setup (€450 value)
+                            </li>
+                            <li class="flex items-center text-sm text-gray-300">
+                                <svg
+                                    class="w-4 h-4 text-sky-400 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg
+                                >
+                                Google Search Console & GA4
+                            </li>
+                        </ul>
+                        <a
+                            href="#calculator"
+                            class="block w-full py-3 text-center bg-sky-500 text-white font-bold rounded-full hover:bg-sky-600 transition-colors"
+                            >Customize →</a
+                        >
+                    </div>
+
+                    {/* ENTERPRISE */}
+                    <div
+                        class="bg-gray-900/50 border border-white/10 p-8 rounded-3xl flex flex-col hover:border-purple-500/50 transition-colors group"
+                    >
+                        <div
+                            class="text-purple-400 font-bold text-xs tracking-widest uppercase mb-4"
+                        >
+                            Premium
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            Elite Digital
+                        </h3>
+                        <p class="text-gray-500 text-sm mb-6">
+                            Everything included. For international markets, with
+                            custom design.
+                        </p>
+                        <div class="text-3xl font-black text-white mb-8">
+                            From €2,990 <span
+                                class="text-xs text-gray-500 font-normal"
+                                >+ VAT</span
+                            >
+                        </div>
+
+                        <ul class="space-y-4 mb-10 flex-grow">
+                            <li class="flex items-center text-sm text-gray-300">
+                                <svg
+                                    class="w-4 h-4 text-purple-400 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg
+                                >
+                                Custom UX/UI Design
+                            </li>
+                            <li class="flex items-center text-sm text-gray-300">
+                                <svg
+                                    class="w-4 h-4 text-purple-400 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg
+                                >
+                                Cinematic Animations
+                            </li>
+                            <li class="flex items-center text-sm text-gray-300">
+                                <svg
+                                    class="w-4 h-4 text-purple-400 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg
+                                >
+                                Multilingual (i18n) Support
+                            </li>
+                            <li class="flex items-center text-sm text-gray-300">
+                                <svg
+                                    class="w-4 h-4 text-purple-400 mr-3"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg
+                                >
+                                Full SEO & Analytics Stack
+                            </li>
+                        </ul>
+                        <a
+                            href="#calculator"
+                            class="block w-full py-3 text-center border border-white/20 text-white rounded-full hover:bg-white/5 transition-colors"
+                            >Customize →</a
+                        >
+                    </div>
+                </div>
+
+                <div id="calculator" class="max-w-6xl mx-auto pt-24">
+                    <div class="text-center mb-12">
+                        <span
+                            class="text-sky-400 font-bold uppercase tracking-widest text-xs"
+                            >Customization</span
+                        >
+                        <h2 class="text-3xl font-bold text-white mt-2">
+                            Interactive Calculator
+                        </h2>
+                    </div>
                     <PriceCalculator client:visible />
                 </div>
             </div>
@@ -99,7 +489,8 @@ import SpotlightHeroBackground from "../components/react/SpotlightHeroBackground
                     </h3>
                     <div class="text-4xl font-black text-sky-400 mb-6">
                         €120 <span class="text-lg text-gray-500 font-normal"
-                            >/ year</span>
+                            >/ year</span
+                        >
                     </div>
 
                     <ul
@@ -166,6 +557,50 @@ import SpotlightHeroBackground from "../components/react/SpotlightHeroBackground
             </div>
         </section>
 
+        <!-- FAQ SECTION -->
+        <section class="py-24 bg-[#0B1120] border-t border-white/5">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-6">
+                        Frequently Asked Questions
+                    </h2>
+                    <p class="text-gray-400">
+                        Everything you need to know about website pricing and the process.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    {
+                        allFaqItems.map((faq) => (
+                            <details class="group bg-gray-900/40 border border-white/5 rounded-2xl overflow-hidden hover:border-sky-500/20 transition-all">
+                                <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                                    <h3 class="text-white font-bold pr-4">
+                                        {faq.question}
+                                    </h3>
+                                    <svg
+                                        class="w-5 h-5 text-sky-500 group-open:rotate-180 transition-transform duration-300 flex-shrink-0"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </summary>
+                                <div class="px-6 pb-6 text-gray-400 leading-relaxed border-t border-white/5 pt-4">
+                                    {faq.answer}
+                                </div>
+                            </details>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
         <Contact />
     </main>
 
@@ -179,6 +614,13 @@ import SpotlightHeroBackground from "../components/react/SpotlightHeroBackground
     gsap.registerPlugin(ScrollTrigger);
 
     function animatePricing() {
+        // Kill all page-level ScrollTriggers to prevent accumulation on View Transitions
+        ScrollTrigger.getAll().forEach(t => t.kill());
+
+        // GSAP sets initial hidden state (not CSS) — keeps LCP visible for Core Web Vitals
+        gsap.set(".reveal-text", { y: 80, opacity: 0 });
+        gsap.set(".reveal-desc", { y: 40, opacity: 0 });
+
         const tl = gsap.timeline({ delay: 0.2 });
         tl.to(".reveal-text", {
             y: 0,
@@ -209,6 +651,6 @@ import SpotlightHeroBackground from "../components/react/SpotlightHeroBackground
         });
     }
 
-    animatePricing();
+    // Only use astro:page-load (fires on initial load too) — prevents double init
     document.addEventListener("astro:page-load", animatePricing);
 </script>

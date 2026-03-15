@@ -1,0 +1,68 @@
+---
+// src/components/BlogPostSchema.astro
+// JSON-LD BlogPosting schema for blog posts — enables rich results in Google
+
+interface Props {
+    title: string;
+    description: string;
+    pubDate: Date;
+    updatedDate?: Date;
+    image?: string;
+    url: string;
+    author?: string;
+    tags?: string[];
+}
+
+const {
+    title,
+    description,
+    pubDate,
+    updatedDate,
+    image,
+    url,
+    author = "Arpad Bretz",
+    tags = [],
+} = Astro.props;
+
+const siteUrl = "https://www.prometheusdigital.eu";
+const fullUrl = `${siteUrl}${url}`;
+const fullImage = image
+    ? image.startsWith("http")
+        ? image
+        : `${siteUrl}${image}`
+    : `${siteUrl}/images/og-image.png`;
+
+const schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description: description,
+    image: fullImage,
+    datePublished: pubDate.toISOString(),
+    dateModified: updatedDate
+        ? updatedDate.toISOString()
+        : pubDate.toISOString(),
+    author: {
+        "@type": "Person",
+        name: author,
+        url: `${siteUrl}/about`,
+    },
+    publisher: {
+        "@type": "Organization",
+        name: "Prometheus Digital",
+        logo: {
+            "@type": "ImageObject",
+            url: `${siteUrl}/images/og-image.jpg`,
+        },
+    },
+    mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": fullUrl,
+    },
+    url: fullUrl,
+    keywords: tags.join(", "),
+    inLanguage: "en",
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

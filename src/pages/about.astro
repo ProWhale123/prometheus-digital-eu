@@ -5,7 +5,10 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { Image } from "astro:assets";
 import aboutImage from "../assets/images/about-background.jpg";
+import arpadImage from "../assets/images/arpad-bretz.jpg";
+import felixImage from "../assets/images/felix-bary.jpg";
 import CookieBanner from "../components/CookieBanner.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
 
 // Icon imports
 import FacebookIcon from "../components/icons/FacebookIcon.astro";
@@ -14,23 +17,23 @@ import LinkedInIcon from "../components/icons/LinkedInIcon.astro";
 
 // Interactive elements
 import FloatingElement from "../components/FloatingElement.astro";
-import SpotlightCard from "../components/react/SpotlightCard.jsx";
-import MagneticButton from "../components/react/MagneticButton.jsx";
+import SpotlightCard from "../components/SpotlightCard.astro";
+import MagneticButtonAstro from "../components/MagneticButtonAstro.astro";
 
 const teamMembers = [
     {
-        name: "Árpád Bretz",
+        name: "Arpad Bretz",
         role: "Founder & Lead Developer",
         bio: "My passion is clean code and building efficient systems. I believe the foundation of a good website is a rock-solid technological background maximizing speed and reliability.",
-        imageUrl: "/images/arpad-bretz.JPG",
+        image: arpadImage,
         email: "arpadbretz@prometheusdigital.hu",
         socials: { linkedin: "#", facebook: "#" },
     },
     {
-        name: "Félix Bary",
+        name: "Felix Bary",
         role: "Founder & Creative Technologist",
         bio: "I am interested in the human side: how to create digital experiences that not only work but evoke real emotions and remain memorable.",
-        imageUrl: "/images/felix-bary.JPG",
+        image: felixImage,
         email: "felixbary@prometheusdigital.hu",
         socials: { linkedin: "#", facebook: "#" },
     },
@@ -79,6 +82,8 @@ const principles = [
                         alt="Prometheus Digital Team"
                         class="w-full h-full object-cover opacity-60"
                         quality="high"
+                        loading="eager"
+                        fetchpriority="high"
                     />
                 </div>
             </div>
@@ -88,12 +93,13 @@ const principles = [
             </div>
 
             <div class="container mx-auto px-6 relative z-20 pt-20">
+                <Breadcrumb items={[{ name: "About", url: "/about" }]} />
                 <h1
                     class="font-black text-white uppercase tracking-tighter mb-8"
                 >
                     <div class="overflow-hidden py-4">
                         <span
-                            class="reveal-text block text-4xl md:text-6xl text-gray-300 translate-y-20 opacity-0 mb-2 leading-tight"
+                            class="reveal-text block text-4xl md:text-6xl text-gray-300 mb-2 leading-tight"
                         >
                             TWO PASSIONS
                         </span>
@@ -101,14 +107,14 @@ const principles = [
 
                     <div class="overflow-hidden py-4">
                         <span
-                            class="reveal-text block text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 translate-y-20 opacity-0 pb-3 leading-tight"
+                            class="reveal-text block text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 pb-3 leading-tight"
                         >
                             ONE MISSION
                         </span>
                     </div>
                 </h1>
                 <p
-                    class="reveal-desc max-w-3xl mx-auto text-xl text-gray-300 font-light translate-y-10 opacity-0 leading-relaxed"
+                    class="reveal-desc max-w-3xl mx-auto text-xl text-gray-300 font-light leading-relaxed"
                 >
                     We are not just an agency. We are a partnership born from
                     the meeting of technology and creativity.
@@ -135,7 +141,7 @@ const principles = [
                         <p>
                             According to Greek mythology, Prometheus saw
                             humanity in the dark, without tools or knowledge. He
-                            defied the gods and stole fire for them – the symbol
+                            defied the gods and stole fire for them -- the symbol
                             of progress and knowledge.
                         </p>
                         <p
@@ -188,10 +194,11 @@ const principles = [
                                 >
                                     <div class="absolute inset-0 bg-gradient-to-tr from-sky-500 to-cyan-400 rounded-3xl transform rotate-3 scale-95 group-hover:rotate-6 group-hover:scale-100 transition-all duration-500 opacity-20 group-hover:opacity-40" />
                                     <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-                                        <img
-                                            src={member.imageUrl}
+                                        <Image
+                                            src={member.image}
                                             alt={member.name}
                                             class="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
+                                            width={800}
                                         />
                                     </div>
                                 </div>
@@ -283,8 +290,7 @@ const principles = [
                     {
                         principles.map((principle) => (
                             <SpotlightCard
-                                client:visible
-                                className="h-full bg-gray-900/40 backdrop-blur-sm"
+                                class="h-full bg-gray-900/40 backdrop-blur-sm"
                             >
                                 <div class="p-8 h-full">
                                     <h3 class="text-xl font-bold text-white mb-4 border-b border-sky-500/30 pb-4 inline-block">
@@ -316,14 +322,14 @@ const principles = [
                     If our values match yours, let's create something lasting
                     together.
                 </p>
-                <MagneticButton client:visible>
+                <MagneticButtonAstro>
                     <a
                         href="/contact"
                         class="inline-block bg-white text-gray-900 font-bold py-4 px-12 rounded-full text-lg shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(14,165,233,0.4)] hover:scale-105 transition-all duration-300"
                     >
                         Get in Touch
                     </a>
-                </MagneticButton>
+                </MagneticButtonAstro>
             </div>
         </section>
     </main>
@@ -337,6 +343,13 @@ const principles = [
     gsap.registerPlugin(ScrollTrigger);
 
     function animateAbout() {
+        // Kill all page-level ScrollTriggers to prevent accumulation on View Transitions
+        ScrollTrigger.getAll().forEach(t => t.kill());
+
+        // GSAP sets initial hidden state (not CSS) — keeps LCP visible for Core Web Vitals
+        gsap.set(".reveal-text", { y: 80, opacity: 0 });
+        gsap.set(".reveal-desc", { y: 40, opacity: 0 });
+
         // 1. Header Reveal
         const tl = gsap.timeline({ delay: 0.2 });
         tl.to(".reveal-text", {
@@ -388,6 +401,5 @@ const principles = [
         });
     }
 
-    animateAbout();
     document.addEventListener("astro:page-load", animateAbout);
 </script>

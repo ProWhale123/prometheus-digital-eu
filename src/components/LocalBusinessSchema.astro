@@ -1,0 +1,59 @@
+---
+// src/components/LocalBusinessSchema.astro
+// JSON-LD LocalBusiness schema for geo-targeted landing pages
+
+interface AreaServedItem {
+    "@type": string;
+    name: string;
+}
+
+interface Props {
+    pageName?: string;
+    pageUrl?: string;
+    areaServed?: AreaServedItem[];
+}
+
+const { pageName, pageUrl, areaServed } = Astro.props;
+
+const siteUrl = "https://www.prometheusdigital.eu";
+
+const defaultAreaServed: AreaServedItem[] = [
+    { "@type": "City", name: "Budapest" },
+    { "@type": "Country", name: "Hungary" },
+];
+
+const schema = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: "Prometheus Digital",
+    url: pageUrl ? `${siteUrl}${pageUrl}` : siteUrl,
+    logo: `${siteUrl}/logo.jpg`,
+    image: `${siteUrl}/images/og-image.png`,
+    description:
+        "We build modern, fast, and SEO-optimized websites and webshops for European businesses.",
+    telephone: "+36-30-922-2042",
+    email: "info@prometheusdigital.eu",
+    address: {
+        "@type": "PostalAddress",
+        addressLocality: "Budapest",
+        addressRegion: "Budapest",
+        addressCountry: "HU",
+    },
+    geo: {
+        "@type": "GeoCoordinates",
+        latitude: "47.4979",
+        longitude: "19.0402",
+    },
+    areaServed: areaServed || defaultAreaServed,
+    priceRange: "$$",
+    openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "18:00",
+    },
+    sameAs: ["https://www.facebook.com/profile.php?id=61581901426105"],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

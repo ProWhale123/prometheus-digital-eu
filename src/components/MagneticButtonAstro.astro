@@ -1,0 +1,49 @@
+---
+// src/components/MagneticButtonAstro.astro
+// Vanilla JS replacement for React MagneticButton
+// Uses GSAP (already loaded) for elastic spring-back animation
+interface Props {
+  class?: string;
+}
+const className = Astro.props.class || "";
+---
+
+<div class={`magnetic-btn relative inline-block ${className}`}>
+  <span class="magnetic-btn-inner relative block z-10">
+    <slot />
+  </span>
+</div>
+
+<script>
+  import { gsap } from 'gsap';
+
+  function initMagneticButtons() {
+    document.querySelectorAll('.magnetic-btn').forEach((btn) => {
+      if (btn.hasAttribute('data-magnetic-init')) return;
+      btn.setAttribute('data-magnetic-init', '');
+
+      const inner = btn.querySelector('.magnetic-btn-inner') as HTMLElement;
+
+      btn.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect = (btn as HTMLElement).getBoundingClientRect();
+        const x = e.clientX - (rect.left + rect.width / 2);
+        const y = e.clientY - (rect.top + rect.height / 2);
+
+        gsap.to(btn, { x: x * 0.2, y: y * 0.2, duration: 1, ease: 'power3.out' });
+        if (inner) {
+          gsap.to(inner, { x: x * 0.1, y: y * 0.1, duration: 1, ease: 'power3.out' });
+        }
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1, 0.3)' });
+        if (inner) {
+          gsap.to(inner, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1, 0.3)' });
+        }
+      });
+    });
+  }
+
+  initMagneticButtons();
+  document.addEventListener('astro:page-load', initMagneticButtons);
+</script>

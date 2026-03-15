@@ -3,8 +3,9 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import ContactSection from "../components/Contact.astro"; // Renamed to avoid alias conflict if any
+import ContactSection from "../components/Contact.astro";
 import CookieBanner from "../components/CookieBanner.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
 ---
 
 <Layout
@@ -17,6 +18,9 @@ import CookieBanner from "../components/CookieBanner.astro";
         <!-- Page Hero Section -->
         <section class="pt-40 pb-20 bg-gray-900/40">
             <div class="container mx-auto px-6 text-center">
+                <Breadcrumb
+                    items={[{ name: "Contact", url: "/contact" }]}
+                />
                 <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
                     Get in <span
                         class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300"

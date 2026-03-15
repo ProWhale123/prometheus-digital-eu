@@ -5,8 +5,10 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Contact from "../components/Contact.astro";
 import { Image } from "astro:assets";
-import servicesImage from "../../public/images/services-background.jpg";
+import servicesImage from "../assets/images/services-background.jpg";
 import CookieBanner from "../components/CookieBanner.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import ServiceSchema from "../components/ServiceSchema.astro";
 
 // Icons
 import WebsiteIcon from "../components/icons/WebsiteIcon.astro";
@@ -15,11 +17,12 @@ import CartIcon from "../components/icons/CartIcon.astro";
 import SeoIcon from "../components/icons/SeoIcon.astro";
 
 // Interactive elements
-import SpotlightCard from "../components/react/SpotlightCard.jsx";
+import SpotlightCard from "../components/SpotlightCard.astro";
 import FloatingElement from "../components/FloatingElement.astro";
-import MagneticButton from "../components/react/MagneticButton.jsx";
+import MagneticButtonAstro from "../components/MagneticButtonAstro.astro";
+import LatestBlog from "../components/LatestBlog.astro";
 
-// DATA BASED ON NEW PRICING LOGIC
+// DATA BASED ON MODULAR PRICING LOGIC
 const serviceCategories = [
     {
         icon: WebsiteIcon,
@@ -34,6 +37,7 @@ const serviceCategories = [
             { name: "Extra Sales Page", detail: "€180 (High-impact)" },
             { name: "Tech Pages", detail: "€45 (404, Thank You)" },
         ],
+        href: "/web-design-budapest",
     },
     {
         icon: DesignIcon,
@@ -75,6 +79,22 @@ const serviceCategories = [
             { name: "Invoicing Integration", detail: "€240 (Billingo/Equiv)" },
             { name: "Payment Gateway", detail: "Stripe / SimplePay" },
         ],
+        href: "/webshop-development-budapest",
+    },
+    {
+        icon: SeoIcon,
+        category: "5. SEARCH ENGINE OPTIMIZATION",
+        title: "SEO Services",
+        price: "From €250/mo",
+        description:
+            "More customers from Google. One-time audit + monthly retainer for sustained growth.",
+        features: [
+            { name: "Advanced SEO Setup", detail: "€450 (One-time)" },
+            { name: "Monthly SEO Retainer", detail: "€250 / month" },
+            { name: "Content Production", detail: "4 expert articles/month" },
+            { name: "Monthly Reporting", detail: "PDF + Consultation" },
+        ],
+        href: "/seo-consulting",
     },
 ];
 
@@ -115,14 +135,43 @@ const businessLogicModules = [
 ---
 
 <Layout
-    title="Services - Prometheus Digital"
+    title="Web Development and Digital Marketing Services | Prometheus Digital"
     description="Discover our modular web development system. Build your website exactly as your business needs it."
 >
     <Header />
 
+    <ServiceSchema
+        services={[
+            {
+                name: "Web Design",
+                description:
+                    "Modern, fast and SEO-optimized business websites built with cutting-edge technology.",
+                url: "/web-design-budapest",
+            },
+            {
+                name: "Webshop Development",
+                description:
+                    "Conversion-optimized online stores with custom design and secure payment integration.",
+                url: "/webshop-development-budapest",
+            },
+            {
+                name: "UI/UX Design",
+                description:
+                    "Professional user experience design that increases conversions and customer satisfaction.",
+                url: "/services",
+            },
+            {
+                name: "SEO Consulting",
+                description:
+                    "Data-driven search engine optimization for European businesses. More organic traffic and customers from Google.",
+                url: "/seo-consulting",
+            },
+        ]}
+    />
+
     <main id="main-content" class="overflow-hidden">
         <section
-            class="relative h-[60vh] min-h-[500px] flex items-center justify-center text-center overflow-hidden"
+            class="relative pt-48 pb-24 md:pt-64 md:pb-32 flex items-center justify-center text-center overflow-hidden"
         >
             <div class="absolute inset-0 z-0">
                 <div
@@ -130,9 +179,11 @@ const businessLogicModules = [
                 >
                     <Image
                         src={servicesImage}
-                        alt="Prometheus Digital Services"
+                        alt="Prometheus Digital web development and digital marketing services"
                         class="w-full h-full object-cover opacity-60"
                         quality="high"
+                        loading="eager"
+                        fetchpriority="high"
                     />
                 </div>
             </div>
@@ -142,26 +193,29 @@ const businessLogicModules = [
             </div>
 
             <div class="container mx-auto px-6 relative z-10 pt-20">
+                <Breadcrumb
+                    items={[{ name: "Services", url: "/services" }]}
+                />
                 <h1
                     class="font-black text-white uppercase tracking-tighter mb-6"
                 >
                     <div class="overflow-hidden py-4">
                         <span
-                            class="reveal-text block text-4xl md:text-6xl text-gray-300 translate-y-20 opacity-0 mb-2"
+                            class="reveal-text block text-4xl md:text-6xl text-gray-300 mb-2"
                         >
                             MODULAR
                         </span>
                     </div>
                     <div class="overflow-hidden py-4">
                         <span
-                            class="reveal-text block text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 translate-y-20 opacity-0 pb-3"
+                            class="reveal-text block text-5xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300 pb-3"
                         >
                             FREEDOM
                         </span>
                     </div>
                 </h1>
                 <p
-                    class="reveal-desc max-w-2xl mx-auto text-lg md:text-xl text-gray-300 font-light translate-y-10 opacity-0"
+                    class="reveal-desc max-w-2xl mx-auto text-lg md:text-xl text-gray-300 font-light"
                 >
                     Forget inflexible packages. Build your project from exactly
                     the modules your business needs.
@@ -254,8 +308,7 @@ const businessLogicModules = [
                             return (
                                 <div class="h-full">
                                     <SpotlightCard
-                                        client:visible
-                                        className="h-full bg-gray-900/40 backdrop-blur-sm border border-white/10 group"
+                                        class="h-full bg-gray-900/40 backdrop-blur-sm border border-white/10 group"
                                     >
                                         <div class="p-8 md:p-10 h-full flex flex-col">
                                             <div class="flex items-center justify-between mb-6">
@@ -305,10 +358,12 @@ const businessLogicModules = [
                                                     {mod.price}
                                                 </div>
                                                 <a
-                                                    href="/pricing"
+                                                    href={mod.href || "/pricing"}
                                                     class="text-sm font-bold text-sky-400 hover:text-white transition-colors flex items-center gap-1"
                                                 >
-                                                    Calculator{" "}
+                                                    {mod.href
+                                                        ? "Details"
+                                                        : "Calculator"}{" "}
                                                     <span class="group-hover:translate-x-1 transition-transform">
                                                         →
                                                     </span>
@@ -523,15 +578,18 @@ const businessLogicModules = [
                     interactive price calculator and build your own package in
                     minutes.
                 </p>
-                <MagneticButton
-                    href="/pricing"
-                    client:visible
-                    className="inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-sky-500 to-cyan-400 text-white font-bold rounded-full text-lg hover:shadow-[0_0_30px_rgba(14,165,233,0.4)] hover:scale-105 transition-all duration-300"
-                >
-                    Start Price Calculator
-                </MagneticButton>
+                <MagneticButtonAstro>
+                    <a
+                        href="/pricing"
+                        class="inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-sky-500 to-cyan-400 text-white font-bold rounded-full text-lg hover:shadow-[0_0_30px_rgba(14,165,233,0.4)] hover:scale-105 transition-all duration-300"
+                    >
+                        Start Price Calculator
+                    </a>
+                </MagneticButtonAstro>
             </div>
         </section>
+
+        <LatestBlog />
 
         <Contact />
     </main>
@@ -546,6 +604,13 @@ const businessLogicModules = [
     gsap.registerPlugin(ScrollTrigger);
 
     function animateServices() {
+        // Kill all page-level ScrollTriggers to prevent accumulation on View Transitions
+        ScrollTrigger.getAll().forEach(t => t.kill());
+
+        // GSAP sets initial hidden state (not CSS) — keeps LCP visible for Core Web Vitals
+        gsap.set(".reveal-text", { y: 80, opacity: 0 });
+        gsap.set(".reveal-desc", { y: 40, opacity: 0 });
+
         const tl = gsap.timeline({ delay: 0.2 });
         tl.to(".reveal-text", {
             y: 0,
@@ -576,9 +641,6 @@ const businessLogicModules = [
         });
     }
 
-    // Run animation on page load
-    animateServices();
-
-    // Run on view transition navigation
+    // Only use astro:page-load (fires on initial load too) — prevents double init
     document.addEventListener("astro:page-load", animateServices);
 </script>

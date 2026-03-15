@@ -1,0 +1,44 @@
+---
+// src/components/SpotlightCard.astro
+// Vanilla JS replacement for React SpotlightCard + SpotlightHeroBackground
+// Eliminates React runtime (~184KB) from pages that only use spotlight effects
+interface Props {
+  class?: string;
+}
+const className = Astro.props.class || "";
+---
+
+<div class={`spotlight-card relative overflow-hidden rounded-2xl border border-white/10 bg-gray-900/50 group ${className}`}>
+  <div class="spotlight-overlay pointer-events-none absolute -inset-px opacity-0 transition duration-300"></div>
+  <div class="relative z-10 h-full">
+    <slot />
+  </div>
+</div>
+
+<script>
+  function initSpotlightCards() {
+    document.querySelectorAll('.spotlight-card').forEach((card) => {
+      const overlay = card.querySelector('.spotlight-overlay') as HTMLElement;
+      if (!overlay || card.hasAttribute('data-spotlight-init')) return;
+      card.setAttribute('data-spotlight-init', '');
+
+      card.addEventListener('mousemove', (e: MouseEvent) => {
+        const rect = (card as HTMLElement).getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        overlay.style.background = `radial-gradient(600px circle at ${x}px ${y}px, rgba(14, 165, 233, 0.15), transparent 40%)`;
+      });
+
+      card.addEventListener('mouseenter', () => {
+        overlay.style.opacity = '1';
+      });
+
+      card.addEventListener('mouseleave', () => {
+        overlay.style.opacity = '0';
+      });
+    });
+  }
+
+  initSpotlightCards();
+  document.addEventListener('astro:page-load', initSpotlightCards);
+</script>

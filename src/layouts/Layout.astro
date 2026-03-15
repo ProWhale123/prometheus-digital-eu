@@ -16,10 +16,25 @@ interface Props {
     title: string;
     description: string;
     image?: string;
+    type?: "website" | "article";
+    publishedTime?: Date;
+    modifiedTime?: Date;
+    author?: string;
+    tags?: string[];
     noindex?: boolean;
 }
 
-const { title, description, image, noindex } = Astro.props;
+const {
+    title,
+    description,
+    image,
+    type,
+    publishedTime,
+    modifiedTime,
+    author,
+    tags,
+    noindex,
+} = Astro.props;
 
 const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
 ---
@@ -27,17 +42,29 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
 <!doctype html>
 <html lang="en">
     <head>
-        <SEO title={title} description={description} image={image} noindex={noindex} />
+        <SEO
+            title={title}
+            description={description}
+            image={image}
+            type={type}
+            publishedTime={publishedTime}
+            modifiedTime={modifiedTime}
+            author={author}
+            tags={tags}
+            noindex={noindex}
+        />
         <Schema title={title} description={description} url={Astro.url} image={image || '/images/og-image.jpg'} />
         <ClientRouter />
-        
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" media="print" onload="this.media='all'">
-        <noscript>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap">
-        </noscript>
-    
+        <meta name="theme-color" content="#0B1120" />
+
+        <!-- Self-hosted Inter font — eliminates external DNS lookup + round trip -->
+        <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="/fonts/inter-latin-ext.woff2" as="font" type="font/woff2" crossorigin />
+
+        <!-- DNS prefetch for Google Analytics (loaded on consent) -->
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
         <script define:vars={{ GA_MEASUREMENT_ID }}>
             // 1. Load Google Analytics (Call only)
             function initAnalytics() {
