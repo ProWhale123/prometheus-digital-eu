@@ -16,9 +16,10 @@ interface Props {
     title: string;
     description: string;
     image?: string;
+    noindex?: boolean;
 }
 
-const { title, description, image } = Astro.props;
+const { title, description, image, noindex } = Astro.props;
 
 const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
 ---
@@ -26,7 +27,7 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
 <!doctype html>
 <html lang="en">
     <head>
-        <SEO title={title} description={description} image={image} />
+        <SEO title={title} description={description} image={image} noindex={noindex} />
         <Schema title={title} description={description} url={Astro.url} image={image || '/images/og-image.jpg'} />
         <ClientRouter />
         

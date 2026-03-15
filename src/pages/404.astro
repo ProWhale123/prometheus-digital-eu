@@ -8,9 +8,10 @@ import SpotlightHeroBackground from "../components/react/SpotlightHeroBackground
 import CookieBanner from "../components/CookieBanner.astro";
 ---
 
-<Layout title="404 - Not Found" description="This page is lost in space.">
+<Layout title="404 - Not Found" description="This page is lost in space." noindex={true}>
     <Header />
     <main
+        id="main-content"
         class="h-screen flex items-center justify-center text-center bg-gray-950 overflow-hidden relative"
     >
         <SpotlightHeroBackground client:visible />

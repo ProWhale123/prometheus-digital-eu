@@ -3,31 +3,58 @@
 interface Props {
 	title: string;
 	description: string;
-    // Az 'image' prop opcionális. Ha nem adunk meg egyedi képet egy aloldalnak,
-    // akkor az alapértelmezett og-image.jpg-t fogja használni.
-	image?: string; 
+	image?: string;
+	noindex?: boolean;
 }
 
-const { 
-    title, 
-    description, 
-    image = '/images/og-image.jpg' // Alapértelmezett kép
+const {
+    title,
+    description,
+    image = '/images/og-image.jpg',
+    noindex = false,
 } = Astro.props;
 
 const siteName = "Prometheus Digital";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const absoluteImageUrl = new URL(image, Astro.site);
+
+// Hreflang path mapping (EN → HU)
+const enToHuPaths: Record<string, string> = {
+    "/": "/",
+    "/services": "/szolgaltatasok",
+    "/pricing": "/araink",
+    "/works": "/munkaink",
+    "/about": "/rolunk",
+    "/blog": "/blog",
+    "/contact": "/kapcsolat",
+    "/seo-consulting": "/seo-szolgaltatasok",
+    "/privacy-policy": "/adatvedelem",
+    "/web-design-budapest": "/weboldal-keszites-budapest",
+    "/webshop-development-budapest": "/webshop-keszites-budapest",
+};
+const cleanPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const huPath = enToHuPaths[cleanPath] || "/";
 ---
 
-<!-- Alapvető Meta Tagek -->
+<!-- Basic Meta Tags -->
 <meta charset="UTF-8">
 <title>{title}</title>
 <meta name="description" content={description}>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content={Astro.generator}>
+{noindex ? (
+    <meta name="robots" content="noindex, nofollow" />
+) : (
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+)}
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL}>
+
+<!-- Hreflang (EN ↔ HU) -->
+<link rel="alternate" hreflang="en" href={canonicalURL} />
+<link rel="alternate" hreflang="hu" href={`https://www.prometheusdigital.hu${huPath}`} />
+<link rel="alternate" hreflang="x-default" href={`https://www.prometheusdigital.hu${huPath}`} />
 
 <!-- Favicon (már beállítottuk, de itt is lehetne) -->
 <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
@@ -39,7 +66,7 @@ const absoluteImageUrl = new URL(image, Astro.site);
 <meta property="og:image" content={absoluteImageUrl}>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content={siteName}>
-<meta property="og:locale" content="hu_HU">
+<meta property="og:locale" content="en_US">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
