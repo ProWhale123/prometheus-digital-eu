@@ -21,5 +21,7 @@ export default defineConfig({
     inlineStylesheets: 'auto'
   },
 
-  integrations: [sitemap(), react()]
+  integrations: [sitemap({
+    filter: (page) => !page.includes('/blog/topic/') && !page.includes('/thank-you'),
+  }), react()]
 });

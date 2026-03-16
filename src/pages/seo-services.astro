@@ -1,0 +1,743 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Contact from "../components/Contact.astro";
+import CookieBanner from "../components/CookieBanner.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import ServiceSchema from "../components/ServiceSchema.astro";
+import LocalBusinessSchema from "../components/LocalBusinessSchema.astro";
+import MagneticButtonAstro from "../components/MagneticButtonAstro.astro";
+import SpotlightCard from "../components/SpotlightCard.astro";
+import FloatingElement from "../components/FloatingElement.astro";
+
+const seoProcess = [
+    {
+        step: "01",
+        title: "SEO Audit & Assessment",
+        description:
+            "We start with a comprehensive technical audit: speed, indexing, structure, competitor analysis. We map out where your website stands now and where the market gaps are.",
+    },
+    {
+        step: "02",
+        title: "Keyword Research & Gap Analysis",
+        description:
+            "We identify high-value searches your customers are making. We analyze competitors' keyword strategies and find areas where they are weak.",
+    },
+    {
+        step: "03",
+        title: "Technical SEO & Code Optimization",
+        description:
+            "We build results into the backend code: JSON-LD structured data, schema markup, meta data optimization, Core Web Vitals fine-tuning.",
+    },
+    {
+        step: "04",
+        title: "Content & Link Building",
+        description:
+            "4 professional, keyword-optimized expert articles per month. Placement on relevant portals to increase domain authority (DA).",
+    },
+    {
+        step: "05",
+        title: "Measurement & Monthly Report",
+        description:
+            "Transparent PDF report at the end of every month: rankings, traffic, conversions. We continuously refine the strategy based on the data.",
+    },
+];
+
+const setupIncludes = [
+    {
+        title: "JSON-LD Structured Data",
+        description:
+            "Custom schema.org code that explicitly defines the business, services, price range and service area for Google.",
+    },
+    {
+        title: "GA4 & GSC Conversion Tracking",
+        description:
+            "Micro-conversion measurement: phone number clicks, form submissions, content engagement. Shows which channel brings paying prospects.",
+    },
+    {
+        title: "B2B/B2C Keyword Research",
+        description:
+            "Detailed analysis of competitors' strategies. Identifying market gaps where we can get ahead of the competition.",
+    },
+    {
+        title: "Technical SEO Fix",
+        description:
+            "Core Web Vitals optimization, meta data fine-tuning, sitemap and robots.txt, image optimization, component-level metadata implementation.",
+    },
+];
+
+const monthlyIncludes = [
+    "4 keyword-optimized expert articles written and published per month",
+    "Core Web Vitals check and Search Console data analysis",
+    "Link building: placement on relevant portals and business directories",
+    "Competitor monitoring and strategic response",
+    "Transparent monthly PDF report: rankings, traffic, conversions",
+    "Monthly consultation on results and next month's focus",
+];
+
+const faqs = [
+    {
+        question: "How long until I see results?",
+        answer: "Google's algorithm typically takes 3-6 months to start pricing in content development and authority building. In the first month, basic technical fixes are already measurable, but stable improvement in search positions typically starts from month 3.",
+    },
+    {
+        question: "Do you guarantee first place on Google?",
+        answer: "No one can responsibly guarantee this — anyone who does is misleading you. What we guarantee: measurable, continuous improvement in search positions, data-driven decisions, and transparent reports where you can see exactly the progress.",
+    },
+    {
+        question: "Do I need a new website for SEO?",
+        answer: "Not necessarily. Our SEO service can be applied to existing websites. However, if your site runs on outdated technology (e.g., old WordPress template), technical limitations may hinder results. In that case, we'll discuss the options during consultation.",
+    },
+    {
+        question: "What's the difference between 6 and 12 month commitment?",
+        answer: "The 6-month package focuses on building the foundation and achieving visible results. With the 12-month commitment, the first half builds the same base, but then we go much deeper: more complex strategy, more specific lead generation and deeper competitive targeting.",
+    },
+    {
+        question: "What does the Advanced SEO Setup include?",
+        answer: "JSON-LD structured data implementation, Google Analytics 4 and Search Console conversion tracking setup, complete B2B/B2C keyword research and competitor gap analysis, and website technical SEO fine-tuning (speed optimization, meta data, schema extensions).",
+    },
+    {
+        question: "How do you measure results?",
+        answer: "At the end of every month, we send a transparent PDF report: search position changes, organic traffic trends, conversions (phone calls, forms, contacts), and next month's strategy. Plus a monthly online consultation.",
+    },
+    {
+        question: "We already have a website you built. What's the deal?",
+        answer: "Every website we build includes basic technical SEO (speed, structure). The Advanced SEO Setup, however, is a deeper, marketing-focused foundation (keyword research, GSC/GA4 measurement, JSON-LD) on which the monthly SEO retainer builds.",
+    },
+];
+---
+
+<Layout
+    title="SEO Services for Businesses | Search Engine Optimization - Prometheus Digital"
+    description="Professional SEO services for businesses. Advanced SEO Setup + monthly retainer. More organic traffic, better Google rankings, measurable results."
+>
+    <Header />
+
+    <ServiceSchema
+        services={[
+            {
+                name: "Advanced SEO Setup",
+                description:
+                    "One-time SEO foundation: JSON-LD structured data, GA4/GSC conversion tracking, keyword research and technical SEO fixes.",
+                url: "/seo-services",
+            },
+            {
+                name: "Monthly SEO Retainer",
+                description:
+                    "Ongoing search engine optimization: content creation, link building, competitor monitoring and monthly reporting for businesses.",
+                url: "/seo-services",
+            },
+        ]}
+    />
+
+    <LocalBusinessSchema />
+
+    <main id="main-content" class="overflow-hidden">
+        <!-- HERO -->
+        <section
+            class="relative pt-48 pb-24 md:pt-56 md:pb-32 flex items-center justify-center text-center overflow-hidden"
+        >
+            <div class="absolute inset-0 bg-gray-950"></div>
+            <div
+                class="absolute inset-0 bg-gradient-to-b from-emerald-950/20 via-transparent to-transparent"
+            >
+            </div>
+            <FloatingElement
+                speed={0.15}
+                class="top-20 -right-40 z-0 opacity-10"
+            >
+                <div
+                    class="w-[500px] h-[500px] rounded-full bg-emerald-600 blur-[150px]"
+                >
+                </div>
+            </FloatingElement>
+
+            <div class="container mx-auto px-6 text-center relative z-10">
+                <Breadcrumb
+                    items={[
+                        {
+                            name: "SEO Services",
+                            url: "/seo-services",
+                        },
+                    ]}
+                />
+
+                <div
+                    class="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-sm text-emerald-400"
+                >
+                    <span
+                        class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"
+                    ></span>
+                    Proactive Growth
+                </div>
+
+                <h1
+                    class="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight"
+                >
+                    Don't wait for customers.<br />
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-300"
+                    >
+                        Get them from Google.
+                    </span>
+                </h1>
+
+                <p
+                    class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 mb-10"
+                >
+                    Even the best product stays invisible if your customers can't
+                    find it. We help your business be the first one Google
+                    recommends when a potential client searches.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <MagneticButtonAstro>
+                        <a
+                            href="/contact?topic=seo-assessment"
+                            class="inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-full text-lg hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] hover:scale-105 transition-all duration-300"
+                        >
+                            Free SEO Assessment
+                        </a>
+                    </MagneticButtonAstro>
+                    <a
+                        href="#packages"
+                        class="inline-flex items-center justify-center px-8 py-4 border border-white/20 text-white font-bold rounded-full text-lg hover:bg-white/5 transition-all duration-300"
+                    >
+                        Packages & Pricing ↓
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY SEO -->
+        <section class="py-20 bg-[#0B1120] border-b border-white/5">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                        Why is SEO the best investment?
+                    </h2>
+                    <p class="text-lg text-gray-400">
+                        Google Ads bring nothing once turned off. SEO, on the other
+                        hand, is a continuously working, 24/7 customer acquisition
+                        machine — that gets stronger month after month.
+                    </p>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto"
+                >
+                    <div
+                        class="text-center p-8 rounded-2xl bg-gray-900/50 border border-white/5 hover:border-emerald-500/20 transition-colors"
+                    >
+                        <div class="text-5xl font-black text-emerald-400 mb-3">
+                            53%
+                        </div>
+                        <p class="text-gray-300 font-medium mb-1">
+                            Organic Traffic
+                        </p>
+                        <p class="text-gray-400 text-xs text-balance">
+                            More than half of all web traffic comes from organic
+                            search (BrightEdge).
+                        </p>
+                    </div>
+                    <div
+                        class="text-center p-8 rounded-2xl bg-gray-900/50 border border-white/5 hover:border-emerald-500/20 transition-colors"
+                    >
+                        <div class="text-5xl font-black text-emerald-400 mb-3">
+                            8.5x
+                        </div>
+                        <p class="text-gray-300 font-medium mb-1">
+                            Better Conversion
+                        </p>
+                        <p class="text-gray-400 text-xs text-balance">
+                            SEO leads are eight times more likely to become
+                            customers than cold outreach.
+                        </p>
+                    </div>
+                    <div
+                        class="text-center p-8 rounded-2xl bg-gray-900/50 border border-white/5 hover:border-emerald-500/20 transition-colors"
+                    >
+                        <div class="text-5xl font-black text-emerald-400 mb-3">
+                            5.7x
+                        </div>
+                        <p class="text-gray-300 font-medium mb-1">
+                            More Clicks
+                        </p>
+                        <p class="text-gray-400 text-xs text-balance">
+                            Organic results get nearly six times more clicks
+                            than paid ads.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROCESS -->
+        <section class="py-24 md:py-32 relative">
+            <div
+                class="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:50px_50px] opacity-[0.03] pointer-events-none"
+            >
+            </div>
+
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">
+                        Not Magic. <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400"
+                            >A System.</span
+                        >
+                    </h2>
+                    <p class="text-lg text-gray-400">
+                        SEO is not a collection of secret tricks. It's a
+                        data-driven, transparent process tailored to your industry.
+                    </p>
+                </div>
+
+                <div class="max-w-4xl mx-auto space-y-6">
+                    {
+                        seoProcess.map((item) => (
+                            <div class="flex items-start gap-6 bg-gray-900/40 border border-white/5 rounded-2xl p-6 hover:border-emerald-500/20 transition-all duration-300 group">
+                                <div class="text-emerald-400 font-black text-3xl opacity-50 group-hover:opacity-100 transition-opacity">
+                                    {item.step}
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white mb-2">
+                                        {item.title}
+                                    </h3>
+                                    <p class="text-gray-400 leading-relaxed">
+                                        {item.description}
+                                    </p>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING -->
+        <section
+            id="packages"
+            class="py-24 md:py-32 bg-gray-900/30 border-y border-white/5 relative overflow-hidden"
+        >
+            <FloatingElement
+                speed={0.2}
+                class="bottom-20 -left-40 z-0 opacity-10"
+            >
+                <div class="w-96 h-96 rounded-full bg-emerald-600 blur-[120px]">
+                </div>
+            </FloatingElement>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">
+                        Investment Packages
+                    </h2>
+                    <p class="text-lg text-gray-400">
+                        Transparent, straightforward pricing — no hidden costs.
+                    </p>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12"
+                >
+                    <!-- SETUP -->
+                    <SpotlightCard
+                        class="h-full bg-gray-900/60 backdrop-blur-sm border border-white/10"
+                    >
+                        <div class="p-8 md:p-10 h-full flex flex-col">
+                            <div
+                                class="inline-flex items-center gap-2 mb-4 text-xs font-bold tracking-widest text-gray-500 uppercase"
+                            >
+                                <span
+                                    class="w-2 h-6 bg-emerald-500 rounded-full"
+                                ></span>
+                                One-Time Fee
+                            </div>
+
+                            <h3 class="text-2xl font-bold text-white mb-2">
+                                Advanced SEO Setup
+                            </h3>
+                            <p
+                                class="text-gray-400 text-sm mb-6 leading-relaxed"
+                            >
+                                Before content creation begins, we switch the
+                                system into "data-driven" mode. This critical
+                                foundation ensures measurable results.
+                            </p>
+
+                            <div class="space-y-3 mb-8 flex-grow">
+                                {
+                                    setupIncludes.map((item) => (
+                                        <div class="border-b border-white/5 pb-3 last:border-0">
+                                            <div class="text-white font-bold text-sm flex items-center gap-2">
+                                                <svg
+                                                    class="w-4 h-4 text-emerald-500 flex-shrink-0"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M5 13l4 4L19 7"
+                                                    />
+                                                </svg>
+                                                {item.title}
+                                            </div>
+                                            <p class="text-xs text-gray-500 ml-6 mt-1">
+                                                {item.description}
+                                            </p>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+
+                            <div class="pt-6 border-t border-white/10">
+                                <div class="flex items-baseline gap-2 mb-4">
+                                    <span class="text-3xl font-black text-white"
+                                        >From &euro;400</span
+                                    >
+                                    <span class="text-gray-500 text-sm"
+                                        >+ VAT</span
+                                    >
+                                </div>
+                                <a
+                                    href="/contact?topic=seo-setup"
+                                    class="block w-full text-center py-3 px-6 border border-emerald-500/30 text-emerald-400 font-bold rounded-full hover:bg-emerald-500/10 transition-all"
+                                >
+                                    Request Setup
+                                </a>
+                            </div>
+                        </div>
+                    </SpotlightCard>
+
+                    <!-- MONTHLY -->
+                    <SpotlightCard
+                        class="h-full bg-gray-900/60 backdrop-blur-sm border border-emerald-500/30 relative"
+                    >
+                        <div class="p-8 md:p-10 h-full flex flex-col">
+                            <div
+                                class="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl"
+                            >
+                                RECOMMENDED
+                            </div>
+
+                            <div
+                                class="inline-flex items-center gap-2 mb-4 text-xs font-bold tracking-widest text-gray-500 uppercase"
+                            >
+                                <span
+                                    class="w-2 h-6 bg-emerald-500 rounded-full"
+                                ></span>
+                                Monthly Fee
+                            </div>
+
+                            <h3 class="text-2xl font-bold text-white mb-2">
+                                Monthly SEO Retainer
+                            </h3>
+                            <p
+                                class="text-gray-400 text-sm mb-6 leading-relaxed"
+                            >
+                                SEO is not a sprint, it's a marathon. Continuous
+                                work guarantees that the result is a lasting
+                                market position, not a brief flash.
+                            </p>
+
+                            <div class="space-y-3 mb-8 flex-grow">
+                                {
+                                    monthlyIncludes.map((item) => (
+                                        <div class="flex items-start gap-2 text-sm">
+                                            <svg
+                                                class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M5 13l4 4L19 7"
+                                                />
+                                            </svg>
+                                            <span class="text-gray-300">
+                                                {item}
+                                            </span>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+
+                            <div class="pt-6 border-t border-white/10">
+                                <div class="flex items-baseline gap-2 mb-4">
+                                    <span class="text-3xl font-black text-white"
+                                        >From &euro;220</span
+                                    >
+                                    <span class="text-gray-500 text-sm"
+                                        >+ VAT / mo</span
+                                    >
+                                </div>
+                                <a
+                                    href="/contact?topic=seo-retainer"
+                                    class="block w-full text-center py-3 px-6 bg-emerald-500 text-white font-bold rounded-full hover:bg-emerald-600 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all"
+                                >
+                                    Request Retainer
+                                </a>
+                            </div>
+                        </div>
+                    </SpotlightCard>
+                </div>
+
+                <!-- BONUSES -->
+                <div
+                    class="max-w-5xl mx-auto bg-gradient-to-br from-gray-900 to-black border border-emerald-500/20 rounded-2xl p-8 md:p-10"
+                >
+                    <h3
+                        class="text-xl font-bold text-white mb-6 flex items-center gap-3"
+                    >
+                        <svg
+                            class="w-6 h-6 text-emerald-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"
+                            ></path>
+                        </svg>
+                        Commitment Bonuses
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div
+                            class="bg-gray-800/30 rounded-xl p-6 border border-white/5"
+                        >
+                            <div
+                                class="text-emerald-400 font-bold text-sm mb-2 uppercase tracking-wider"
+                            >
+                                6-Month Start
+                            </div>
+                            <p class="text-gray-300 mb-4">
+                                Blog Module development <strong
+                                    class="text-white">FREE OF CHARGE</strong
+                                > — integrated into the portfolio.
+                            </p>
+                            <div class="text-xs text-gray-500">
+                                Value: <span class="line-through"
+                                    >&euro;320 + VAT</span
+                                >
+                                <span class="text-emerald-400 font-bold ml-1"
+                                    >&rarr; &euro;0</span
+                                >
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-gray-800/30 rounded-xl p-6 border border-emerald-500/20"
+                        >
+                            <div
+                                class="text-emerald-400 font-bold text-sm mb-2 uppercase tracking-wider"
+                            >
+                                12-Month Market Leader
+                            </div>
+                            <p class="text-gray-300 mb-4">
+                                Blog Module <strong class="text-white"
+                                    >FREE OF CHARGE</strong
+                                > + Advanced SEO Setup at <strong
+                                    class="text-white">20% discount</strong
+                                >.
+                            </p>
+                            <div class="text-xs text-gray-500">
+                                Setup: <span class="line-through"
+                                    >&euro;400 + &euro;320 + VAT</span
+                                >
+                                <span class="text-emerald-400 font-bold ml-1"
+                                    >&rarr; &euro;320 + VAT</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETUP DETAILS -->
+        <section class="py-24 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                        What happens under the hood?
+                    </h2>
+                    <p class="text-lg text-gray-400">
+                        The Advanced SEO Setup is not superficial tweaking. We
+                        make changes in the deeper layers of the website where
+                        content and technical infrastructure sync 100%.
+                    </p>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+                >
+                    {
+                        setupIncludes.map((item) => (
+                            <div class="bg-gray-900/40 border border-white/5 rounded-2xl p-8 hover:border-emerald-500/20 transition-colors">
+                                <h3 class="text-xl font-bold text-white mb-3">
+                                    {item.title}
+                                </h3>
+                                <p class="text-gray-400 leading-relaxed">
+                                    {item.description}
+                                </p>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- ROI -->
+        <section class="py-20 bg-gray-900/30 border-y border-white/5">
+            <div class="container mx-auto px-6 text-center max-w-3xl">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                    Return on Investment (ROI)
+                </h2>
+                <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+                    A single new, mid-sized client or partner — even a regular
+                    customer — with their monthly order volume and the resulting
+                    margin can already <strong class="text-emerald-400"
+                        >cover the entire annual SEO budget in the first
+                        year</strong
+                    >. Every additional client is pure profit.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                    <div
+                        class="bg-gray-900/50 p-6 rounded-xl border border-white/5"
+                    >
+                        <div class="text-2xl font-black text-emerald-400 mb-2">
+                            &euro;220
+                        </div>
+                        <div class="text-gray-400 text-sm">
+                            Monthly SEO investment
+                        </div>
+                    </div>
+                    <div
+                        class="bg-gray-900/50 p-6 rounded-xl border border-white/5"
+                    >
+                        <div class="text-2xl font-black text-emerald-400 mb-2">
+                            1 new client
+                        </div>
+                        <div class="text-gray-400 text-sm">
+                            Enough for full ROI
+                        </div>
+                    </div>
+                    <div
+                        class="bg-gray-900/50 p-6 rounded-xl border border-white/5"
+                    >
+                        <div class="text-2xl font-black text-emerald-400 mb-2">
+                            &infin; profit
+                        </div>
+                        <div class="text-gray-400 text-sm">
+                            From every additional client
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-24 md:py-32">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                        Frequently Asked Questions
+                    </h2>
+                </div>
+
+                <div class="space-y-4">
+                    {
+                        faqs.map((faq, i) => (
+                            <details class="group bg-gray-900/40 border border-white/5 rounded-xl overflow-hidden hover:border-emerald-500/20 transition-colors">
+                                <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                                    <h3 class="text-white font-bold pr-4">
+                                        {faq.question}
+                                    </h3>
+                                    <svg
+                                        class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform duration-300 flex-shrink-0"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </summary>
+                                <div class="px-6 pb-6 text-gray-400 leading-relaxed border-t border-white/5 pt-4">
+                                    {faq.answer}
+                                </div>
+                            </details>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Schema -->
+        <script
+            type="application/ld+json"
+            set:html={JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                mainEntity: faqs.map((faq) => ({
+                    "@type": "Question",
+                    name: faq.question,
+                    acceptedAnswer: {
+                        "@type": "Answer",
+                        text: faq.answer,
+                    },
+                })),
+            })}
+        />
+
+        <!-- EXISTING WEBSITE CTA -->
+        <section class="py-20 bg-gradient-to-b from-transparent to-[#0B1120]">
+            <div class="container mx-auto px-6 text-center">
+                <div
+                    class="max-w-3xl mx-auto bg-gray-900/60 border border-white/10 rounded-3xl p-10 md:p-14"
+                >
+                    <h2 class="text-3xl md:text-4xl font-black text-white mb-4">
+                        Already have a website?
+                    </h2>
+                    <p class="text-gray-400 text-lg mb-3 leading-relaxed">
+                        Our SEO service isn't just for websites we built. If you
+                        have an existing site (WordPress or otherwise), let's
+                        start with a free assessment.
+                    </p>
+                    <p class="text-gray-500 text-sm mb-8">
+                        No commitment. We map out the opportunities, and you
+                        decide.
+                    </p>
+                    <MagneticButtonAstro>
+                        <a
+                            href="/contact?topic=seo-assessment"
+                            class="inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-full text-lg hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] hover:scale-105 transition-all duration-300"
+                        >
+                            Request a Free Assessment
+                        </a>
+                    </MagneticButtonAstro>
+                </div>
+            </div>
+        </section>
+
+        <Contact />
+    </main>
+    <Footer />
+    <CookieBanner />
+</Layout>
