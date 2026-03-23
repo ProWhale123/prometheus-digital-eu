@@ -16,10 +16,7 @@ import MagneticButtonAstro from "../components/MagneticButtonAstro.astro";
 
 // Image imports
 import project1Image from "../assets/images/project-1.jpg";
-import project2Image from "../assets/images/project-2.jpg";
 import project3Image from "../assets/images/project-3.jpg";
-import project4Image from "../assets/images/project-4.jpg";
-import project5Image from "../assets/images/project-5.jpg";
 import project7Image from "../assets/images/project-7.png";
 import project8Image from "../assets/images/project-8.png";
 import project9Image from "../assets/images/project-9.jpg";
@@ -54,20 +51,20 @@ const clientProjects = [
 
 const showcaseProjects = [
     {
-        title: "Nebula Motors",
+        title: "Golden Wheat Bakery",
         description:
-            "The electric mobility of the future. An immersive, cyberpunk aesthetic website with stunning visual storytelling and motion design.",
-        tags: ["Automotive", "Motion UI", "Immersive"],
-        imageSrc: project8Image,
-        liveUrl: "https://nebula-motors.eu/",
+            "Narrative-design bakery website with three generations of tradition. Product catalog, breakfast menu and ordering.",
+        tags: ["Bakery", "Storytelling", "Clean"],
+        imageSrc: project13Image,
+        liveUrl: "https://pekseg-demo.vercel.app/",
     },
     {
-        title: "LUX SECURE",
+        title: "Napoli Pizzeria",
         description:
-            "Futuristic, terminal-style website for a cybersecurity provider. Live interceptor grid visualization and dark-themed UI.",
-        tags: ["Cybersecurity", "Dark Mode", "Animated"],
-        imageSrc: project7Image,
-        liveUrl: "https://luxsecure.eu/",
+            "Authentic Neapolitan pizzeria website with food photography, menu and table reservation system.",
+        tags: ["Hospitality", "Restaurant", "Menu"],
+        imageSrc: project15Image,
+        liveUrl: "https://pizzeria-demo-omega.vercel.app/",
     },
     {
         title: "Artisan Coffee Shop",
@@ -94,60 +91,12 @@ const showcaseProjects = [
         liveUrl: "https://franzi-bajor-etterem.vercel.app/",
     },
     {
-        title: "Golden Wheat Bakery",
-        description:
-            "Narrative-design bakery website with three generations of tradition. Product catalog, breakfast menu and ordering.",
-        tags: ["Bakery", "Storytelling", "Clean"],
-        imageSrc: project13Image,
-        liveUrl: "https://pekseg-demo.vercel.app/",
-    },
-    {
-        title: "Gastronomo Fine Dining",
-        description:
-            "Exclusive fine dining restaurant website with interactive cursor effects, reservation system and premium visual appearance.",
-        tags: ["Fine Dining", "UI/UX", "Animated"],
-        imageSrc: project2Image,
-        liveUrl: "https://gastronomo.eu/",
-    },
-    {
-        title: "Duna Rapszodia Restaurant",
-        description:
-            "Atmospheric restaurant website with lightbox gallery, detailed menu and panoramic Budapest ambiance.",
-        tags: ["Restaurant", "Gallery", "Responsive"],
-        imageSrc: project3Image,
-        liveUrl: "https://duna-rapszodia.hu/",
-    },
-    {
-        title: "Construction & Renovation Company",
-        description:
-            "Trust-inspiring showcase site for a renovation and construction company. Reference gallery, process overview and quote request.",
-        tags: ["Construction", "Lead Gen", "Corporate"],
-        imageSrc: project4Image,
-        liveUrl: "https://renovation-company.netlify.app/",
-    },
-    {
-        title: "Kovacs Legal — Law Firm",
-        description:
-            "Reliability-focused legal website with practice area introduction, team showcase and consultation booking.",
-        tags: ["Legal", "Professional", "Trust"],
-        imageSrc: project5Image,
-        liveUrl: "https://kovacslegal.hu/",
-    },
-    {
         title: "Apex Fitness",
         description:
             "Premium fitness club website with exclusive membership tiers and elegant dark design.",
         tags: ["Fitness", "Premium", "Dark Mode"],
         imageSrc: project14Image,
         liveUrl: "https://fitnesstemplate-phi.vercel.app/",
-    },
-    {
-        title: "Napoli Pizzeria",
-        description:
-            "Authentic Neapolitan pizzeria website with food photography, menu and table reservation system.",
-        tags: ["Hospitality", "Restaurant", "Menu"],
-        imageSrc: project15Image,
-        liveUrl: "https://pizzeria-demo-omega.vercel.app/",
     },
     {
         title: "Oak Tree Guesthouse",
@@ -158,18 +107,43 @@ const showcaseProjects = [
         liveUrl: "https://panzio-demo.vercel.app/",
     },
     {
-        title: "Void Survivors",
+        title: "Duna Rapszodia Restaurant",
         description:
-            "Browser-based roguelike game with neon cyberpunk aesthetic, PWA support and global leaderboards.",
-        tags: ["Web App", "Gaming", "PWA"],
+            "Atmospheric restaurant website with lightbox gallery, detailed menu and panoramic Budapest ambiance.",
+        tags: ["Restaurant", "Gallery", "Responsive"],
+        imageSrc: project3Image,
+        liveUrl: "https://duna-rapszodia.hu/",
+    },
+    {
+        title: "Nebula Motors",
+        description:
+            "The electric mobility of the future. An immersive, cyberpunk aesthetic website with stunning visual storytelling and motion design.",
+        tags: ["Automotive", "Motion UI", "Immersive"],
+        imageSrc: project8Image,
+        liveUrl: "https://nebula-motors.eu/",
+    },
+    {
+        title: "LUX SECURE",
+        description:
+            "Futuristic, terminal-style website for a cybersecurity provider. Live interceptor grid visualization and dark-themed UI.",
+        tags: ["Cybersecurity", "Dark Mode", "Animated"],
+        imageSrc: project7Image,
+        liveUrl: "https://luxsecure.eu/",
+    },
+];
+
+const ownProducts = [
+    {
+        title: "Void Survivors",
+        description: "Browser-based roguelike game with neon cyberpunk aesthetic, PWA support and global leaderboards.",
+        tags: ["Gaming", "PWA", "Next.js"],
         imageSrc: project17Image,
         liveUrl: "https://www.voidsurvivors.eu/",
     },
     {
         title: "StockTrackr",
-        description:
-            "Portfolio management and stock valuation web app with DCF calculator and real-time market data.",
-        tags: ["Web App", "FinTech", "Dashboard"],
+        description: "Portfolio management and stock valuation web app with DCF calculator and real-time market data.",
+        tags: ["FinTech", "Dashboard", "Next.js"],
         imageSrc: project18Image,
         liveUrl: "https://stocktrackr.eu/",
     },
@@ -323,6 +297,95 @@ const showcaseProjects = [
                                                 </span>
                                                 <svg
                                                     class="w-5 h-5 text-sky-400"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                                    />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </TiltCardAstro>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Own Products -->
+        <section class="relative py-24 md:py-32 bg-[#0B1120]">
+            <FloatingElement speed={0.15} class="top-20 -right-20 z-0 opacity-20">
+                <div class="w-96 h-96 rounded-full bg-amber-500 blur-[100px]">
+                </div>
+            </FloatingElement>
+            <div
+                class="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:50px_50px] opacity-[0.03] pointer-events-none"
+            >
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-16">
+                    <span class="text-sm font-bold text-amber-400 uppercase tracking-widest mb-4 block">Products we built and operate</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tight">
+                        Our Own <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-300">Products</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
+                    {
+                        ownProducts.map((project, index) => (
+                            <div
+                                class={`project-card ${index % 2 !== 0 ? "md:translate-y-16" : ""}`}
+                            >
+                                <TiltCardAstro
+                                    class="h-full bg-transparent"
+                                >
+                                    <a
+                                        href={project.liveUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="group block relative rounded-3xl overflow-hidden bg-gray-900 border border-white/10 hover:border-amber-500/50 transition-colors duration-500"
+                                    >
+                                        <div class="h-64 md:h-80 w-full overflow-hidden relative">
+                                            <div class="absolute inset-0 bg-amber-900/0 group-hover:bg-amber-900/20 transition-colors duration-500 z-10" />
+                                            <ParallaxImage
+                                                src={project.imageSrc}
+                                                alt={project.title}
+                                                height="h-full"
+                                                class="transition-transform duration-700 group-hover:scale-105"
+                                            />
+                                        </div>
+
+                                        <div class="p-8">
+                                            <div class="flex flex-wrap gap-2 mb-4">
+                                                <span class="text-xs font-bold text-amber-400 uppercase tracking-wider bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+                                                    Own Product
+                                                </span>
+                                                {project.tags.map((tag) => (
+                                                    <span class="text-xs font-bold text-sky-400 uppercase tracking-wider bg-sky-500/10 px-3 py-1 rounded-full border border-sky-500/20">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                            <h3 class="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-amber-300 transition-colors">
+                                                {project.title}
+                                            </h3>
+                                            <p class="text-gray-400 leading-relaxed mb-6">
+                                                {project.description}
+                                            </p>
+                                            <div class="flex items-center text-white font-medium group/link">
+                                                <span class="mr-2 group-hover/link:mr-4 transition-all">
+                                                    View Live
+                                                </span>
+                                                <svg
+                                                    class="w-5 h-5 text-amber-400"
                                                     fill="none"
                                                     stroke="currentColor"
                                                     viewBox="0 0 24 24"

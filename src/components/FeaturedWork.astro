@@ -5,8 +5,6 @@ import TiltCardAstro from './TiltCardAstro.astro';
 import ParallaxImage from './ParallaxImage.astro';
 
 import project1Image from '../assets/images/project-1.jpg';
-import project2Image from '../assets/images/project-2.jpg';
-import project3Image from '../assets/images/project-3.jpg';
 import project7Image from '../assets/images/project-7.png';
 import project8Image from '../assets/images/project-8.png';
 import project9Image from '../assets/images/project-9.jpg';
@@ -21,32 +19,25 @@ import project18Image from '../assets/images/project-18.jpg';
 
 const projects = [
     {
+        title: "Golden Wheat Bakery",
+        description: "Narrative-design bakery website with three generations of tradition.",
+        tags: ["Bakery", "Storytelling", "Clean"],
+        imageSrc: project13Image,
+        liveUrl: "https://pekseg-demo.vercel.app/"
+    },
+    {
+        title: "Napoli Pizzeria",
+        description: "Authentic Neapolitan pizzeria website with food photography, menu and table reservation system.",
+        tags: ["Hospitality", "Restaurant", "Menu"],
+        imageSrc: project15Image,
+        liveUrl: "https://pizzeria-demo-omega.vercel.app/"
+    },
+    {
         title: "MSM Chicken Goods",
         description: "Full website for a premium food manufacturer. Modern animations and product showcase.",
         tags: ["Food Industry", "B2B", "Astro"],
         imageSrc: project12Image,
         liveUrl: "https://msmchickengoods.com/"
-    },
-    {
-        title: "Nebula Motors",
-        description: "Immersive, cyberpunk aesthetic website with stunning motion design.",
-        tags: ["Automotive", "Motion UI", "Immersive"],
-        imageSrc: project8Image,
-        liveUrl: "https://nebula-motors.eu/"
-    },
-    {
-        title: "Artisan Coffee Shop",
-        description: "Elegant, dark-toned showcase site for a premium cafe.",
-        tags: ["Hospitality", "Premium", "Dark Mode"],
-        imageSrc: project9Image,
-        liveUrl: "https://coffee-shop-demo-six.vercel.app/"
-    },
-    {
-        title: "LUX SECURE",
-        description: "Futuristic cybersecurity website with live interceptor grid visualization.",
-        tags: ["Cybersecurity", "Dark Mode", "Animated"],
-        imageSrc: project7Image,
-        liveUrl: "https://luxsecure.eu/"
     },
     {
         title: "DOL Bt. — Travel Agency",
@@ -56,6 +47,13 @@ const projects = [
         liveUrl: "https://dolbt.eu/"
     },
     {
+        title: "Artisan Coffee Shop",
+        description: "Elegant, dark-toned showcase site for a premium cafe.",
+        tags: ["Hospitality", "Premium", "Dark Mode"],
+        imageSrc: project9Image,
+        liveUrl: "https://coffee-shop-demo-six.vercel.app/"
+    },
+    {
         title: "Artisan Ice Cream Parlor",
         description: "Cheerful, warm-colored website for an artisan ice cream shop.",
         tags: ["Hospitality", "Light Theme", "Branding"],
@@ -63,32 +61,11 @@ const projects = [
         liveUrl: "https://ice-cream-shop-eta.vercel.app/"
     },
     {
-        title: "Golden Wheat Bakery",
-        description: "Narrative-design bakery website with three generations of tradition.",
-        tags: ["Bakery", "Storytelling", "Clean"],
-        imageSrc: project13Image,
-        liveUrl: "https://pekseg-demo.vercel.app/"
-    },
-    {
-        title: "Gastronomo Fine Dining",
-        description: "Exclusive fine dining website with interactive cursor effects and reservation system.",
-        tags: ["Fine Dining", "UI/UX", "Animated"],
-        imageSrc: project2Image,
-        liveUrl: "https://gastronomo.eu/"
-    },
-    {
         title: "Apex Fitness",
         description: "Premium fitness club website with exclusive membership tiers and elegant dark design.",
         tags: ["Fitness", "Premium", "Dark Mode"],
         imageSrc: project14Image,
         liveUrl: "https://fitnesstemplate-phi.vercel.app/"
-    },
-    {
-        title: "Napoli Pizzeria",
-        description: "Authentic Neapolitan pizzeria website with food photography, menu and table reservation system.",
-        tags: ["Hospitality", "Restaurant", "Menu"],
-        imageSrc: project15Image,
-        liveUrl: "https://pizzeria-demo-omega.vercel.app/"
     },
     {
         title: "Oak Tree Guesthouse",
@@ -100,16 +77,30 @@ const projects = [
     {
         title: "Void Survivors",
         description: "Browser-based roguelike game with neon cyberpunk aesthetic, PWA support and global leaderboards.",
-        tags: ["Web App", "Gaming", "PWA"],
+        tags: ["Own Product", "Gaming", "PWA"],
         imageSrc: project17Image,
         liveUrl: "https://www.voidsurvivors.eu/"
     },
     {
         title: "StockTrackr",
         description: "Portfolio management and stock valuation web app with DCF calculator and real-time market data.",
-        tags: ["Web App", "FinTech", "Dashboard"],
+        tags: ["Own Product", "FinTech", "Dashboard"],
         imageSrc: project18Image,
         liveUrl: "https://stocktrackr.eu/"
+    },
+    {
+        title: "Nebula Motors",
+        description: "Immersive, cyberpunk aesthetic website with stunning motion design.",
+        tags: ["Automotive", "Motion UI", "Immersive"],
+        imageSrc: project8Image,
+        liveUrl: "https://nebula-motors.eu/"
+    },
+    {
+        title: "LUX SECURE",
+        description: "Futuristic cybersecurity website with live interceptor grid visualization.",
+        tags: ["Cybersecurity", "Dark Mode", "Animated"],
+        imageSrc: project7Image,
+        liveUrl: "https://luxsecure.eu/"
     },
 ];
 ---
@@ -147,7 +138,7 @@ const projects = [
                                     <p class="text-gray-400 text-sm mb-6 leading-relaxed line-clamp-3">{project.description}</p>
                                     <div class="flex flex-wrap gap-2">
                                         {project.tags.map(tag => (
-                                            <span class={`text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider ${tag === 'Client Project' ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20' : 'bg-sky-500/10 text-sky-300'}`}>{tag}</span>
+                                            <span class={`text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider ${tag === 'Client Project' ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/20' : tag === 'Own Product' ? 'bg-amber-500/10 text-amber-300 border border-amber-500/20' : 'bg-sky-500/10 text-sky-300'}`}>{tag}</span>
                                         ))}
                                     </div>
                                 </div>
