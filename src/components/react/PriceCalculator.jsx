@@ -31,7 +31,6 @@ export default function PriceCalculator() {
         extras: {
             booking: false,
             marketing: false,
-            billing: false,
             newsletter: false,
             chatbot: false
         },
@@ -82,7 +81,6 @@ export default function PriceCalculator() {
         sum += config.multilingual * 270; // ~90k HUF
         if (config.extras.booking) sum += 135; // ~45k HUF
         if (config.extras.marketing) sum += 195; // ~65k HUF
-        if (config.extras.billing) sum += 240; // ~80k HUF
         if (config.extras.newsletter) sum += 120; // ~40k HUF
         if (config.extras.chatbot) sum += 450; // ~150k HUF
 
@@ -284,7 +282,7 @@ export default function PriceCalculator() {
                                     className={`p-5 rounded-xl border text-left relative transition-all ${config.webshop === 'lite' ? 'border-sky-500 bg-sky-500/10' : 'border-white/10 hover:bg-gray-800/50'}`}
                                 >
                                     <div className="font-bold text-white text-sm">Lite Commerce</div>
-                                    <div className="text-xs text-gray-400 mt-2 leading-relaxed">Integrated cart & checkout, Stripe payments. Ideal for up to 20 products.</div>
+                                    <div className="text-xs text-gray-400 mt-2 leading-relaxed">Integrated cart & checkout, Stripe payments, invoicing included. Ideal for up to 20 products.</div>
                                     <div className="text-sky-400 text-xs font-mono mt-3 font-bold">€1,050</div>
                                     {config.webshop === 'lite' && <span className="absolute top-3 right-3 w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_#38bdf8]"></span>}
                                 </button>
@@ -294,7 +292,7 @@ export default function PriceCalculator() {
                                     className={`p-5 rounded-xl border text-left relative transition-all ${config.webshop === 'pro' ? 'border-purple-500 bg-purple-500/10' : 'border-white/10 hover:bg-gray-800/50'}`}
                                 >
                                     <div className="font-bold text-white text-sm">Pro Commerce (Headless)</div>
-                                    <div className="text-xs text-gray-400 mt-2 leading-relaxed">Shopify/BigCommerce backend. Scalable e-commerce.</div>
+                                    <div className="text-xs text-gray-400 mt-2 leading-relaxed">User registration, order history, invoicing included. Scalable e-commerce.</div>
                                     <div className="text-purple-400 text-xs font-mono mt-3 font-bold">Custom Quote</div>
                                     {config.webshop === 'pro' && <span className="absolute top-3 right-3 w-2 h-2 bg-purple-500 rounded-full shadow-[0_0_10px_#a855f7]"></span>}
                                 </button>
@@ -338,7 +336,6 @@ export default function PriceCalculator() {
                                 {[
                                     { id: 'booking', label: 'Booking Module', price: '€135' },
                                     { id: 'marketing', label: 'CRM / Marketing Auto', price: '€195' },
-                                    { id: 'billing', label: 'Invoicing Integration', price: '€240' },
                                     { id: 'newsletter', label: 'Newsletter API', price: '€120' },
                                     { id: 'chatbot', label: 'AI Chatbot', price: '€450' }
                                 ].map(item => (
@@ -404,8 +401,8 @@ export default function PriceCalculator() {
                                 <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-400">Analytics Stack</span><span className="text-white font-mono">{formatPrice((config.analytics.ga4 ? 75 : 0) + (config.analytics.gtm ? 75 : 0) + (config.analytics.pixel ? 60 : 0) + (config.analytics.searchConsole ? 45 : 0))}</span></div>
                             )}
 
-                            {(config.extras.booking || config.extras.marketing || config.extras.billing || config.extras.newsletter || config.extras.chatbot || config.multilingual > 0) && (
-                                <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-400">Business Logic</span><span className="text-white font-mono">{formatPrice((config.extras.booking ? 135 : 0) + (config.extras.marketing ? 195 : 0) + (config.extras.billing ? 240 : 0) + (config.extras.newsletter ? 120 : 0) + (config.extras.chatbot ? 450 : 0) + (config.multilingual * 270))}</span></div>
+                            {(config.extras.booking || config.extras.marketing || config.extras.newsletter || config.extras.chatbot || config.multilingual > 0) && (
+                                <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-400">Business Logic</span><span className="text-white font-mono">{formatPrice((config.extras.booking ? 135 : 0) + (config.extras.marketing ? 195 : 0) + (config.extras.newsletter ? 120 : 0) + (config.extras.chatbot ? 450 : 0) + (config.multilingual * 270))}</span></div>
                             )}
                         </div>
 
