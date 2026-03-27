@@ -56,8 +56,8 @@ const { speed = 0.2, class: className = "" } = Astro.props;
             });
         });
         
-        // Frissítjük a ScrollTriggert, hogy biztosan lássa a magasságot
-        ScrollTrigger.refresh();
+        // Defer refresh so it doesn't block page transition reveal animation
+        setTimeout(() => ScrollTrigger.refresh(), 800);
     }
 
     // Indítás
