@@ -9,7 +9,7 @@ import ServiceSchema from "../components/ServiceSchema.astro";
 import LocalBusinessSchema from "../components/LocalBusinessSchema.astro";
 import MagneticButtonAstro from "../components/MagneticButtonAstro.astro";
 import SpotlightCard from "../components/SpotlightCard.astro";
-import FloatingElement from "../components/FloatingElement.astro";
+
 
 const seoProcess = [
     {
@@ -143,15 +143,9 @@ const faqs = [
                 class="absolute inset-0 bg-gradient-to-b from-emerald-950/20 via-transparent to-transparent"
             >
             </div>
-            <FloatingElement
-                speed={0.15}
-                class="top-20 -right-40 z-0 opacity-10"
-            >
-                <div
-                    class="w-[500px] h-[500px] rounded-full bg-emerald-600 blur-[150px]"
-                >
-                </div>
-            </FloatingElement>
+            <div class="absolute top-20 -right-40 z-0 opacity-10 pointer-events-none">
+                <div class="w-[500px] h-[500px] rounded-full bg-emerald-600 blur-[150px]"></div>
+            </div>
 
             <div class="container mx-auto px-6 text-center relative z-10">
                 <Breadcrumb
@@ -321,13 +315,9 @@ const faqs = [
             id="packages"
             class="py-24 md:py-32 bg-gray-900/30 border-y border-white/5 relative overflow-hidden"
         >
-            <FloatingElement
-                speed={0.2}
-                class="bottom-20 -left-40 z-0 opacity-10"
-            >
-                <div class="w-96 h-96 rounded-full bg-emerald-600 blur-[120px]">
-                </div>
-            </FloatingElement>
+            <div class="absolute bottom-20 -left-40 z-0 opacity-10 pointer-events-none">
+                <div class="w-96 h-96 rounded-full bg-emerald-600 blur-[120px]"></div>
+            </div>
 
             <div class="container mx-auto px-6 relative z-10">
                 <div class="text-center max-w-3xl mx-auto mb-16">
