@@ -14,6 +14,9 @@ const className = Astro.props.class || "";
 
 <script>
   function initTiltCards() {
+    // No hover on mobile — skip 3D tilt listeners entirely
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
     document.querySelectorAll('.tilt-card').forEach((card) => {
       if (card.hasAttribute('data-tilt-init')) return;
       card.setAttribute('data-tilt-init', '');

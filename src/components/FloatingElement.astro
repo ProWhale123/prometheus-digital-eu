@@ -60,9 +60,9 @@ const { speed = 0.2, class: className = "" } = Astro.props;
         setTimeout(() => ScrollTrigger.refresh(), 800);
     }
 
-    // Indítás
-    initFloating();
-    
-    // View Transitions támogatás
-    document.addEventListener('astro:page-load', initFloating);
+    // Skip ScrollTrigger parallax on mobile (no value, wastes CPU)
+    if (!window.matchMedia('(pointer: coarse)').matches) {
+        initFloating();
+        document.addEventListener('astro:page-load', initFloating);
+    }
 </script>

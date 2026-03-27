@@ -17,6 +17,9 @@ const className = Astro.props.class || "";
 
 <script>
   function initSpotlightCards() {
+    // No hover on mobile — skip mousemove listeners entirely
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+
     document.querySelectorAll('.spotlight-card').forEach((card) => {
       const overlay = card.querySelector('.spotlight-overlay') as HTMLElement;
       if (!overlay || card.hasAttribute('data-spotlight-init')) return;

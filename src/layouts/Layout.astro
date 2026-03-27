@@ -143,6 +143,9 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
                 // If exists, don't create new (Important for View Transitions)
                 if (lenis) return;
 
+                // Mobile already has excellent native smooth scroll — skip Lenis entirely
+                if (window.matchMedia('(pointer: coarse)').matches) return;
+
                 lenis = new Lenis({
                     duration: 1.2, // Slightly slower, "premium" feel
                     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Classic "mobile-like" scroll math
