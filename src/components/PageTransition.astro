@@ -1,108 +1,80 @@
 ---
-/* src/components/PageTransition.astro - Ultimate Branded Version */
+/* src/components/PageTransition.astro - Lightweight single-curtain version */
 ---
-<div 
-    id="pt-overlay-text" 
-    class="fixed inset-0 z-[9995] flex items-center justify-center pointer-events-none opacity-0 translate-y-8 will-change-transform"
+<div
+    id="pt-overlay-text"
+    class="fixed inset-0 z-[9995] flex items-center justify-center pointer-events-none"
+    style="opacity:0;transform:translateY(2rem)"
 >
     <h2 class="text-2xl md:text-4xl font-black uppercase tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-300">
         Prometheus Digital
     </h2>
 </div>
 
-<div class="transition-curtain fixed inset-0 z-[9992] bg-[#0B1120] pointer-events-none translate-y-full will-change-transform"></div>
-<div class="transition-curtain fixed inset-0 z-[9991] bg-gray-900 pointer-events-none translate-y-full will-change-transform"></div>
-<div class="transition-curtain fixed inset-0 z-[9990] bg-gray-800 pointer-events-none translate-y-full will-change-transform"></div>
-
+<div id="pt-curtain" class="fixed inset-0 z-[9992] bg-[#0B1120] pointer-events-none" style="transform:translateY(100%)"></div>
 
 <script>
-    import { gsap } from "gsap";
+    const curtain = document.getElementById('pt-curtain')!;
+    const text = document.getElementById('pt-overlay-text')!;
 
-    const curtainSelector = '.transition-curtain';
-    const textSelector = '#pt-overlay-text';
+    // CSS transitions handle the GPU compositing — no GSAP needed for curtain
+    curtain.style.transition = 'none';
+    text.style.transition = 'none';
 
-    // Easing görbék a prémium érzethez
-    const expoInOut = "expo.inOut"; // Nagyon drámai, gyors indulás/érkezés
-    const power3Out = "power3.out"; // Finomabb lassulás a szövegnek
-
-    // --- 1. INDULÁS (Kattintáskor: Takarás + Szöveg be) ---
+    // --- 1. COVER (on click: curtain slides up) ---
     document.addEventListener('astro:before-preparation', (event) => {
-        const curtains = document.querySelectorAll(curtainSelector);
-        const text = document.querySelector(textSelector);
-        
-        if (curtains.length === 0 || !text) return;
+        if (!curtain || !text) return;
 
         const originalLoader = event.loader;
         event.loader = async () => {
-            const tl = gsap.timeline();
+            // Start curtain slide-up via CSS transition
+            curtain.style.transition = 'transform 0.55s cubic-bezier(0.77,0,0.175,1)';
+            text.style.transition = 'opacity 0.4s ease-out 0.2s, transform 0.4s ease-out 0.2s';
 
-            // Párhuzamosan fut a függöny felhúzás és a szöveg megjelenés
-            tl.to(curtains, {
-                y: '0%', 
-                duration: 0.8,
-                ease: expoInOut,
-                stagger: 0.05
-            }, 0) // A "0" a timeline elejére teszi
-            
-            // Szöveg beúszik (opacity 0->1, y 32px->0px)
-            .to(text, {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                ease: power3Out
-            }, 0.3); // Kis késleltetéssel indul, hogy a sötétre érkezzen
+            // Force reflow so transition starts from current position
+            curtain.offsetHeight;
 
-            // Megvárjuk az animációt ÉS a betöltést
-            await Promise.all([tl, originalLoader()]);
+            curtain.style.transform = 'translateY(0%)';
+            text.style.opacity = '1';
+            text.style.transform = 'translateY(0)';
+
+            // Wait for both: curtain animation (550ms) AND page fetch
+            await Promise.all([
+                new Promise(r => setTimeout(r, 560)),
+                originalLoader()
+            ]);
         };
     });
 
-    // --- 2. ÉRKEZÉS (Swap után: Felfedés + Szöveg ki) ---
+    // --- 2. REVEAL (after swap: curtain slides away) ---
     document.addEventListener('astro:after-swap', () => {
-        const curtains = document.querySelectorAll(curtainSelector);
-        const text = document.querySelector(textSelector);
-        
-        if (curtains.length > 0 && text) {
-            // AZONNALI POZÍCIONÁLÁS (Reset az új oldalon)
-            // A függönyök fedésben, a szöveg láthatóan középen
-            gsap.set(curtains, { y: '0%' });
-            gsap.set(text, { opacity: 1, y: 0 });
+        if (!curtain || !text) return;
 
-            const tl = gsap.timeline({
-                onComplete: () => {
-                    // RESET A KÖVETKEZŐ KÖRRE (Mindent vissza a pincébe)
-                    gsap.set(curtains, { y: '100%' });
-                    gsap.set(text, { opacity: 0, y: 32 }); // Tailwind translate-y-8 = 32px
-                }
-            });
+        // Ensure curtain covers (instant reset for new page)
+        curtain.style.transition = 'none';
+        text.style.transition = 'none';
+        curtain.style.transform = 'translateY(0%)';
+        text.style.opacity = '1';
+        text.style.transform = 'translateY(0)';
 
-            // Párhuzamosan fut a függöny továbbhúzás és a szöveg eltűnés
-            tl.to(curtains, {
-                y: '-100%', 
-                duration: 0.8,
-                ease: expoInOut,
-                stagger: 0.05
-            }, 0)
-            
-            // Szöveg kiúszik (opacity 1->0, y 0px -> -32px felfelé)
-            .to(text, {
-                opacity: 0,
-                y: -32, 
-                duration: 0.5,
-                ease: "power2.in"
-            }, 0); // Azonnal indul a függönyökkel együtt
-        }
+        // Force reflow
+        curtain.offsetHeight;
+
+        // Slide curtain up and fade text
+        curtain.style.transition = 'transform 0.55s cubic-bezier(0.77,0,0.175,1)';
+        text.style.transition = 'opacity 0.35s ease-in, transform 0.35s ease-in';
+
+        curtain.style.transform = 'translateY(-100%)';
+        text.style.opacity = '0';
+        text.style.transform = 'translateY(-2rem)';
+
+        // Reset after animation completes
+        setTimeout(() => {
+            curtain.style.transition = 'none';
+            text.style.transition = 'none';
+            curtain.style.transform = 'translateY(100%)';
+            text.style.opacity = '0';
+            text.style.transform = 'translateY(2rem)';
+        }, 600);
     });
 </script>
-
-<style>
-    /* Alapállapotok a Tailwind osztályokban vannak kezelve,
-       de a biztonság kedvéért itt is definiálhatjuk. */
-    .transition-curtain {
-        transform: translateY(100%);
-    }
-    #pt-overlay-text {
-        opacity: 0;
-        transform: translateY(2rem); /* translate-y-8 */
-    }
-</style>
