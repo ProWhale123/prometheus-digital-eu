@@ -24,11 +24,14 @@
 <script>
     import { gsap } from "gsap";
 
-    const curtains = document.querySelectorAll('.pt-curtain');
-    const text = document.getElementById('pt-overlay-text')!;
+    // Query elements fresh each time — after view transitions, old refs are detached
+    function getCurtains() { return document.querySelectorAll('.pt-curtain'); }
+    function getText() { return document.getElementById('pt-overlay-text'); }
 
     // --- 1. COVER (on click: curtains slide up + branded text) ---
     document.addEventListener('astro:before-preparation', (event) => {
+        const curtains = getCurtains();
+        const text = getText();
         if (curtains.length === 0 || !text) return;
 
         const originalLoader = event.loader;
@@ -59,6 +62,8 @@
 
     // --- 2. REVEAL (after swap: curtains slide away) ---
     document.addEventListener('astro:after-swap', () => {
+        const curtains = getCurtains();
+        const text = getText();
         if (curtains.length === 0 || !text) return;
 
         // Instant reset: curtains covering, text visible
