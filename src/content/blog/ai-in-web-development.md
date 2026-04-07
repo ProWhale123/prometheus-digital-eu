@@ -1,7 +1,7 @@
 ---
 title: "AI in Web Development: Opportunities and Reality in 2026"
 description: "AI is transforming web development — but not the way most people think. Where does AI actually help, where does it fall short, and how do we use it in our daily work?"
-pubDate: 2026-03-27
+pubDate: 2026-03-25
 heroImage: "/src/assets/images/blog/hero-ai-webfejlesztes.png"
 tags: ["web development", "technology", "SME"]
 author: "Prometheus Digital"

@@ -1,7 +1,7 @@
 ---
 title: "Digital Marketing Budget for Small Businesses: Where to Invest Your Money in 2026"
 description: "You can run effective digital marketing even on a limited budget. We break down how to allocate your marketing spend between website, SEO, advertising, and content."
-pubDate: 2026-03-27
+pubDate: 2026-04-01
 heroImage: "/src/assets/images/blog/hero-marketing-budzse.png"
 tags: ["marketing", "SME", "SEO", "business"]
 author: "Prometheus Digital"

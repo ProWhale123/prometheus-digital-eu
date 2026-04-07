@@ -1,7 +1,7 @@
 ---
 title: "Conversion Rate Optimization (CRO): How to Turn Website Visitors into Paying Customers"
 description: "Traffic alone doesn't mean revenue. Conversion rate optimization helps you get more customers from existing visitors — without spending more on ads."
-pubDate: 2026-03-27
+pubDate: 2026-03-18
 heroImage: "/src/assets/images/blog/hero-konverzio-optimalizalas.png"
 tags: ["conversion", "web development", "marketing", "SME"]
 author: "Prometheus Digital"

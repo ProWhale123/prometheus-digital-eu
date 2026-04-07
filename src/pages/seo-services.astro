@@ -77,6 +77,49 @@ const setupIncludes = [
     },
 ];
 
+const complexSetupIncludes = [
+    {
+        title: "SEO Audit & Assessment",
+        description:
+            "Full technical audit, indexing issue mapping, top 3 competitor analysis. (€300 value)",
+    },
+    {
+        title: "Full Technical SEO Implementation",
+        description:
+            "Core Web Vitals optimization (within platform limits), WebP image conversion, sitemap regeneration, robots.txt cleanup, redirects.",
+    },
+    {
+        title: "Schema.org Markup Implementation",
+        description:
+            "Organization, BreadcrumbList, Service/Product, FAQ, Article schema in JSON-LD format on every relevant page.",
+    },
+    {
+        title: "Content Audit & 3-5 Page Expansion",
+        description:
+            "Critical pages rewritten or expanded, keyword-optimized (min 800-1500 words/page). Plus 2 new foundational blog posts.",
+    },
+    {
+        title: "Meta Tags & Internal Linking",
+        description:
+            "Custom meta title and description for every page, 20-40 new contextual internal links, breadcrumb implementation.",
+    },
+    {
+        title: "GA4 + GSC + Conversion Tracking",
+        description:
+            "Google Analytics 4 and Search Console setup, conversion funnel tracking, lead events (form, phone, email click).",
+    },
+    {
+        title: "Local SEO Optimization",
+        description:
+            "Google Business Profile cleanup, local schema markup, NAP consistency check (where relevant).",
+    },
+    {
+        title: "30-60-90 Day Action Plan",
+        description:
+            "Detailed handoff document, prioritized roadmap, 2-hour consultation and video walkthrough of all changes.",
+    },
+];
+
 const monthlyIncludes = [
     "4 keyword-optimized expert articles written and published per month",
     "Core Web Vitals check and Search Console data analysis",
@@ -108,6 +151,14 @@ const faqs = [
         answer: "JSON-LD structured data implementation, Google Analytics 4 and Search Console conversion tracking setup, complete B2B/B2C keyword research and competitor gap analysis, and website technical SEO fine-tuning (speed optimization, meta data, schema extensions).",
     },
     {
+        question: "What's the difference between Advanced and Complex SEO Setup?",
+        answer: "The Advanced (€600) is a foundation package for websites we built ourselves, where the technical foundation is already solid. The Complex (€1,400) is a full SEO transformation for an existing website we did not build: technical fixes, schema implementation, 3-5 page rewrites, full measurement stack and Local SEO. It's the right choice if your website comes from another developer or a template.",
+    },
+    {
+        question: "What if some elements are already working well on my site?",
+        answer: "We price flexibly. If you already have a working GA4 + Search Console setup, or your schema markup is partially in place, we deduct that from the price. In a free consultation we tailor the Complex Setup to your actual situation — you only pay for what is real work.",
+    },
+    {
         question: "How do you measure results?",
         answer: "At the end of every month, we send a transparent PDF report: search position changes, organic traffic trends, conversions (phone calls, forms, contacts), and next month's strategy. Plus a monthly online consultation.",
     },
@@ -129,7 +180,13 @@ const faqs = [
             {
                 name: "Advanced SEO Setup",
                 description:
-                    "One-time SEO foundation: JSON-LD structured data, GA4/GSC conversion tracking, keyword research and technical SEO fixes.",
+                    "One-time SEO foundation for websites we built: JSON-LD structured data, GA4/GSC conversion tracking, keyword research and technical SEO fixes.",
+                url: "/seo-services",
+            },
+            {
+                name: "Complex SEO Setup",
+                description:
+                    "Full SEO transformation for an existing website not built by us: technical SEO, schema markup, page expansion, GA4/GSC, Local SEO and 30-60-90 day action plan.",
                 url: "/seo-services",
             },
             {
@@ -342,13 +399,13 @@ const faqs = [
                 </div>
 
                 <div
-                    class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12"
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-8"
                 >
                     <!-- SETUP -->
                     <SpotlightCard
                         class="h-full bg-gray-900/60 border border-white/10"
                     >
-                        <div class="p-8 md:p-10 h-full flex flex-col">
+                        <div class="p-6 md:p-8 h-full flex flex-col">
                             <div
                                 class="inline-flex items-center gap-2 mb-4 text-xs font-bold tracking-widest text-gray-500 uppercase"
                             >
@@ -416,11 +473,94 @@ const faqs = [
                         </div>
                     </SpotlightCard>
 
+                    <!-- COMPLEX SETUP -->
+                    <SpotlightCard
+                        class="h-full bg-gray-900/60 border border-purple-500/30 relative"
+                    >
+                        <div class="p-6 md:p-8 h-full flex flex-col">
+                            <div
+                                class="absolute top-0 right-0 bg-purple-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl"
+                            >
+                                NEW
+                            </div>
+
+                            <div
+                                class="inline-flex items-center gap-2 mb-4 text-xs font-bold tracking-widest text-gray-500 uppercase"
+                            >
+                                <span
+                                    class="w-2 h-6 bg-purple-500 rounded-full"
+                                ></span>
+                                One-Time Fee
+                            </div>
+
+                            <h3 class="text-2xl font-bold text-white mb-2">
+                                Complex SEO Setup
+                            </h3>
+                            <p
+                                class="text-gray-400 text-sm mb-6 leading-relaxed"
+                            >
+                                Got an existing website with weak SEO? Full
+                                transformation: technical fixes, content
+                                expansion, schema, measurement and a handoff
+                                action plan.
+                            </p>
+
+                            <div class="space-y-3 mb-8 flex-grow">
+                                {
+                                    complexSetupIncludes.map((item) => (
+                                        <div class="border-b border-white/5 pb-3 last:border-0">
+                                            <div class="text-white font-bold text-sm flex items-center gap-2">
+                                                <svg
+                                                    class="w-4 h-4 text-purple-400 flex-shrink-0"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M5 13l4 4L19 7"
+                                                    />
+                                                </svg>
+                                                {item.title}
+                                            </div>
+                                            <p class="text-xs text-gray-500 ml-6 mt-1">
+                                                {item.description}
+                                            </p>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+
+                            <div class="pt-6 border-t border-white/10">
+                                <div class="flex items-baseline gap-2 mb-2">
+                                    <span class="text-3xl font-black text-white"
+                                        >From &euro;900</span
+                                    >
+                                    <span class="text-gray-500 text-sm"
+                                        >+ VAT</span
+                                    >
+                                </div>
+                                <p class="text-xs text-gray-500 italic mb-4">
+                                    Flexible pricing — what you already have, we
+                                    deduct
+                                </p>
+                                <a
+                                    href="/contact?topic=complex-seo-setup"
+                                    class="block w-full text-center py-3 px-6 border border-purple-500/40 text-purple-300 font-bold rounded-full hover:bg-purple-500/10 transition-all"
+                                >
+                                    Request Complex Setup
+                                </a>
+                            </div>
+                        </div>
+                    </SpotlightCard>
+
                     <!-- MONTHLY -->
                     <SpotlightCard
                         class="h-full bg-gray-900/60 border border-emerald-500/30 relative"
                     >
-                        <div class="p-8 md:p-10 h-full flex flex-col">
+                        <div class="p-6 md:p-8 h-full flex flex-col">
                             <div
                                 class="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl"
                             >
@@ -492,6 +632,41 @@ const faqs = [
                     </SpotlightCard>
                 </div>
 
+                <!-- FLEXIBLE PRICING NOTE -->
+                <div
+                    class="max-w-5xl mx-auto mb-8 bg-purple-500/5 border border-purple-500/20 rounded-2xl p-6 md:p-8 flex items-start gap-4"
+                >
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center">
+                        <svg
+                            class="w-5 h-5 text-purple-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                            />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold mb-1">
+                            Flexible pricing — you only pay for what's actually
+                            work
+                        </h4>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            If certain elements are already working well on your
+                            site (e.g. a properly configured GA4 + Search
+                            Console, or partial schema markup), we
+                            <strong class="text-white">deduct them from the price</strong>.
+                            In a free consultation we tailor the Setup to your
+                            actual situation.
+                        </p>
+                    </div>
+                </div>
+
                 <!-- BONUSES -->
                 <div
                     class="max-w-5xl mx-auto bg-gradient-to-br from-gray-900 to-black border border-emerald-500/20 rounded-2xl p-8 md:p-10"
@@ -550,16 +725,18 @@ const faqs = [
                             <p class="text-gray-300 mb-4">
                                 Blog Module <strong class="text-white"
                                     >FREE OF CHARGE</strong
-                                > + Advanced SEO Setup at <strong
-                                    class="text-white">20% discount</strong
+                                > + Advanced <strong class="text-white"
+                                    >or</strong
+                                > Complex Setup at <strong class="text-white"
+                                    >20% discount</strong
                                 >.
                             </p>
                             <div class="text-xs text-gray-500">
-                                Setup: <span class="line-through"
-                                    >&euro;400 + &euro;320 + VAT</span
+                                E.g. Complex Setup: <span class="line-through"
+                                    >&euro;900 + VAT</span
                                 >
                                 <span class="text-emerald-400 font-bold ml-1"
-                                    >&rarr; &euro;320 + VAT</span
+                                    >&rarr; &euro;720 + VAT</span
                                 >
                             </div>
                         </div>
