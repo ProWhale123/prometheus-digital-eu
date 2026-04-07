@@ -51,9 +51,9 @@ const setupIncludes = [
             "Custom schema.org code that explicitly defines the business, services, price range and service area for Google.",
     },
     {
-        title: "GA4 & GSC Conversion Tracking",
+        title: "SEO Audit & Assessment",
         description:
-            "Micro-conversion measurement: phone number clicks, form submissions, content engagement. Shows which channel brings paying prospects.",
+            "Comprehensive technical audit: speed, indexing, site structure, competitor analysis. We map out where your website stands and where the market gaps are.",
     },
     {
         title: "B2B/B2C Keyword Research",
@@ -64,6 +64,16 @@ const setupIncludes = [
         title: "Technical SEO Fix",
         description:
             "Core Web Vitals optimization, meta data fine-tuning, sitemap and robots.txt, image optimization, component-level metadata implementation.",
+    },
+    {
+        title: "Google Search Console Setup",
+        description:
+            "Website ownership verification, sitemap submission, indexing status monitoring and search performance report setup.",
+    },
+    {
+        title: "Google Analytics 4 Conversion Tracking",
+        description:
+            "GA4 property creation and configuration, micro-conversion measurement (phone clicks, form submissions, content engagement).",
     },
 ];
 
@@ -143,8 +153,9 @@ const faqs = [
                 class="absolute inset-0 bg-gradient-to-b from-emerald-950/20 via-transparent to-transparent"
             >
             </div>
+            <!-- Static ambient glow — reduced blur on mobile to avoid GPU overload -->
             <div class="absolute top-20 -right-40 z-0 opacity-10 pointer-events-none">
-                <div class="w-[500px] h-[500px] rounded-full bg-emerald-600 blur-[150px]"></div>
+                <div class="w-[500px] h-[500px] rounded-full bg-emerald-600 blur-[60px] md:blur-[150px]"></div>
             </div>
 
             <div class="container mx-auto px-6 text-center relative z-10">
@@ -315,8 +326,9 @@ const faqs = [
             id="packages"
             class="py-24 md:py-32 bg-gray-900/30 border-y border-white/5 relative overflow-hidden"
         >
+            <!-- Static ambient glow — reduced blur on mobile to avoid GPU overload -->
             <div class="absolute bottom-20 -left-40 z-0 opacity-10 pointer-events-none">
-                <div class="w-96 h-96 rounded-full bg-emerald-600 blur-[120px]"></div>
+                <div class="w-96 h-96 rounded-full bg-emerald-600 blur-[60px] md:blur-[120px]"></div>
             </div>
 
             <div class="container mx-auto px-6 relative z-10">
@@ -334,7 +346,7 @@ const faqs = [
                 >
                     <!-- SETUP -->
                     <SpotlightCard
-                        class="h-full bg-gray-900/60 backdrop-blur-sm border border-white/10"
+                        class="h-full bg-gray-900/60 border border-white/10"
                     >
                         <div class="p-8 md:p-10 h-full flex flex-col">
                             <div
@@ -406,7 +418,7 @@ const faqs = [
 
                     <!-- MONTHLY -->
                     <SpotlightCard
-                        class="h-full bg-gray-900/60 backdrop-blur-sm border border-emerald-500/30 relative"
+                        class="h-full bg-gray-900/60 border border-emerald-500/30 relative"
                     >
                         <div class="p-8 md:p-10 h-full flex flex-col">
                             <div

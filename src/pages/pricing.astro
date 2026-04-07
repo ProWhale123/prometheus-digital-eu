@@ -639,16 +639,19 @@ const offerSchema = {
             "-=0.8",
         );
 
-        gsap.to(".parallax-bg", {
-            yPercent: 20,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "header",
-                start: "top top",
-                end: "bottom top",
-                scrub: true,
-            },
-        });
+        // Skip parallax on mobile — scrub-based scroll animation is GPU-heavy
+        if (!window.matchMedia('(pointer: coarse)').matches) {
+            gsap.to(".parallax-bg", {
+                yPercent: 20,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "header",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true,
+                },
+            });
+        }
     }
 
     // Only use astro:page-load (fires on initial load too) — prevents double init
