@@ -1,0 +1,40 @@
+# Legacy Hungarian URL slugs → English equivalents (301 permanent)
+/araink                          /pricing                            301
+/araink/*                        /pricing                            301
+/munkaink                        /works                              301
+/munkaink/*                      /works                              301
+/kapcsolat                       /contact                            301
+/kapcsolat/*                     /contact                            301
+/koszonjuk                       /thank-you                          301
+/rolunk                          /about                              301
+/rolunk/*                        /about                              301
+/szolgaltatasok                  /services                           301
+/szolgaltatasok/*                /services                           301
+/adatvedelem                     /privacy-policy                     301
+/seo-tanacsadas-kkv-knak         /seo-services                       301
+
+# Removed/consolidated standalone landing pages
+/seo-consulting                  /seo-services                       301
+/web-design-budapest             /services                           301
+/weboldal-keszites-budapest      /services                           301
+/webshop-development-budapest    /services                           301
+/webshop-keszites-budapest       /services                           301
+
+# Legacy numbered blog post slugs → descriptive slugs
+/blog/1                          /blog/why-astro-is-the-perfect-choice           301
+/blog/2                          /blog/astro-vs-wordpress                        301
+/blog/3                          /blog/seo-guide-for-businesses                  301
+/blog/4                          /blog/what-is-a-headless-cms                    301
+/blog/5                          /blog/business-website-mistakes-to-avoid        301
+/blog/6                          /blog/how-much-does-a-website-cost              301
+/blog/7                          /blog/website-development-process               301
+/blog/8                          /blog/how-much-does-a-website-cost              301
+/blog/9                          /blog/web-animations-and-user-experience        301
+/blog/10                         /blog/local-seo-guide-google-business           301
+/blog/11                         /blog/how-to-write-seo-blog-posts               301
+/blog/12                         /blog/technical-seo-audit-checklist             301
+/blog/13                         /blog/technical-seo-audit-checklist             301
+/blog/14                         /blog/webshop-launch-guide                      301
+/blog/15                         /blog/how-to-write-about-us-page                301
+/blog/16                         /blog/google-analytics-4-beginners              301
+/blog/17                         /blog/google-analytics-4-beginners              301
