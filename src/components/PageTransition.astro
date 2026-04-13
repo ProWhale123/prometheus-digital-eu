@@ -20,13 +20,11 @@
 <div class="pt-curtain fixed inset-0 z-[9991] bg-[#0f1729] pointer-events-none pt-curtain-initial pt-curtain-stagger"></div>
 
 <script>
-    import { gsap } from "gsap";
-
     function getCurtains() { return document.querySelectorAll('.pt-curtain'); }
     function getText() { return document.getElementById('pt-overlay-text'); }
 
-    // --- 1. COVER: GSAP (no competing JS during cover phase) ---
-    document.addEventListener('astro:before-preparation', (event) => {
+    // --- 1. COVER: CSS transitions (no GSAP needed) ---
+    document.addEventListener('astro:before-preparation', (event: any) => {
         const curtains = getCurtains();
         const text = getText();
         if (curtains.length === 0 || !text) return;

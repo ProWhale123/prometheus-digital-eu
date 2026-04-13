@@ -8,7 +8,7 @@ import MagneticButton from "./react/MagneticButton.jsx";
     id="home"
     class="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-[#0B1120]"
 >
-    <SpotlightHeroBackground client:load />
+    <SpotlightHeroBackground client:visible />
 
     <div
         class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-sky-500/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none z-0 mix-blend-screen"
@@ -47,14 +47,14 @@ import MagneticButton from "./react/MagneticButton.jsx";
         </h1>
 
         <p
-            class="hero-desc max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-8 md:mb-12 opacity-0 px-4"
+            class="hero-desc max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-8 md:mb-12 px-4"
         >
             Strategic websites that are not just beautiful, but <span
                 class="text-white font-medium">convert</span
             >. Astro technology, premium design, and measurable results.
         </p>
 
-        <div class="hero-btn opacity-0 w-full flex justify-center px-4 pb-10">
+        <div class="hero-btn w-full flex justify-center px-4 pb-10">
             <MagneticButton
                 href="/contact"
                 client:visible
@@ -84,7 +84,7 @@ import MagneticButton from "./react/MagneticButton.jsx";
     </div>
 
     <div
-        class="hero-scroll absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0 pointer-events-none"
+        class="hero-scroll absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
     >
         <span
             class="text-[10px] md:text-xs font-mono text-gray-500 uppercase tracking-widest"
@@ -101,59 +101,45 @@ import MagneticButton from "./react/MagneticButton.jsx";
     import { gsap } from "gsap";
 
     function animateHero() {
-        // Only run if elements exist
         if (!document.querySelector(".hero-title-element")) return;
 
         const tl = gsap.timeline({ delay: 0.1 });
 
-        // --- CINEMATIC REVEAL ---
-        // Text animation
-        tl.fromTo(
+        tl.from(
             ".hero-title-element",
             {
                 y: 50,
                 opacity: 0,
                 filter: "blur(10px)",
                 scale: 1.05,
-            },
-            {
-                y: 0,
-                opacity: 1,
-                filter: "blur(0px)",
-                scale: 1,
                 duration: 1.2,
                 stagger: 0.2,
                 ease: "power3.out",
             },
         )
-            // Description
-            .fromTo(
+            .from(
                 ".hero-desc",
-                { y: 30, opacity: 0, filter: "blur(4px)" },
                 {
-                    y: 0,
-                    opacity: 1,
-                    filter: "blur(0px)",
+                    y: 30,
+                    opacity: 0,
+                    filter: "blur(4px)",
                     duration: 1,
                     ease: "power2.out",
                 },
                 "-=0.8",
             )
-            // Button
-            .fromTo(
+            .from(
                 ".hero-btn",
-                { y: 30, opacity: 0, scale: 0.95 },
                 {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
+                    y: 30,
+                    opacity: 0,
+                    scale: 0.95,
                     duration: 0.8,
                     ease: "back.out(1.5)",
                 },
                 "-=0.6",
             )
-            // Scroll indicator
-            .to(".hero-scroll", { opacity: 1, duration: 1 }, "-=0.5");
+            .from(".hero-scroll", { opacity: 0, duration: 1 }, "-=0.5");
     }
 
     animateHero(); // Run once on load

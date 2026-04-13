@@ -140,7 +140,9 @@ const offerSchema = {
                         src={arainkImage}
                         alt="Prometheus Digital transparent website and webshop pricing"
                         class="w-full h-full object-cover opacity-50"
-                        quality="high"
+                        widths={[640, 1024, 1440, 1920]}
+                        sizes="100vw"
+                        quality="mid"
                         loading="eager"
                         fetchpriority="high"
                     />
@@ -828,22 +830,19 @@ const offerSchema = {
         // Kill all page-level ScrollTriggers to prevent accumulation on View Transitions
         ScrollTrigger.getAll().forEach(t => t.kill());
 
-        // GSAP sets initial hidden state (not CSS) — keeps LCP visible for Core Web Vitals
-        gsap.set(".reveal-text", { y: 80, opacity: 0 });
-        gsap.set(".reveal-desc", { y: 40, opacity: 0 });
-
+        // Elements start visible — animation enhances progressively (no LCP blocking)
         const tl = gsap.timeline({ delay: 0.2 });
-        tl.to(".reveal-text", {
-            y: 0,
-            opacity: 1,
+        tl.from(".reveal-text", {
+            y: 80,
+            opacity: 0,
             duration: 1.2,
             stagger: 0.15,
             ease: "power4.out",
-        }).to(
+        }).from(
             ".reveal-desc",
             {
-                y: 0,
-                opacity: 1,
+                y: 40,
+                opacity: 0,
                 duration: 1,
                 ease: "power3.out",
             },

@@ -15,54 +15,27 @@ const { speed = 0.2, class: className = "" } = Astro.props;
 </div>
 
 <script>
-    import { gsap } from "gsap";
-    import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-    // FONTOS: Regisztráljuk a plugint
-    gsap.registerPlugin(ScrollTrigger);
-
     function initFloating() {
-        // Először takarítunk (ha esetleg már futna korábbi ScrollTrigger)
-        ScrollTrigger.getAll().forEach(t => {
-            if (t.vars && t.vars.trigger === 'body' && t.vars.id === 'floating-parallax') {
-                t.kill();
-            }
-        });
-
         const elements = document.querySelectorAll('.floating-element');
-
         if (elements.length === 0) return;
 
-        elements.forEach((el) => {
-            // Adat attribútum kiolvasása
-            const speedAttr = el.getAttribute('data-speed');
-            const speed = speedAttr ? parseFloat(speedAttr) : 0.2;
-            
-            // Mozgás távolsága:
-            // Ha a speed 1, akkor 500px-t mozdul el a görgetés teljes hossza alatt.
-            // Ha a speed -0.5, akkor 250px-t mozdul el FELFELÉ.
-            const movementY = 500 * speed; 
+        if (window.matchMedia('(pointer: coarse)').matches) return;
 
-            gsap.to(el, {
-                y: movementY,
-                ease: "none", // Lineáris mozgás (fontos a parallaxhoz)
-                scrollTrigger: {
-                    id: 'floating-parallax', // Egyedi azonosító a takarításhoz
-                    trigger: document.body,  // Az egész oldalhoz kötjük
-                    start: "top top",        // Amikor az oldal teteje fent van
-                    end: "bottom bottom",    // Amikor az oldal alja lent van
-                    scrub: 1                 // Smooth követés (1mp késleltetés)
-                }
+        const docHeight = () => document.documentElement.scrollHeight - window.innerHeight;
+
+        function onScroll() {
+            const progress = window.scrollY / (docHeight() || 1);
+            elements.forEach((el) => {
+                const speed = parseFloat(el.getAttribute('data-speed') || '0.2');
+                const y = 500 * speed * progress;
+                (el as HTMLElement).style.transform = `translateY(${y}px)`;
             });
-        });
-        
-        // Defer refresh so it doesn't block page transition reveal animation
-        setTimeout(() => ScrollTrigger.refresh(), 800);
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
     }
 
-    // Skip ScrollTrigger parallax on mobile (no value, wastes CPU)
-    if (!window.matchMedia('(pointer: coarse)').matches) {
-        initFloating();
-        document.addEventListener('astro:page-load', initFloating);
-    }
+    initFloating();
+    document.addEventListener('astro:page-load', initFloating);
 </script>

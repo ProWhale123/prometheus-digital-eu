@@ -382,8 +382,7 @@ const relatedPosts = allPosts
     // Kill all page-level ScrollTriggers to prevent accumulation on View Transitions
     ScrollTrigger.getAll().forEach(t => t.kill());
 
-    // GSAP sets initial hidden state (not CSS) — keeps LCP visible for Core Web Vitals
-    gsap.set(".hero-element", { y: 20, opacity: 0 });
+    // Elements start visible — animation enhances progressively (no LCP blocking)
 
     const updateProgress = () => {
       const winScroll =
@@ -399,9 +398,9 @@ const relatedPosts = allPosts
     window.addEventListener("scroll", updateProgress);
 
     const tl = gsap.timeline({ delay: 0.2 });
-    tl.to(".hero-element", {
-      y: 0,
-      opacity: 1,
+    tl.from(".hero-element", {
+      y: 20,
+      opacity: 0,
       duration: 1,
       stagger: 0.15,
       ease: "power4.out",
