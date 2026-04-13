@@ -108,18 +108,18 @@ import MagneticButton from "./react/MagneticButton.jsx";
         gsap.set(".hero-btn", { y: 30, opacity: 0, scale: 0.95 });
         gsap.set(".hero-scroll", { opacity: 0 });
 
-        const tl = gsap.timeline({ delay: 0.1 });
+        const tl = gsap.timeline({ delay: 0.05 });
 
         tl.to(".hero-title-element", {
-            y: 0, opacity: 1, filter: "blur(0px)", scale: 1, duration: 1.2, stagger: 0.2, ease: "power3.out",
+            y: 0, opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.6, stagger: 0.1, ease: "power3.out",
         })
             .to(".hero-desc", {
-                y: 0, opacity: 1, filter: "blur(0px)", duration: 1, ease: "power2.out",
-            }, "-=0.8")
+                y: 0, opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power2.out",
+            }, "-=0.4")
             .to(".hero-btn", {
-                y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.5)",
-            }, "-=0.6")
-            .to(".hero-scroll", { opacity: 1, duration: 1 }, "-=0.5");
+                y: 0, opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.5)",
+            }, "-=0.3")
+            .to(".hero-scroll", { opacity: 1, duration: 0.5 }, "-=0.3");
     }
 
     animateHero(); // Run once on load

@@ -673,12 +673,6 @@ const offerSchema = {
                     <!-- COMPLEX SEO SETUP -->
                     <div class="bg-gray-900/50 border border-purple-500/30 rounded-3xl p-8 flex flex-col relative overflow-hidden">
                         <div
-                            class="absolute top-0 right-0 bg-purple-500 text-white text-xs font-black px-4 py-1.5 rounded-bl-xl uppercase tracking-wider"
-                        >
-                            New
-                        </div>
-
-                        <div
                             class="text-purple-400 font-bold text-xs tracking-widest uppercase mb-4"
                         >
                             Step 2 — Implementation
@@ -687,8 +681,9 @@ const offerSchema = {
                             Complex SEO Setup
                         </h3>
                         <p class="text-gray-500 text-sm mb-6">
-                            Full SEO transformation: technical fixes, schema,
-                            page expansion, measurement and handoff.
+                            Need page expansion or deeper technical issues?
+                            Full transformation: technical fixes, schema,
+                            content expansion, measurement and blog strategy.
                         </p>
                         <div class="text-3xl font-black text-white mb-2">
                             From &euro;900 <span
@@ -738,7 +733,7 @@ const offerSchema = {
                                     stroke-linejoin="round"
                                     stroke-width="2"
                                     d="M5 13l4 4L19 7"></path></svg>
-                                3-5 page rewrites + 2 new blog posts
+                                Up to 5 page rewrites + 2 blog posts + blog strategy
                             </li>
                             <li class="flex items-start text-gray-300">
                                 <svg
@@ -751,7 +746,7 @@ const offerSchema = {
                                     stroke-linejoin="round"
                                     stroke-width="2"
                                     d="M5 13l4 4L19 7"></path></svg>
-                                GA4 + GSC + Local SEO + Action Plan
+                                GA4 + GSC + Local SEO (extra pages: €60/each)
                             </li>
                         </ul>
                         <a
@@ -833,12 +828,12 @@ const offerSchema = {
         gsap.set(".reveal-text", { y: 80, opacity: 0 });
         gsap.set(".reveal-desc", { y: 40, opacity: 0 });
 
-        const tl = gsap.timeline({ delay: 0.2 });
+        const tl = gsap.timeline({ delay: 0.05 });
         tl.to(".reveal-text", {
-            y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out",
+            y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "power4.out",
         }).to(
             ".reveal-desc",
-            { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+            { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
             "-=0.8",
         );
 
