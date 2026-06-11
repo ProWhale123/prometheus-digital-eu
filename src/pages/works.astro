@@ -17,13 +17,13 @@ import MagneticButtonAstro from "../components/MagneticButtonAstro.astro";
 // Image imports
 import project1Image from "../assets/images/project-1.jpg";
 import project3Image from "../assets/images/project-3.jpg";
+import project21Image from "../assets/images/project-21.jpg";
 import project7Image from "../assets/images/project-7.png";
 import project8Image from "../assets/images/project-8.png";
 import project9Image from "../assets/images/project-9.jpg";
 import project10Image from "../assets/images/project-10.jpg";
 import project11Image from "../assets/images/project-11.jpg";
 import project12Image from "../assets/images/project-12.jpg";
-import project13Image from "../assets/images/project-13.jpg";
 import project14Image from "../assets/images/project-14.jpg";
 import project15Image from "../assets/images/project-15.jpg";
 import project16Image from "../assets/images/project-16.jpg";
@@ -33,6 +33,14 @@ import project19Image from "../assets/images/project-19.jpg";
 import project20Image from "../assets/images/project-20.jpg";
 
 const clientProjects = [
+    {
+        title: "Kovásztanya Bakery",
+        description:
+            "Artisan sourdough bakery in Budakeszi, Hungary — from the soil to the family table. Warm, natural design with a Sanity CMS-managed product catalog, gallery and Wolt ordering integration.",
+        tags: ["Bakery", "Sanity CMS", "Next.js"],
+        imageSrc: project21Image,
+        liveUrl: "https://www.kovasztanya.com/",
+    },
     {
         title: "MSM Chicken Goods",
         description:
@@ -52,14 +60,6 @@ const clientProjects = [
 ];
 
 const showcaseProjects = [
-    {
-        title: "Golden Wheat Bakery",
-        description:
-            "Narrative-design bakery website with three generations of tradition. Product catalog, breakfast menu and ordering.",
-        tags: ["Bakery", "Storytelling", "Clean"],
-        imageSrc: project13Image,
-        liveUrl: "https://pekseg-demo.vercel.app/",
-    },
     {
         title: "Napoli Pizzeria",
         description:
@@ -170,7 +170,7 @@ const ownProducts = [
 
 <Layout
     title="Our Work — Client Projects and Demo Sites | Prometheus Digital"
-    description="Check out the custom websites built by Prometheus Digital: real client projects and industry demo sites showcasing our expertise."
+    description="Real client projects — Kovásztanya Bakery, MSM Chicken Goods, DOL travel agency — and industry demo sites: see the kind of websites we build."
 >
     <Header />
 
@@ -269,9 +269,71 @@ const ownProducts = [
                     </h2>
                 </div>
 
+                <!-- Featured: latest client project -->
+                {
+                    clientProjects.slice(0, 1).map((project) => (
+                        <div class="project-card mb-10 lg:mb-16">
+                            <TiltCardAstro class="bg-transparent">
+                                <a
+                                    href={project.liveUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="group block relative rounded-3xl overflow-hidden bg-gray-900 border border-emerald-500/30 hover:border-emerald-400/60 transition-colors duration-500"
+                                >
+                                    <div class="h-72 md:h-[480px] w-full overflow-hidden relative">
+                                        <div class="absolute inset-0 bg-emerald-900/0 group-hover:bg-emerald-900/10 transition-colors duration-500 z-10" />
+                                        <ParallaxImage
+                                            src={project.imageSrc}
+                                            alt={project.title}
+                                            height="h-full"
+                                            class="transition-transform duration-700 group-hover:scale-105"
+                                        />
+                                    </div>
+                                    <div class="p-8 md:p-10">
+                                        <div class="flex flex-wrap gap-2 mb-4">
+                                            <span class="text-xs font-bold text-white uppercase tracking-wider bg-emerald-500 px-3 py-1 rounded-full">
+                                                Latest Work
+                                            </span>
+                                            {project.tags.map((tag) => (
+                                                <span class="text-xs font-bold text-sky-400 uppercase tracking-wider bg-sky-500/10 px-3 py-1 rounded-full border border-sky-500/20">
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+                                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-4 group-hover:text-emerald-300 transition-colors">
+                                            {project.title}
+                                        </h3>
+                                        <p class="text-gray-400 leading-relaxed mb-6 max-w-3xl">
+                                            {project.description}
+                                        </p>
+                                        <div class="flex items-center text-white font-medium group/link">
+                                            <span class="mr-2 group-hover/link:mr-4 transition-all">
+                                                View Live
+                                            </span>
+                                            <svg
+                                                class="w-5 h-5 text-emerald-400"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                                                />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </a>
+                            </TiltCardAstro>
+                        </div>
+                    ))
+                }
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
                     {
-                        clientProjects.map((project, index) => (
+                        clientProjects.slice(1).map((project, index) => (
                             <div
                                 class={`project-card ${index % 2 !== 0 ? "md:translate-y-16" : ""}`}
                             >
