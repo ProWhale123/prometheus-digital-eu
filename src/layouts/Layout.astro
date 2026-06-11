@@ -37,6 +37,7 @@ const {
 } = Astro.props;
 
 const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
+const LEAD_PATH = '/thank-you';
 ---
 
 <!doctype html>
@@ -65,7 +66,7 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
-        <script define:vars={{ GA_MEASUREMENT_ID }}>
+        <script define:vars={{ GA_MEASUREMENT_ID, LEAD_PATH }}>
             // 1. Load Google Analytics (Call only)
             function initAnalytics() {
                 // If already loaded, do nothing
@@ -120,6 +121,46 @@ const GA_MEASUREMENT_ID = 'G-19T8LJEWVT';
             document.addEventListener('astro:page-load', handleConsent);
             // On consent update
             window.addEventListener('cookie-consent-updated', handleConsent);
+
+            // 5. Lead events (GA4 key events)
+            // Phone & email clicks — event delegation survives View
+            // Transitions DOM swaps
+            document.addEventListener('click', (e) => {
+                const link =
+                    e.target.closest &&
+                    e.target.closest("a[href^='tel:'], a[href^='mailto:']");
+                if (!link || !window.gtag) return;
+                const href = link.getAttribute('href');
+                window.gtag(
+                    'event',
+                    href.startsWith('tel:') ? 'phone_click' : 'email_click',
+                    {
+                        link_url: href,
+                        page_path: window.location.pathname,
+                    },
+                );
+            });
+
+            // Successful form submission: thank-you page load.
+            // gtag may be created late (after the consent check), so retry
+            // briefly.
+            function trackLeadPage() {
+                if (!window.location.pathname.startsWith(LEAD_PATH)) return;
+                if (sessionStorage.getItem('pd_lead_sent')) return;
+                let tries = 0;
+                const fire = () => {
+                    if (window.gtag) {
+                        window.gtag('event', 'generate_lead', {
+                            page_path: window.location.pathname,
+                        });
+                        sessionStorage.setItem('pd_lead_sent', '1');
+                    } else if (tries++ < 10) {
+                        setTimeout(fire, 500);
+                    }
+                };
+                fire();
+            }
+            document.addEventListener('astro:page-load', trackLeadPage);
         </script>
     </head>
     <body class="bg-gray-900 text-gray-200 font-sans leading-relaxed selection:bg-sky-500 selection:text-white">

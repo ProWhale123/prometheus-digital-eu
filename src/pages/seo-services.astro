@@ -34,7 +34,7 @@ const seoProcess = [
         step: "04",
         title: "Content & Link Building",
         description:
-            "2-8 professional, keyword-optimized expert articles per month — at the pace of your chosen plan. Placement on relevant portals to increase domain authority (DA).",
+            "2-8 professional, keyword-optimized expert articles per month — at the pace of your chosen plan. The SEO Dominance plan adds premium link building: 2-4 PR placements per month to increase domain authority (DA).",
     },
     {
         step: "05",
@@ -131,10 +131,10 @@ const retainerTiers = [
         kicker: "Solid Foundations",
         description:
             "Continuous presence on Google: foundational content creation and technical oversight, so your site grows stronger month after month.",
+        baseNote: null,
         features: [
             "2 keyword-optimized expert articles written and published per month",
             "Technical monitoring: Core Web Vitals and Search Console",
-            "Foundational link building in relevant directories and catalogs",
             "Transparent monthly PDF report: rankings, traffic, conversions",
         ],
         featured: false,
@@ -144,13 +144,12 @@ const retainerTiers = [
         name: "SEO Growth",
         kicker: "Active Growth",
         description:
-            "Double the content volume, PR placements and competitor monitoring — for actively growing your market share.",
+            "Double the content pace plus active competitor monitoring — for continuously growing your market share.",
+        baseNote: "Everything in SEO Start, plus:",
         features: [
-            "4 keyword-optimized expert articles written and published per month",
-            "Active link building: 2-4 PR placements on relevant portals per month",
+            "4 keyword-optimized expert articles per month (double the content)",
             "Competitor monitoring and strategic response",
-            "Core Web Vitals check and Search Console data analysis",
-            "Monthly PDF report + consultation on next month's focus",
+            "Monthly strategy consultation on next month's focus",
         ],
         featured: true,
         cta: "/contact?topic=seo-growth",
@@ -159,14 +158,13 @@ const retainerTiers = [
         name: "SEO Dominance",
         kicker: "Market Leadership",
         description:
-            "Full content dominance: premium link building, visibility in AI search engines (GEO/AEO) and conversion optimization.",
+            "The only plan with link building, AI search optimization and conversion optimization — for full market dominance.",
+        baseNote: "Everything in SEO Growth, plus:",
         features: [
-            "6-8 keyword-optimized expert articles written and published per month",
-            "Premium link building on high-authority portals",
+            "6-8 keyword-optimized expert articles per month",
+            "Premium link building: 2-4 PR placements on high-authority portals per month",
             "GEO/AEO optimization: visibility in ChatGPT, Gemini and Google AI results",
-            "Competitor monitoring and strategic response",
             "Conversion rate optimization (CRO) recommendations",
-            "Monthly PDF report + strategy consultation",
         ],
         featured: false,
         cta: "/contact?topic=seo-dominance",
@@ -192,7 +190,7 @@ const faqs = [
     },
     {
         question: "Which monthly SEO plan should I choose?",
-        answer: "SEO Start is built for continuous presence: a lighter pace with solid foundations. SEO Growth is the most popular choice — double the content volume, active PR link building and competitor monitoring for active growth. SEO Dominance targets market leadership: premium link building, AI search (GEO/AEO) optimization and conversion optimization recommendations. In a free consultation we'll help you pick the level that fits your goals.",
+        answer: "SEO Start is built for continuous presence: 2 expert articles per month, technical monitoring and reporting. SEO Growth is the most popular choice — double the content volume, competitor monitoring and a monthly strategy consultation. SEO Dominance targets market leadership, and it's the only plan that includes premium link building (2-4 PR placements per month), AI search (GEO/AEO) optimization and conversion optimization. In a free consultation we'll help you pick the level that fits your goals.",
     },
     {
         question: "Why are the monthly SEO plans custom priced?",
@@ -248,19 +246,19 @@ const faqs = [
             {
                 name: "SEO Start - Monthly SEO Plan",
                 description:
-                    "Entry-level ongoing search engine optimization: 2 expert articles per month, technical monitoring, foundational link building and monthly reporting. Custom quote.",
+                    "Entry-level ongoing search engine optimization: 2 expert articles per month, technical monitoring and monthly reporting. Custom quote.",
                 url: "/seo-services",
             },
             {
                 name: "SEO Growth - Monthly SEO Plan",
                 description:
-                    "Active growth plan: 4 expert articles per month, active link building with 2-4 PR placements, competitor monitoring and monthly consultation. Custom quote.",
+                    "Active growth plan: 4 expert articles per month, competitor monitoring and monthly strategy consultation. Custom quote.",
                 url: "/seo-services",
             },
             {
                 name: "SEO Dominance - Monthly SEO Plan",
                 description:
-                    "Premium monthly search engine optimization: 6-8 expert articles per month, premium link building, GEO/AEO optimization for AI search and CRO recommendations. Custom quote.",
+                    "Premium monthly search engine optimization: 6-8 expert articles per month, premium link building with 2-4 PR placements, GEO/AEO optimization for AI search and CRO recommendations. Custom quote.",
                 url: "/seo-services",
             },
         ]}
@@ -686,6 +684,11 @@ const faqs = [
                                     </p>
 
                                     <div class="space-y-3 mb-8 flex-grow">
+                                        {tier.baseNote && (
+                                            <p class="text-xs font-bold text-emerald-400/80 uppercase tracking-wider">
+                                                {tier.baseNote}
+                                            </p>
+                                        )}
                                         {tier.features.map((item) => (
                                             <div class="flex items-start gap-2 text-sm">
                                                 <svg
