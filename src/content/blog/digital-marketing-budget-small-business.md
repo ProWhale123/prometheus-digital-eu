@@ -63,7 +63,7 @@ Search Engine Optimization (SEO) delivers the **best return on investment** of a
 
 **SEO ROI in numbers:**
 
-Suppose you spend €220/month on SEO (our [monthly retainer](/seo-services) rate). After 6 months, organic traffic typically grows by **30–60%**. If your website converts at 3%, and the average customer value is €2,000:
+Suppose you spend €220/month on SEO (a typical entry-level [monthly retainer](/seo-services) market rate). After 6 months, organic traffic typically grows by **30–60%**. If your website converts at 3%, and the average customer value is €2,000:
 
 - **6 months SEO cost**: €1,320 + €400 (one-time setup) = €1,720
 - **Result**: If organic traffic brings just **1 extra client** per month

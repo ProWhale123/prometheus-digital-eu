@@ -34,7 +34,7 @@ const seoProcess = [
         step: "04",
         title: "Content & Link Building",
         description:
-            "4 professional, keyword-optimized expert articles per month. Placement on relevant portals to increase domain authority (DA).",
+            "2-8 professional, keyword-optimized expert articles per month — at the pace of your chosen plan. Placement on relevant portals to increase domain authority (DA).",
     },
     {
         step: "05",
@@ -125,13 +125,52 @@ const complexSetupIncludes = [
     },
 ];
 
-const monthlyIncludes = [
-    "4 keyword-optimized expert articles written and published per month",
-    "Core Web Vitals check and Search Console data analysis",
-    "Link building: placement on relevant portals and business directories",
-    "Competitor monitoring and strategic response",
-    "Transparent monthly PDF report: rankings, traffic, conversions",
-    "Monthly consultation on results and next month's focus",
+const retainerTiers = [
+    {
+        name: "SEO Start",
+        kicker: "Solid Foundations",
+        description:
+            "Continuous presence on Google: foundational content creation and technical oversight, so your site grows stronger month after month.",
+        features: [
+            "2 keyword-optimized expert articles written and published per month",
+            "Technical monitoring: Core Web Vitals and Search Console",
+            "Foundational link building in relevant directories and catalogs",
+            "Transparent monthly PDF report: rankings, traffic, conversions",
+        ],
+        featured: false,
+        cta: "/contact?topic=seo-start",
+    },
+    {
+        name: "SEO Growth",
+        kicker: "Active Growth",
+        description:
+            "Double the content volume, PR placements and competitor monitoring — for actively growing your market share.",
+        features: [
+            "4 keyword-optimized expert articles written and published per month",
+            "Active link building: 2-4 PR placements on relevant portals per month",
+            "Competitor monitoring and strategic response",
+            "Core Web Vitals check and Search Console data analysis",
+            "Monthly PDF report + consultation on next month's focus",
+        ],
+        featured: true,
+        cta: "/contact?topic=seo-growth",
+    },
+    {
+        name: "SEO Dominance",
+        kicker: "Market Leadership",
+        description:
+            "Full content dominance: premium link building, visibility in AI search engines (GEO/AEO) and conversion optimization.",
+        features: [
+            "6-8 keyword-optimized expert articles written and published per month",
+            "Premium link building on high-authority portals",
+            "GEO/AEO optimization: visibility in ChatGPT, Gemini and Google AI results",
+            "Competitor monitoring and strategic response",
+            "Conversion rate optimization (CRO) recommendations",
+            "Monthly PDF report + strategy consultation",
+        ],
+        featured: false,
+        cta: "/contact?topic=seo-dominance",
+    },
 ];
 
 const faqs = [
@@ -150,6 +189,18 @@ const faqs = [
     {
         question: "What's the difference between 6 and 12 month commitment?",
         answer: "The 6-month package focuses on building the foundation and achieving visible results. With the 12-month commitment, the first half builds the same base, but then we go much deeper: more complex strategy, more specific lead generation and deeper competitive targeting.",
+    },
+    {
+        question: "Which monthly SEO plan should I choose?",
+        answer: "SEO Start is built for continuous presence: a lighter pace with solid foundations. SEO Growth is the most popular choice — double the content volume, active PR link building and competitor monitoring for active growth. SEO Dominance targets market leadership: premium link building, AI search (GEO/AEO) optimization and conversion optimization recommendations. In a free consultation we'll help you pick the level that fits your goals.",
+    },
+    {
+        question: "Why are the monthly SEO plans custom priced?",
+        answer: "Because no two markets are the same: a local service provider and a nationwide webshop operate in completely different competitive environments and require different amounts of work. We set the monthly fee based on your market's competitiveness, your starting point and your goals — so you pay exactly for what your growth actually requires. After a free assessment, you receive a concrete written quote.",
+    },
+    {
+        question: "What is GEO/AEO optimization?",
+        answer: "GEO (Generative Engine Optimization) and AEO (Answer Engine Optimization) ensure your business also appears as a source in AI-powered search — ChatGPT, Gemini, Perplexity, Google AI Overview. We achieve this with structured data, entity-based SEO and AI-friendly content architecture. It's part of the SEO Dominance plan.",
     },
     {
         question: "What does the Advanced SEO Setup include?",
@@ -176,7 +227,7 @@ const faqs = [
 
 <Layout
     title="SEO Services for Businesses | Search Engine Optimization - Prometheus Digital"
-    description="Professional SEO services for businesses. Advanced SEO Setup + monthly retainer. More organic traffic, better Google rankings, measurable results."
+    description="Professional SEO services for businesses. One-time SEO setup + three-tier monthly SEO plans: Start, Growth, Dominance. More organic traffic, measurable results."
 >
     <Header />
 
@@ -195,9 +246,21 @@ const faqs = [
                 url: "/seo-services",
             },
             {
-                name: "Monthly SEO Retainer",
+                name: "SEO Start - Monthly SEO Plan",
                 description:
-                    "Ongoing search engine optimization: content creation, link building, competitor monitoring and monthly reporting for businesses.",
+                    "Entry-level ongoing search engine optimization: 2 expert articles per month, technical monitoring, foundational link building and monthly reporting. Custom quote.",
+                url: "/seo-services",
+            },
+            {
+                name: "SEO Growth - Monthly SEO Plan",
+                description:
+                    "Active growth plan: 4 expert articles per month, active link building with 2-4 PR placements, competitor monitoring and monthly consultation. Custom quote.",
+                url: "/seo-services",
+            },
+            {
+                name: "SEO Dominance - Monthly SEO Plan",
+                description:
+                    "Premium monthly search engine optimization: 6-8 expert articles per month, premium link building, GEO/AEO optimization for AI search and CRO recommendations. Custom quote.",
                 url: "/seo-services",
             },
         ]}
@@ -271,7 +334,7 @@ const faqs = [
                         href="#packages"
                         class="inline-flex items-center justify-center px-8 py-4 border border-white/20 text-white font-bold rounded-full text-lg hover:bg-white/5 transition-all duration-300"
                     >
-                        Packages & Pricing ↓
+                        SEO Packages ↓
                     </a>
                 </div>
             </div>
@@ -399,12 +462,24 @@ const faqs = [
                         Investment Packages
                     </h2>
                     <p class="text-lg text-gray-400">
-                        Transparent, straightforward pricing — no hidden costs.
+                        A fixed-price one-time foundation — and three monthly
+                        plans with a custom quote tailored to your market.
                     </p>
                 </div>
 
+                <!-- ONE-TIME SETUPS -->
+                <div class="text-center mb-10">
+                    <span
+                        class="text-xs font-bold tracking-widest text-emerald-400 uppercase"
+                        >Step 1 — One-Time Foundation</span
+                    >
+                    <h3 class="text-2xl md:text-3xl font-bold text-white mt-2">
+                        SEO Setup Packages
+                    </h3>
+                </div>
+
                 <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-8"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-20"
                 >
                     <!-- SETUP -->
                     <SpotlightCard
@@ -555,80 +630,109 @@ const faqs = [
                         </div>
                     </SpotlightCard>
 
-                    <!-- MONTHLY -->
-                    <SpotlightCard
-                        class="h-full bg-gray-900/60 border border-emerald-500/30 relative"
+                </div>
+
+                <!-- MONTHLY RETAINER TIERS -->
+                <div class="text-center mb-10">
+                    <span
+                        class="text-xs font-bold tracking-widest text-emerald-400 uppercase"
+                        >Step 2 — Continuous Growth</span
                     >
-                        <div class="p-6 md:p-8 h-full flex flex-col">
-                            <div
-                                class="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl"
-                            >
-                                RECOMMENDED
-                            </div>
+                    <h3 class="text-2xl md:text-3xl font-bold text-white mt-2">
+                        Monthly SEO Plans
+                    </h3>
+                    <p class="text-gray-400 mt-3 max-w-2xl mx-auto">
+                        Three growth paces, with a minimum 6-month
+                        partnership. The fee is set in a custom quote, tailored
+                        to your market and goals.
+                    </p>
+                </div>
 
-                            <div
-                                class="inline-flex items-center gap-2 mb-4 text-xs font-bold tracking-widest text-gray-500 uppercase"
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-8"
+                >
+                    {
+                        retainerTiers.map((tier) => (
+                            <SpotlightCard
+                                class={`h-full bg-gray-900/60 border relative ${
+                                    tier.featured
+                                        ? "border-emerald-500/40"
+                                        : "border-white/10"
+                                }`}
                             >
-                                <span
-                                    class="w-2 h-6 bg-emerald-500 rounded-full"
-                                ></span>
-                                Monthly Fee
-                            </div>
+                                <div class="p-6 md:p-8 h-full flex flex-col">
+                                    {tier.featured && (
+                                        <div class="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl">
+                                            MOST POPULAR
+                                        </div>
+                                    )}
 
-                            <h3 class="text-2xl font-bold text-white mb-2">
-                                Monthly SEO Retainer
-                            </h3>
-                            <p
-                                class="text-gray-400 text-sm mb-6 leading-relaxed"
-                            >
-                                SEO is not a sprint, it's a marathon. Continuous
-                                work guarantees that the result is a lasting
-                                market position, not a brief flash.
-                            </p>
+                                    <div class="inline-flex items-center gap-2 mb-4 text-xs font-bold tracking-widest text-gray-500 uppercase">
+                                        <span
+                                            class={`w-2 h-6 rounded-full ${
+                                                tier.featured
+                                                    ? "bg-emerald-500"
+                                                    : "bg-emerald-500/40"
+                                            }`}
+                                        />
+                                        {tier.kicker}
+                                    </div>
 
-                            <div class="space-y-3 mb-8 flex-grow">
-                                {
-                                    monthlyIncludes.map((item) => (
-                                        <div class="flex items-start gap-2 text-sm">
-                                            <svg
-                                                class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M5 13l4 4L19 7"
-                                                />
-                                            </svg>
-                                            <span class="text-gray-300">
-                                                {item}
+                                    <h3 class="text-2xl font-bold text-white mb-2">
+                                        {tier.name}
+                                    </h3>
+                                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                                        {tier.description}
+                                    </p>
+
+                                    <div class="space-y-3 mb-8 flex-grow">
+                                        {tier.features.map((item) => (
+                                            <div class="flex items-start gap-2 text-sm">
+                                                <svg
+                                                    class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M5 13l4 4L19 7"
+                                                    />
+                                                </svg>
+                                                <span class="text-gray-300">
+                                                    {item}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div class="pt-6 border-t border-white/10">
+                                        <div class="flex items-baseline gap-2 mb-1">
+                                            <span class="text-3xl font-black text-white">
+                                                Custom pricing
                                             </span>
                                         </div>
-                                    ))
-                                }
-                            </div>
-
-                            <div class="pt-6 border-t border-white/10">
-                                <div class="flex items-baseline gap-2 mb-4">
-                                    <span class="text-3xl font-black text-white"
-                                        >From &euro;220</span
-                                    >
-                                    <span class="text-gray-500 text-sm"
-                                        >+ VAT / mo</span
-                                    >
+                                        <p class="text-xs text-gray-500 italic mb-4">
+                                            A quote tailored to your market and
+                                            goals
+                                        </p>
+                                        <a
+                                            href={tier.cta}
+                                            class={`block w-full text-center py-3 px-6 font-bold rounded-full transition-all ${
+                                                tier.featured
+                                                    ? "bg-emerald-500 text-white hover:bg-emerald-600 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)]"
+                                                    : "border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
+                                            }`}
+                                        >
+                                            Request a Quote
+                                        </a>
+                                    </div>
                                 </div>
-                                <a
-                                    href="/contact?topic=seo-retainer"
-                                    class="block w-full text-center py-3 px-6 bg-emerald-500 text-white font-bold rounded-full hover:bg-emerald-600 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all"
-                                >
-                                    Request Retainer
-                                </a>
-                            </div>
-                        </div>
-                    </SpotlightCard>
+                            </SpotlightCard>
+                        ))
+                    }
                 </div>
 
                 <!-- FLEXIBLE PRICING NOTE -->
@@ -796,10 +900,10 @@ const faqs = [
                         class="bg-gray-900/50 p-6 rounded-xl border border-white/5"
                     >
                         <div class="text-2xl font-black text-emerald-400 mb-2">
-                            &euro;220
+                            Custom plan
                         </div>
                         <div class="text-gray-400 text-sm">
-                            Monthly SEO investment
+                            Monthly SEO investment — tailored to your goals
                         </div>
                     </div>
                     <div
