@@ -94,11 +94,6 @@ body {
     transform: translateY(0);
 }
 
-/* FONTOS: A Lenis miatt a html-nek auto-nak kell lennie */
-html.lenis, html.lenis body {
-  height: auto;
-}
-
 /* ACCESSIBILITY: Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {

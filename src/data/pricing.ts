@@ -33,7 +33,6 @@ export const webModules = {
   core:               { label: "Prometheus Core base system", price: 749 },
   subPage:            { label: "Content sub-page", price: 90, unit: "/ ea" },
   salesPage:          { label: "Sales Landing Page", price: 360 },
-  techPage:           { label: "Technical page (404 / thank-you)", price: 45 },
   customDesign:       { label: "Custom UI/UX design", price: 850, from: true },
   premiumAnimations:  { label: "Premium animations", price: 290 },
   darkMode:           { label: "System-wide dark mode", price: 150 },

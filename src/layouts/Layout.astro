@@ -171,47 +171,6 @@ const LEAD_PATH = '/thank-you';
 <NoiseOverlay />
 
         <script>
-            import Lenis from 'lenis'
-
-            // Singleton pattern: create only once
-            let lenis;
-
-            const initLenis = () => {
-                // If exists, don't create new (Important for View Transitions)
-                if (lenis) return;
-
-                // Mobile already has excellent native smooth scroll — skip Lenis entirely
-                if (window.matchMedia('(pointer: coarse)').matches) return;
-
-                lenis = new Lenis({
-                    duration: 1.2, // Slightly slower, "premium" feel
-                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Classic "mobile-like" scroll math
-                    smoothWheel: true,
-                    wheelMultiplier: 1, // Scroll speed
-                })
-
-                function raf(time) {
-                    lenis.raf(time)
-                    requestAnimationFrame(raf)
-                }
-
-                requestAnimationFrame(raf)
-                
-                // Make global if needed for GSAP (e.g., ScrollTrigger)
-                window.lenis = lenis;
-            }
-
-            // Start
-            initLenis();
-
-            // ClientRouter support: No need to restart Lenis on page change,
-            // script ran, but if specific reset needed, add here.
-            document.addEventListener('astro:page-load', () => {
-                // Ensure scroll position is correct, though Router handles it
-            });
-        </script>
-        
-        <script>
             // Animation logic - Consolidated setup functions for cleaner code
             function setupAnimations() {
                 const observerOptions = {
@@ -249,28 +208,11 @@ const LEAD_PATH = '/thank-you';
 </html>
 
 <style is:global>
-    /* --- LENIS REQUIRED CSS --- */
-    html.lenis, html.lenis body {
-        height: auto;
+    /* Native smooth scrolling for anchor links (reduced-motion overrides) */
+    html {
+        scroll-behavior: smooth;
     }
 
-    .lenis.lenis-smooth {
-        scroll-behavior: auto !important; /* Overrides native smooth scroll */
-    }
-
-    .lenis.lenis-smooth [data-lenis-prevent] {
-        overscroll-behavior: contain;
-    }
-
-    .lenis.lenis-stopped {
-        overflow: hidden;
-    }
-
-    .lenis.lenis-scrolling iframe {
-        pointer-events: none; /* Performance improvement during scroll */
-    }
-
-    /* --- YOUR EXISTING STYLES --- */
     body {
         font-family: 'Inter', sans-serif;
         background-color: #0B1120;

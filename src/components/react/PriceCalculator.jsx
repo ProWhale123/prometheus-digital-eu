@@ -12,10 +12,6 @@ export default function PriceCalculator() {
     const [config, setConfig] = useState({
         subPages: 0,
         salesPage: false,
-        technicalPages: {
-            error404: false,
-            thankYou: false
-        },
         migration: false,
         premiumAnimations: false,
         darkMode: false,
@@ -56,8 +52,6 @@ export default function PriceCalculator() {
         // Structure
         sum += config.subPages * W.subPage.price;
         if (config.salesPage) sum += W.salesPage.price;
-        if (config.technicalPages.error404) sum += W.techPage.price;
-        if (config.technicalPages.thankYou) sum += W.techPage.price;
         if (config.migration) sum += W.migration.price;
 
         // Design
@@ -112,7 +106,6 @@ export default function PriceCalculator() {
         }
     }, [config.webshop, config.blog]);
 
-    const toggleTechPage = (key) => setConfig({ ...config, technicalPages: { ...config.technicalPages, [key]: !config.technicalPages[key] } });
     const toggleAnalytic = (key) => setConfig({ ...config, analytics: { ...config.analytics, [key]: !config.analytics[key] } });
     const toggleExtra = (key) => setConfig({ ...config, extras: { ...config.extras, [key]: !config.extras[key] } });
     const toggleSeo = (key) => setConfig({ ...config, seo: { ...config.seo, [key]: !config.seo[key] } });
@@ -135,7 +128,7 @@ export default function PriceCalculator() {
                             <div className="flex items-center justify-between bg-gradient-to-r from-gray-800/50 to-gray-900/50 p-5 rounded-xl border border-white/5">
                                 <div>
                                     <div className="text-white font-bold text-lg">Prometheus Core Base System</div>
-                                    <div className="text-sm text-gray-400 mt-1">Code-based platform • 100/100 Speed • GDPR & Cookie Ready</div>
+                                    <div className="text-sm text-gray-400 mt-1">Code-based platform • Custom 404 + thank-you page • 100/100 Speed • GDPR Ready</div>
                                 </div>
                                 <div className="text-sky-400 font-bold font-mono">{formatPrice(BASE_PRICE)}</div>
                             </div>
@@ -165,20 +158,6 @@ export default function PriceCalculator() {
                             </div>
 
                             <div className="flex flex-wrap gap-x-6 gap-y-3 pt-2">
-                                <label className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm cursor-pointer group">
-                                    <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${config.technicalPages.error404 ? 'bg-sky-500 border-sky-500' : 'border-white/20 group-hover:border-white/40'}`}>
-                                        {config.technicalPages.error404 && <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12"></polyline></svg>}
-                                    </div>
-                                    <input type="checkbox" checked={config.technicalPages.error404} onChange={() => toggleTechPage('error404')} className="hidden" />
-                                    Custom 404 error page (+{formatPrice(W.techPage.price)})
-                                </label>
-                                <label className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm cursor-pointer group">
-                                    <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${config.technicalPages.thankYou ? 'bg-sky-500 border-sky-500' : 'border-white/20 group-hover:border-white/40'}`}>
-                                        {config.technicalPages.thankYou && <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12"></polyline></svg>}
-                                    </div>
-                                    <input type="checkbox" checked={config.technicalPages.thankYou} onChange={() => toggleTechPage('thankYou')} className="hidden" />
-                                    Conversion success (thank-you) page (+{formatPrice(W.techPage.price)})
-                                </label>
                                 <label className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm cursor-pointer group">
                                     <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${config.migration ? 'bg-sky-500 border-sky-500' : 'border-white/20 group-hover:border-white/40'}`}>
                                         {config.migration && <svg className="w-3 h-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="20 6 9 17 4 12"></polyline></svg>}
@@ -441,7 +420,6 @@ export default function PriceCalculator() {
 
                             {config.subPages > 0 && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-400">Subpages ({config.subPages})</span><span className="text-white font-mono">{formatPrice(config.subPages * W.subPage.price)}</span></div>}
                             {config.salesPage && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-400">Sales Landing</span><span className="text-white font-mono">{formatPrice(W.salesPage.price)}</span></div>}
-                            {(config.technicalPages.error404 || config.technicalPages.thankYou) && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-400">Tech Pages</span><span className="text-white font-mono">{formatPrice((config.technicalPages.error404 ? W.techPage.price : 0) + (config.technicalPages.thankYou ? W.techPage.price : 0))}</span></div>}
                             {config.migration && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-400">Migration</span><span className="text-white font-mono">from {formatPrice(W.migration.price)}</span></div>}
 
                             {config.design === 'custom' && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-sky-400">Custom UI/UX</span><span className="text-sky-400 font-mono">{formatPrice(W.customDesign.price)}</span></div>}
