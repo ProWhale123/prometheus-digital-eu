@@ -179,7 +179,7 @@ export const seoOneTime = {
     id: "technical-sprint",
     name: "Technical SEO Sprint",
     price: 570,
-    tagline: "Full technical foundation: Core Web Vitals, schema/JSON-LD, sitemap, indexing, internal link structure, meta data.",
+    tagline: "Full technical foundation: Core Web Vitals, schema/JSON-LD, sitemap, indexing, internal link structure, meta data, GA4 + GSC setup.",
   },
   keywordContent: {
     id: "keyword-content",
