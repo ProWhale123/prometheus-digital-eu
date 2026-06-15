@@ -22,8 +22,8 @@ import {
     EXTRA_DEV_HOURLY,
     seoOneTime,
     SEO_AUDIT_VALUE,
-    COMPLEX_EXTRA_SUBPAGE,
     seoMonthlyTiers,
+    geoServices,
     type Module,
 } from "../data/pricing";
 
@@ -197,7 +197,7 @@ const offerSchema = {
 
 <Layout
     title="Website Pricing 2026 | Transparent Web Development Pricing - Prometheus Digital"
-    description="Transparent, modular pricing from €749. Typical configurations, a full module list and an interactive calculator — plan your website budget precisely."
+    description="Transparent, modular pricing from €749. Typical configurations, maintenance, SEO and GEO/AI prices, a full module list and an interactive calculator — every price in one place."
 >
     <Header />
 
@@ -254,12 +254,15 @@ const offerSchema = {
                     class="reveal-desc max-w-2xl mx-auto text-lg md:text-xl text-gray-300 font-light mb-6"
                 >
                     Custom, code-based websites <strong class="text-white font-bold">from {fmtEur(ANCHOR_PRICE)}</strong>.
-                    No hidden costs — plan your project budget precisely with exactly the elements you need.
+                    No hidden costs — website, maintenance, SEO and AI visibility, every price in one place.
                 </p>
                 <div class="reveal-desc flex flex-wrap justify-center gap-3 text-sm">
-                    <a href="#configurations" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-sky-500/50 hover:text-white transition-colors">Typical configurations</a>
+                    <a href="#configurations" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-sky-500/50 hover:text-white transition-colors">Configurations</a>
                     <a href="#calculator" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-sky-500/50 hover:text-white transition-colors">Calculator</a>
                     <a href="#maintenance" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-sky-500/50 hover:text-white transition-colors">Maintenance</a>
+                    <a href="#modules" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-sky-500/50 hover:text-white transition-colors">Modules</a>
+                    <a href="#seo" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-emerald-500/50 hover:text-white transition-colors">SEO</a>
+                    <a href="#ai" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-cyan-500/50 hover:text-white transition-colors">GEO / AI</a>
                 </div>
             </div>
         </section>
@@ -365,67 +368,6 @@ const offerSchema = {
                         </h2>
                     </div>
                     <PriceCalculator client:visible />
-                </div>
-
-                <!-- FULL MODULAR PRICE LIST (collapsible) -->
-                <div class="max-w-4xl mx-auto pt-24">
-                    <div class="text-center mb-10">
-                        <span
-                            class="text-sky-400 font-bold uppercase tracking-widest text-xs"
-                            >Full Transparency</span
-                        >
-                        <h2 class="text-3xl font-bold text-white mt-2">
-                            Full Modular Price List
-                        </h2>
-                        <p class="text-gray-400 mt-3">
-                            Every module, every price — open the categories.
-                        </p>
-                    </div>
-
-                    <div class="space-y-4">
-                        {
-                            moduleCategories.map((cat) => (
-                                <details class="group bg-gray-900/40 border border-white/5 rounded-2xl overflow-hidden hover:border-sky-500/20 transition-all">
-                                    <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
-                                        <h3 class="text-white font-bold pr-4">
-                                            {cat.title}
-                                        </h3>
-                                        <svg
-                                            class="w-5 h-5 text-sky-500 group-open:rotate-180 transition-transform duration-300 flex-shrink-0"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M19 9l-7 7-7-7"
-                                            />
-                                        </svg>
-                                    </summary>
-                                    <div class="px-6 pb-6 border-t border-white/5 pt-4">
-                                        <ul class="divide-y divide-white/5">
-                                            {cat.rows.map((row) => (
-                                                <li class="flex items-center justify-between gap-4 py-3">
-                                                    <span class="text-gray-300 text-sm">
-                                                        {row.label}
-                                                    </span>
-                                                    <span class="text-sky-400 font-mono text-sm text-right whitespace-nowrap">
-                                                        {row.price}
-                                                    </span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </details>
-                            ))
-                        }
-                    </div>
-                    <p class="text-center text-gray-500 text-xs mt-6">
-                        All prices are net, excluding VAT. Translation and
-                        photo/video content are quoted individually.
-                    </p>
                 </div>
             </div>
         </section>
@@ -533,141 +475,226 @@ const offerSchema = {
             </div>
         </section>
 
-        <!-- SEO SERVICES FOR EXISTING WEBSITES -->
-        <section class="py-20 md:py-28 border-t border-white/5 bg-[#0B1120] relative overflow-hidden">
+        <!-- FULL MODULAR PRICE LIST (below maintenance) -->
+        <section id="modules" class="py-20 md:py-28 bg-[#0B1120] border-t border-white/5 scroll-mt-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-10">
+                    <span class="text-sky-400 font-bold uppercase tracking-widest text-xs">Full Transparency</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-white mt-3 mb-4">
+                        Full Modular Price List
+                    </h2>
+                    <p class="text-gray-400">
+                        Every module, every price — open the categories.
+                    </p>
+                </div>
+
+                <div class="max-w-4xl mx-auto space-y-4">
+                    {
+                        moduleCategories.map((cat) => (
+                            <details class="group bg-gray-900/40 border border-white/5 rounded-2xl overflow-hidden hover:border-sky-500/20 transition-all">
+                                <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                                    <h3 class="text-white font-bold pr-4">
+                                        {cat.title}
+                                    </h3>
+                                    <svg
+                                        class="w-5 h-5 text-sky-500 group-open:rotate-180 transition-transform duration-300 flex-shrink-0"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"
+                                        />
+                                    </svg>
+                                </summary>
+                                <div class="px-6 pb-6 border-t border-white/5 pt-4">
+                                    <ul class="divide-y divide-white/5">
+                                        {cat.rows.map((row) => (
+                                            <li class="flex items-center justify-between gap-4 py-3">
+                                                <span class="text-gray-300 text-sm">
+                                                    {row.label}
+                                                </span>
+                                                <span class="text-sky-400 font-mono text-sm text-right whitespace-nowrap">
+                                                    {row.price}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </details>
+                        ))
+                    }
+                </div>
+                <p class="text-center text-gray-500 text-xs mt-6 max-w-4xl mx-auto">
+                    All prices are net, excluding VAT. Translation and
+                    photo/video content are quoted individually.
+                </p>
+            </div>
+        </section>
+
+        <!-- SEO SERVICES -->
+        <section id="seo" class="py-20 md:py-28 border-t border-white/5 bg-gray-900/30 relative overflow-hidden scroll-mt-24">
             <div class="absolute top-20 -right-40 z-0 opacity-5 pointer-events-none">
                 <div class="w-[500px] h-[500px] rounded-full bg-emerald-600 blur-[60px] md:blur-[150px]"></div>
             </div>
 
             <div class="container mx-auto px-6 relative z-10">
                 <div class="text-center max-w-3xl mx-auto mb-12">
-                    <span
-                        class="text-emerald-400 font-bold uppercase tracking-widest text-xs"
-                    >Already Have a Website?</span>
+                    <span class="text-emerald-400 font-bold uppercase tracking-widest text-xs">Search Engine Optimization</span>
                     <h2 class="text-3xl md:text-5xl font-black text-white mt-3 mb-4">
-                        SEO Services for Existing Sites
+                        SEO Services
                     </h2>
                     <p class="text-gray-400 text-lg">
-                        You don't need a new website to rank better on Google. If
-                        you already have a working site, we fix its SEO
-                        performance in two steps.
+                        More customers from Google — we start with a free
+                        assessment, then a one-time foundation and monthly care
+                        for lasting growth.
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-8">
-                    <!-- ASSESSMENT (FREE) -->
-                    <div class="bg-gray-900/50 border border-emerald-500/30 rounded-3xl p-8 flex flex-col relative overflow-hidden">
-                        <div
-                            class="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-black px-4 py-1.5 rounded-bl-xl uppercase tracking-wider"
-                        >
-                            Free
+                <!-- One-time foundation -->
+                <div class="text-center mb-6">
+                    <span class="text-xs font-bold tracking-widest text-emerald-400 uppercase">One-time foundation</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-14">
+                    <!-- Free SEO Assessment -->
+                    <div class="bg-gray-900/50 border border-emerald-500/30 rounded-3xl p-6 flex flex-col relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[11px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-wider">Free</div>
+                        <div class="text-emerald-400 font-bold text-[11px] tracking-widest uppercase mb-2">Step 1</div>
+                        <h3 class="text-xl font-bold text-white mb-2">SEO Assessment</h3>
+                        <p class="text-gray-500 text-sm mb-4 flex-grow">A 7-8 page report on your site's SEO state: Core Web Vitals, indexing, top 3 competitors, concrete recommendations.</p>
+                        <div class="flex items-baseline gap-2 mb-4">
+                            <span class="text-2xl font-black text-emerald-400">FREE</span>
+                            <span class="text-xs text-gray-500 line-through">{fmtEur(SEO_AUDIT_VALUE)} value</span>
                         </div>
-
-                        <div
-                            class="text-emerald-400 font-bold text-xs tracking-widest uppercase mb-4"
-                        >
-                            Step 1 — Assessment
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">
-                            SEO Assessment Report
-                        </h3>
-                        <p class="text-gray-500 text-sm mb-6">
-                            A 7-8 page personalized report on the current SEO
-                            state of your website.
-                        </p>
-                        <div class="flex items-baseline gap-2 mb-8">
-                            <div class="text-3xl font-black text-emerald-400">
-                                FREE
-                            </div>
-                            <div class="text-sm text-gray-500 line-through">
-                                {fmtEur(SEO_AUDIT_VALUE)} value
-                            </div>
-                        </div>
-
-                        <ul class="space-y-3 mb-8 flex-grow text-sm">
-                            {[
-                                "Core Web Vitals & PageSpeed analysis",
-                                "Indexing issue mapping",
-                                "Top 3 competitor quick analysis",
-                                "Concrete fix recommendations by priority",
-                            ].map((f) => (
-                                <li class="flex items-start text-gray-300">
-                                    <svg
-                                        class="w-4 h-4 text-emerald-400 mr-3 mt-0.5 flex-shrink-0"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg>
-                                    {f}
-                                </li>
-                            ))}
-                        </ul>
-                        <a
-                            href="/contact?topic=seo-assessment"
-                            class="block w-full py-3 text-center bg-emerald-500 text-white font-bold rounded-full hover:bg-emerald-600 transition-colors"
-                        >Request a Report →</a>
+                        <a href="/contact?topic=seo-assessment" class="block w-full py-2.5 text-center text-sm bg-emerald-500 text-white font-bold rounded-full hover:bg-emerald-600 transition-colors">Request a Report →</a>
                     </div>
 
-                    <!-- COMPLEX SEO SETUP -->
-                    <div class="bg-gray-900/50 border border-purple-500/30 rounded-3xl p-8 flex flex-col relative overflow-hidden">
-                        <div
-                            class="text-purple-400 font-bold text-xs tracking-widest uppercase mb-4"
-                        >
-                            Step 2 — Implementation
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">
-                            {seoOneTime.complex.name}
-                        </h3>
-                        <p class="text-gray-500 text-sm mb-6">
-                            {seoOneTime.complex.tagline}
+                    <!-- SEO Foundation -->
+                    <div class="bg-gray-900/50 border border-emerald-500/30 rounded-3xl p-6 flex flex-col">
+                        <div class="text-emerald-400 font-bold text-[11px] tracking-widest uppercase mb-2">Entry</div>
+                        <h3 class="text-xl font-bold text-white mb-2">{seoOneTime.foundation.name}</h3>
+                        <p class="text-gray-500 text-sm mb-4 flex-grow">
+                            Technical SEO Sprint ({fmtEur(seoOneTime.technicalSprint.price)}) + Keyword & Content Strategy ({fmtEur(seoOneTime.keywordContent.price)}) in one bundle — with GA4 + GSC setup.
                         </p>
-                        <div class="text-3xl font-black text-white mb-2">
-                            {fmtEur(seoOneTime.complex.price)} <span
-                                class="text-xs text-gray-500 font-normal"
-                                >+ VAT</span
-                            >
-                        </div>
-                        <p class="text-xs text-purple-300/80 italic mb-6">
-                            Flexible pricing — what you already have, we deduct
-                        </p>
+                        <div class="text-2xl font-black text-white mb-4">{fmtEur(seoOneTime.foundation.price)} <span class="text-xs text-gray-500 font-normal">+ VAT</span></div>
+                        <a href="/contact?topic=seo-foundation" class="block w-full py-2.5 text-center text-sm border border-emerald-500/30 text-emerald-400 font-bold rounded-full hover:bg-emerald-500/10 transition-colors">Request Foundation →</a>
+                    </div>
 
-                        <ul class="space-y-3 mb-8 flex-grow text-sm">
-                            {[
-                                "SEO Foundation: full technical SEO + keyword and content strategy",
-                                "5 sub-page content expansion (extra sub-page: " + fmtEur(COMPLEX_EXTRA_SUBPAGE) + "/ea)",
-                                "GEO/AI Audit + Setup: visibility in AI search engines",
-                                "Schema.org markup, GA4 + GSC + Local SEO",
-                            ].map((f) => (
-                                <li class="flex items-start text-gray-300">
-                                    <svg
-                                        class="w-4 h-4 text-purple-400 mr-3 mt-0.5 flex-shrink-0"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg>
-                                    {f}
-                                </li>
-                            ))}
-                        </ul>
-                        <a
-                            href="/seo-services#packages"
-                            class="block w-full py-3 text-center border border-purple-500/40 text-purple-300 font-bold rounded-full hover:bg-purple-500/10 transition-colors"
-                        >Details →</a>
+                    <!-- Complex SEO Setup -->
+                    <div class="bg-gray-900/50 border border-purple-500/30 rounded-3xl p-6 flex flex-col">
+                        <div class="text-purple-400 font-bold text-[11px] tracking-widest uppercase mb-2">Complete</div>
+                        <h3 class="text-xl font-bold text-white mb-2">{seoOneTime.complex.name}</h3>
+                        <p class="text-gray-500 text-sm mb-4 flex-grow">
+                            SEO Foundation + 5 sub-page content expansion + full GEO/AI Audit and Setup. A complete transformation for existing sites.
+                        </p>
+                        <div class="text-2xl font-black text-white mb-4">{fmtEur(seoOneTime.complex.price)} <span class="text-xs text-gray-500 font-normal">+ VAT</span></div>
+                        <a href="/seo-services#packages" class="block w-full py-2.5 text-center text-sm border border-purple-500/40 text-purple-300 font-bold rounded-full hover:bg-purple-500/10 transition-colors">Details →</a>
                     </div>
                 </div>
 
+                <!-- Monthly SEO packages -->
+                <div class="text-center mb-6">
+                    <span class="text-xs font-bold tracking-widest text-emerald-400 uppercase">Monthly SEO packages</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-8">
+                    {
+                        seoMonthlyTiers.map((tier) => (
+                            <div
+                                class={`rounded-3xl p-6 flex flex-col relative ${
+                                    tier.featured
+                                        ? "bg-emerald-500/5 border border-emerald-500/40"
+                                        : "bg-gray-900/50 border border-white/10"
+                                }`}
+                            >
+                                {tier.featured && (
+                                    <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[11px] font-bold px-3 py-1 rounded-bl-xl">
+                                        MOST POPULAR
+                                    </div>
+                                )}
+                                <div class="text-emerald-400 font-bold text-[11px] tracking-widest uppercase mb-2">
+                                    {tier.kicker}
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-2">
+                                    {tier.name}
+                                </h3>
+                                <div class="mb-3">
+                                    <span class="text-3xl font-black text-white">{fmtEur(tier.price)}</span>
+                                    <span class="text-sm text-gray-500"> / mo + VAT</span>
+                                </div>
+                                <p class="text-gray-500 text-sm mb-4 flex-grow">
+                                    {tier.description}
+                                </p>
+                                <a
+                                    href={`/contact?topic=${tier.id}`}
+                                    class={`block w-full py-2.5 text-center text-sm rounded-full transition-colors ${
+                                        tier.featured
+                                            ? "bg-emerald-500 text-white font-bold hover:bg-emerald-600"
+                                            : "border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
+                                    }`}
+                                >
+                                    Request a Quote →
+                                </a>
+                            </div>
+                        ))
+                    }
+                </div>
                 <p class="text-center text-gray-500 text-sm">
-                    Continue with a monthly SEO plan — {seoMonthlyTiers.map((t) => `${t.name} ${fmtEur(t.price)}/mo`).join(", ")} — for long-term growth. <a
-                        href="/seo-services#packages"
-                        class="text-emerald-400 hover:text-emerald-300 underline">See details on the SEO page →</a>
+                    Every monthly plan starts with the SEO Foundation setup, min. 6 months. <a
+                        href="/seo-services/"
+                        class="text-emerald-400 hover:text-emerald-300 underline">Full SEO details →</a>
+                </p>
+            </div>
+        </section>
+
+        <!-- GEO / AI VISIBILITY -->
+        <section id="ai" class="py-20 md:py-28 border-t border-white/5 relative overflow-hidden scroll-mt-24">
+            <div class="absolute top-20 -left-40 z-0 opacity-10 pointer-events-none">
+                <div class="w-[500px] h-[500px] rounded-full bg-cyan-600 blur-[60px] md:blur-[150px]"></div>
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <div class="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-sm text-cyan-300">
+                        <span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
+                        New: AI search visibility
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+                        GEO / AI <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400">Visibility</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg">
+                        Be present in the answers of ChatGPT, Gemini, Perplexity
+                        and Google AI Overview — as a standalone package or
+                        alongside your SEO.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    {
+                        geoServices.map((g) => (
+                            <div class="bg-gray-900/50 border border-cyan-500/20 rounded-3xl p-6 flex flex-col relative">
+                                {g.badge && (
+                                    <div class="absolute top-0 right-0 bg-cyan-500 text-white text-[11px] font-bold px-3 py-1 rounded-bl-xl">
+                                        {g.badge}
+                                    </div>
+                                )}
+                                <h3 class="text-lg font-bold text-white mb-2 pr-24">{g.name}</h3>
+                                <p class="text-gray-500 text-sm mb-4 flex-grow">{g.tagline}</p>
+                                <div class="flex items-center justify-between gap-3 pt-3 border-t border-white/10">
+                                    <div>
+                                        <span class="text-2xl font-black text-white">{fmtEur(g.price)}</span>
+                                        <span class="text-gray-500 text-sm">{g.unit ? " " + g.unit : ""} + VAT</span>
+                                    </div>
+                                    <a href={`/contact?topic=${g.id}`} class="text-cyan-300 text-sm font-bold hover:text-cyan-200 transition-colors whitespace-nowrap">Request →</a>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+                <p class="text-center text-gray-500 text-sm mt-8">
+                    <a href="/seo-services#geo" class="text-cyan-300 hover:text-cyan-200 underline">Details in the GEO/AI section →</a>
                 </p>
             </div>
         </section>
