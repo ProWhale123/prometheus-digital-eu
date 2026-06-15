@@ -6,6 +6,8 @@ interface ServiceItem {
     name: string;
     description: string;
     url?: string;
+    /** Net price in EUR; if set, included in the Offer schema. */
+    price?: number;
 }
 
 interface Props {
@@ -13,7 +15,7 @@ interface Props {
     priceRange?: string;
 }
 
-const { services, priceRange = "€799 - €6,000" } = Astro.props;
+const { services, priceRange = "€749 - €6,000" } = Astro.props;
 
 const siteUrl = "https://www.prometheusdigital.eu";
 
@@ -34,15 +36,17 @@ const schema = services.map((service) => ({
         name: "Europe",
     },
     serviceType: service.name,
-    ...(priceRange && {
-        offers: {
-            "@type": "Offer",
-            priceSpecification: {
-                "@type": "PriceSpecification",
-                priceCurrency: "EUR",
-            },
+    offers: {
+        "@type": "Offer",
+        priceCurrency: "EUR",
+        ...(service.price ? { price: String(service.price) } : {}),
+        priceSpecification: {
+            "@type": "PriceSpecification",
+            priceCurrency: "EUR",
+            valueAddedTaxIncluded: false,
+            ...(service.price ? { price: String(service.price) } : {}),
         },
-    }),
+    },
 }));
 ---
 

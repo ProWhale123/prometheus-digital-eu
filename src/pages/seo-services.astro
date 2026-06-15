@@ -10,6 +10,16 @@ import LocalBusinessSchema from "../components/LocalBusinessSchema.astro";
 import MagneticButtonAstro from "../components/MagneticButtonAstro.astro";
 import SpotlightCard from "../components/SpotlightCard.astro";
 
+import {
+    fmtEur,
+    webModules,
+    seoOneTime,
+    seoMonthlyTiers,
+    seoAddons,
+    geoServices,
+    SEO_MIN_MONTHS,
+    COMPLEX_EXTRA_SUBPAGE,
+} from "../data/pricing";
 
 const seoProcess = [
     {
@@ -22,244 +32,205 @@ const seoProcess = [
         step: "02",
         title: "Keyword Research & Gap Analysis",
         description:
-            "We identify high-value searches your customers are making. We analyze competitors' keyword strategies and find areas where they are weak.",
+            "We identify the high-value searches your customers are making. We analyse competitors' keyword strategies and find the areas where they are weak.",
     },
     {
         step: "03",
         title: "Technical SEO & Code Optimization",
         description:
-            "We build results into the backend code: JSON-LD structured data, schema markup, meta data optimization, Core Web Vitals fine-tuning.",
+            "We build the results into the backend code too: JSON-LD structured data, schema markup, meta data optimisation, Core Web Vitals fine-tuning.",
     },
     {
         step: "04",
         title: "Content & Link Building",
         description:
-            "2-8 professional, keyword-optimized expert articles per month — at the pace of your chosen plan. The SEO Dominance plan adds premium link building: 2-4 PR placements per month to increase domain authority (DA).",
+            "Monthly expert articles with pillar content — at the pace of your chosen plan. The higher tiers add link building: quality links and PR placements to grow domain authority (DA).",
     },
     {
         step: "05",
         title: "Measurement & Monthly Report",
         description:
-            "Transparent PDF report at the end of every month: rankings, traffic, conversions. We continuously refine the strategy based on the data.",
+            "A transparent PDF report at the end of every month: rankings, traffic, conversions. We continuously refine the strategy based on the data.",
     },
 ];
 
-const setupIncludes = [
-    {
-        title: "JSON-LD Structured Data",
-        description:
-            "Custom schema.org code that explicitly defines the business, services, price range and service area for Google.",
-    },
+// SEO Foundation = Technical SEO Sprint + Keyword & Content Strategy
+const technicalSprintIncludes = [
     {
         title: "SEO Audit & Assessment",
         description:
-            "Comprehensive technical audit: speed, indexing, site structure, competitor analysis. We map out where your website stands and where the market gaps are.",
+            "Full technical audit: speed, indexing, site structure, competitor analysis.",
     },
+    {
+        title: "Core Web Vitals & Technical Fix",
+        description:
+            "Speed optimisation, image optimisation, sitemap and robots.txt, component-level metadata.",
+    },
+    {
+        title: "JSON-LD Structured Data",
+        description:
+            "Custom schema.org code that explicitly defines the business, services and service area for Google.",
+    },
+    {
+        title: "Internal Link Structure & Meta Data",
+        description:
+            "Custom meta title and description, contextual internal links, breadcrumb implementation.",
+    },
+    {
+        title: "GSC + GA4 Conversion Tracking",
+        description:
+            "Google Search Console and Analytics 4 setup, micro-conversion measurement (form, phone, email clicks).",
+    },
+];
+
+const keywordContentIncludes = [
     {
         title: "B2B/B2C Keyword Research",
         description:
-            "Detailed analysis of competitors' strategies. Identifying market gaps where we can get ahead of the competition.",
+            "Detailed analysis of high-value searches and competitors' strategies.",
     },
     {
-        title: "Technical SEO Fix",
+        title: "Search-Intent Map",
         description:
-            "Core Web Vitals optimization, meta data fine-tuning, sitemap and robots.txt, image optimization, component-level metadata implementation.",
+            "Keyword clusters mapped to every stage of the buyer journey, so the right content serves the right intent.",
     },
     {
-        title: "Google Search Console Setup",
+        title: "Competitor Gap Analysis",
         description:
-            "Website ownership verification, sitemap submission, indexing status monitoring and search performance report setup.",
+            "Identifying the market gaps where we can get ahead of the competition.",
     },
     {
-        title: "Google Analytics 4 Conversion Tracking",
+        title: "Content Calendar & Pillar Structure",
         description:
-            "GA4 property creation and configuration, micro-conversion measurement (phone clicks, form submissions, content engagement).",
-    },
-    {
-        title: "Detailed Blog Strategy",
-        description:
-            "Content plan for the monthly SEO retainer: keyword clusters, topic mapping, publishing schedule — preparation for ongoing content creation.",
+            "A scheduled plan of thematic pillar content and supporting articles — preparation for ongoing content production.",
     },
 ];
 
 const complexSetupIncludes = [
     {
-        title: "SEO Audit & Assessment",
+        title: "Full SEO Foundation",
         description:
-            "Full technical audit, indexing issue mapping, top 3 competitor analysis. (€300 value)",
+            "The complete Technical SEO Sprint and Keyword & Content Strategy — technical groundwork plus keyword and content strategy.",
     },
     {
         title: "Full Technical SEO Implementation",
         description:
-            "Core Web Vitals optimization (within platform limits), WebP image conversion, sitemap regeneration, robots.txt cleanup, redirects.",
+            "Core Web Vitals optimisation (within the limits of the existing platform), WebP image conversion, sitemap regeneration, robots.txt cleanup, redirects.",
     },
     {
         title: "Schema.org Markup Implementation",
         description:
-            "Organization, BreadcrumbList, Service/Product, FAQ, Article schema in JSON-LD format on every relevant page.",
+            "Organization, BreadcrumbList, Service/Product, FAQ and Article schemas in JSON-LD format on every relevant page.",
     },
     {
         title: "Content Audit & Up to 5 Page Expansion",
-        description:
-            "Critical pages rewritten or expanded, keyword-optimized (min 800-1500 words/page). Plus 2 new foundational blog posts. Additional pages: €60/page.",
+        description: `Critical sub-pages rewritten or expanded, keyword-optimised. Plus 2 new foundational blog posts. Each additional sub-page: ${fmtEur(COMPLEX_EXTRA_SUBPAGE)} / page.`,
     },
     {
-        title: "Meta Tags & Internal Linking",
+        title: "GEO/AI Audit + Setup",
         description:
-            "Custom meta title and description for every page, 20-40 new contextual internal links, breadcrumb implementation.",
+            "Full visibility audit and technical setup for AI search engines (ChatGPT, Gemini, Perplexity, Google AI Overview) — entity linking and an AI-friendly content structure.",
     },
     {
-        title: "GA4 + GSC + Conversion Tracking",
+        title: "GA4 + GSC + Local SEO",
         description:
-            "Google Analytics 4 and Search Console setup, conversion funnel tracking, lead events (form, phone, email click).",
-    },
-    {
-        title: "Local SEO Optimization",
-        description:
-            "Google Business Profile cleanup, local schema markup, NAP consistency check (where relevant).",
-    },
-    {
-        title: "Detailed Blog Strategy",
-        description:
-            "Content plan for the monthly SEO retainer: keyword clusters, topic mapping, publishing schedule and competitor gap analysis-based content prioritization.",
-    },
-];
-
-const retainerTiers = [
-    {
-        name: "SEO Start",
-        kicker: "Solid Foundations",
-        description:
-            "Continuous presence on Google: foundational content creation and technical oversight, so your site grows stronger month after month.",
-        baseNote: null,
-        features: [
-            "2 keyword-optimized expert articles written and published per month",
-            "Technical monitoring: Core Web Vitals and Search Console",
-            "Transparent monthly PDF report: rankings, traffic, conversions",
-        ],
-        featured: false,
-        cta: "/contact?topic=seo-start",
-    },
-    {
-        name: "SEO Growth",
-        kicker: "Active Growth",
-        description:
-            "Double the content pace plus active competitor monitoring — for continuously growing your market share.",
-        baseNote: "Everything in SEO Start, plus:",
-        features: [
-            "4 keyword-optimized expert articles per month (double the content)",
-            "Competitor monitoring and strategic response",
-            "Monthly strategy consultation on next month's focus",
-        ],
-        featured: true,
-        cta: "/contact?topic=seo-growth",
-    },
-    {
-        name: "SEO Dominance",
-        kicker: "Market Leadership",
-        description:
-            "The only plan with link building, AI search optimization and conversion optimization — for full market dominance.",
-        baseNote: "Everything in SEO Growth, plus:",
-        features: [
-            "6-8 keyword-optimized expert articles per month",
-            "Premium link building: 2-4 PR placements on high-authority portals per month",
-            "GEO/AEO optimization: visibility in ChatGPT, Gemini and Google AI results",
-            "Conversion rate optimization (CRO) recommendations",
-        ],
-        featured: false,
-        cta: "/contact?topic=seo-dominance",
+            "Analytics and Search Console setup, conversion funnel tracking, Google Business Profile cleanup and local schema markup.",
     },
 ];
 
 const faqs = [
     {
         question: "How long until I see results?",
-        answer: "Google's algorithm typically takes 3-6 months to start pricing in content development and authority building. In the first month, basic technical fixes are already measurable, but stable improvement in search positions typically starts from month 3.",
+        answer: "Google's algorithm typically takes 3-6 months to start pricing in content development and authority building. In the first month the basic technical fixes are already measurable, but a stable improvement in search positions typically begins from month 3.",
     },
     {
         question: "Do you guarantee first place on Google?",
-        answer: "No one can responsibly guarantee this — anyone who does is misleading you. What we guarantee: measurable, continuous improvement in search positions, data-driven decisions, and transparent reports where you can see exactly the progress.",
+        answer: "No one can responsibly guarantee that — anyone who does is misleading you. What we do guarantee: measurable, continuous improvement in search positions, data-driven decisions, and transparent reports where you can see exactly how things progress.",
     },
     {
         question: "Do I need a new website for SEO?",
-        answer: "Not necessarily. Our SEO service can be applied to existing websites. However, if your site runs on outdated technology (e.g., old WordPress template), technical limitations may hinder results. In that case, we'll discuss the options during consultation.",
-    },
-    {
-        question: "What's the difference between 6 and 12 month commitment?",
-        answer: "The 6-month package focuses on building the foundation and achieving visible results. With the 12-month commitment, the first half builds the same base, but then we go much deeper: more complex strategy, more specific lead generation and deeper competitive targeting.",
+        answer: "Not necessarily. Our SEO service can be applied to existing websites too. However, if your site runs on outdated technology (e.g. an old WordPress template), technical limitations may hinder the results. In that case we'll discuss the options during a consultation.",
     },
     {
         question: "Which monthly SEO plan should I choose?",
-        answer: "SEO Start is built for continuous presence: 2 expert articles per month, technical monitoring and reporting. SEO Growth is the most popular choice — double the content volume, competitor monitoring and a monthly strategy consultation. SEO Dominance targets market leadership, and it's the only plan that includes premium link building (2-4 PR placements per month), AI search (GEO/AEO) optimization and conversion optimization. In a free consultation we'll help you pick the level that fits your goals.",
+        answer: `SEO Local (${fmtEur(seoMonthlyTiers[0].price)}/mo) is ideal for local or single-region businesses. SEO Growth (${fmtEur(seoMonthlyTiers[1].price)}/mo) is the most popular: for national providers and small webshops, with link building and local SEO. SEO Dominance (${fmtEur(seoMonthlyTiers[2].price)}/mo) is for competitive markets — maximum cadence, premium link building and full local coverage. In a free assessment we'll help you pick the level that fits your goals.`,
     },
     {
-        question: "Why are the monthly SEO plans custom priced?",
-        answer: "Because no two markets are the same: a local service provider and a nationwide webshop operate in completely different competitive environments and require different amounts of work. We set the monthly fee based on your market's competitiveness, your starting point and your goals — so you pay exactly for what your growth actually requires. After a free assessment, you receive a concrete written quote.",
+        question: "What's the difference between SEO Foundation and Complex SEO Setup?",
+        answer: `SEO Foundation (${fmtEur(seoOneTime.foundation.price)}) is the recommended groundwork for everyone — for our own clients and existing sites where the technical basics are solid. It includes the Technical SEO Sprint (${fmtEur(seoOneTime.technicalSprint.price)}) and the Keyword & Content Strategy (${fmtEur(seoOneTime.keywordContent.price)}) at a bundle discount. Complex SEO Setup (${fmtEur(seoOneTime.complex.price)}) is needed when page expansion is required (up to 5, additional sub-pages ${fmtEur(COMPLEX_EXTRA_SUBPAGE)} each) or you also want AI search visibility — it includes the full GEO/AI Audit + Setup.`,
     },
     {
-        question: "What is GEO/AEO optimization?",
-        answer: "GEO (Generative Engine Optimization) and AEO (Answer Engine Optimization) ensure your business also appears as a source in AI-powered search — ChatGPT, Gemini, Perplexity, Google AI Overview. We achieve this with structured data, entity-based SEO and AI-friendly content architecture. It's part of the SEO Dominance plan.",
+        question: "Can I order the Technical SEO Sprint or the Keyword & Content Strategy separately?",
+        answer: `Yes. The Technical SEO Sprint on its own is ${fmtEur(seoOneTime.technicalSprint.price)}, and the Keyword & Content Strategy is ${fmtEur(seoOneTime.keywordContent.price)}. The two together, as SEO Foundation, are ${fmtEur(seoOneTime.foundation.price)} — cheaper as a bundle than buying them individually.`,
     },
     {
-        question: "What does the Advanced SEO Setup include?",
-        answer: "JSON-LD structured data implementation, Google Analytics 4 and Search Console conversion tracking setup, complete B2B/B2C keyword research and competitor gap analysis, and website technical SEO fine-tuning (speed optimization, meta data, schema extensions).",
+        question: "What is GEO/AEO and do I need it?",
+        answer: "GEO (Generative Engine Optimization) and AEO (Answer Engine Optimization) ensure your business appears as a source in AI-powered search too — ChatGPT, Gemini, Perplexity, Google AI Overview. A growing share of searches end without a click, in an AI answer; anyone left out of those becomes invisible. It can be ordered as a standalone product (Audit, Setup, Monitoring) and as an add-on alongside monthly SEO.",
     },
     {
-        question: "What's the difference between Advanced and Complex SEO Setup?",
-        answer: "The Advanced (€600) is the recommended foundation for everyone — our own clients and existing websites where the technical basics are solid. Both packages prepare you for monthly SEO with a detailed blog strategy. The Complex (€1,400) is needed when page expansion is required (up to 5 pages, additional pages €60 each) or deeper technical issues exist (outdated platform, indexing problems, missing schema).",
+        question: "What is the minimum commitment for the monthly plans?",
+        answer: `A minimum of ${SEO_MIN_MONTHS} months, because SEO results typically take 3-6 months to materialise. Every monthly SEO client first goes through a SEO Foundation or Technical SEO Sprint setup — there is no "bare" monthly fee without a proper foundation.`,
     },
     {
-        question: "What if some elements are already working well on my site?",
-        answer: "We price flexibly. If you already have a working GA4 + Search Console setup, or your schema markup is partially in place, we deduct that from the price. In a free consultation we tailor the Complex Setup to your actual situation — you only pay for what is real work.",
+        question: "What if some elements already work well on my website?",
+        answer: "We price flexibly, of course. If, for example, you already have a working GA4 + Search Console setup, or your schema markup is partially in place, we don't add those to the price. In a free consultation we tailor the setup to your current situation — you only pay for what is genuinely work.",
     },
     {
         question: "How do you measure results?",
-        answer: "At the end of every month, we send a transparent PDF report: search position changes, organic traffic trends, conversions (phone calls, forms, contacts), and next month's strategy. Plus a monthly online consultation.",
-    },
-    {
-        question: "We already have a website you built. What's the deal?",
-        answer: "Every website we build includes basic technical SEO (speed, structure). The Advanced SEO Setup, however, is a deeper, marketing-focused foundation (keyword research, GSC/GA4 measurement, JSON-LD) on which the monthly SEO retainer builds.",
+        answer: "At the end of every month we send a transparent PDF report: search position changes, organic traffic trends, conversions (phone calls, forms, contact requests), and the next month's strategy. Plus, depending on the plan, a monthly or bi-weekly online consultation.",
     },
 ];
 ---
 
 <Layout
     title="SEO Services for Businesses | Search Engine Optimization - Prometheus Digital"
-    description="Professional SEO services for businesses. One-time SEO setup + three-tier monthly SEO plans: Start, Growth, Dominance. More organic traffic, measurable results."
+    description="Professional SEO for businesses: one-time SEO Foundation from €870, three-tier monthly SEO (Local €450, Growth €810, Dominance €1,350) and GEO/AI visibility in AI search engines."
 >
     <Header />
 
     <ServiceSchema
         services={[
             {
-                name: "Advanced SEO Setup",
+                name: "SEO Foundation",
                 description:
-                    "One-time SEO foundation for websites we built: JSON-LD structured data, GA4/GSC conversion tracking, keyword research and technical SEO fixes.",
-                url: "/seo-services",
+                    "One-time SEO groundwork: Technical SEO Sprint (audit, Core Web Vitals, schema/JSON-LD, sitemap, GSC/GA4) and Keyword & Content Strategy in one package.",
+                url: "/seo-services#packages",
+                price: seoOneTime.foundation.price,
             },
             {
                 name: "Complex SEO Setup",
                 description:
-                    "Full SEO transformation: technical SEO, schema markup, up to 5 page expansion, GA4/GSC, Local SEO and detailed blog strategy.",
-                url: "/seo-services",
+                    "Full SEO transformation of an existing website not built by us: SEO Foundation + 5 sub-page content expansion + full GEO/AI Audit and Setup.",
+                url: "/seo-services#packages",
+                price: seoOneTime.complex.price,
             },
             {
-                name: "SEO Start - Monthly SEO Plan",
+                name: "SEO Local - Monthly SEO Plan",
                 description:
-                    "Entry-level ongoing search engine optimization: 2 expert articles per month, technical monitoring and monthly reporting. Custom quote.",
-                url: "/seo-services",
+                    "Monthly search engine optimization for local / single-region businesses: 2 expert articles, monthly on-page work, technical monitoring and a monthly report.",
+                url: "/seo-services#packages",
+                price: seoMonthlyTiers[0].price,
             },
             {
                 name: "SEO Growth - Monthly SEO Plan",
                 description:
-                    "Active growth plan: 4 expert articles per month, competitor monitoring and monthly strategy consultation. Custom quote.",
-                url: "/seo-services",
+                    "Active growth plan: 4 expert articles, link building, baseline local SEO management, quarterly competitor analysis and a monthly strategy call.",
+                url: "/seo-services#packages",
+                price: seoMonthlyTiers[1].price,
             },
             {
                 name: "SEO Dominance - Monthly SEO Plan",
                 description:
-                    "Premium monthly search engine optimization: 6-8 expert articles per month, premium link building with 2-4 PR placements, GEO/AEO optimization for AI search and CRO recommendations. Custom quote.",
-                url: "/seo-services",
+                    "Premium monthly search engine optimization: 6 expert articles, premium link building (6-8 links + 2 PR articles), full local SEO and monthly competitor analysis.",
+                url: "/seo-services#packages",
+                price: seoMonthlyTiers[2].price,
+            },
+            {
+                name: "GEO/AI Setup",
+                description:
+                    "Technical and content foundation for visibility in AI search engines (ChatGPT, Gemini, Perplexity, Google AI Overview): semantic optimisation, entity linking, AI-friendly content structure.",
+                url: "/seo-services#geo",
+                price: geoServices[1].price,
             },
         ]}
     />
@@ -314,9 +285,10 @@ const faqs = [
                 <p
                     class="max-w-3xl mx-auto text-lg md:text-xl text-gray-300 mb-10"
                 >
-                    Even the best product stays invisible if your customers can't
-                    find it. We help your business be the first one Google
-                    recommends when a potential client searches.
+                    Even the best product stays invisible if your customers
+                    can't find it. We help your business be the first one Google
+                    — and the AI search engines — recommend when a potential
+                    client searches.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -346,9 +318,10 @@ const faqs = [
                         Why is SEO the best investment?
                     </h2>
                     <p class="text-lg text-gray-400">
-                        Google Ads bring nothing once turned off. SEO, on the other
-                        hand, is a continuously working, 24/7 customer acquisition
-                        machine — that gets stronger month after month.
+                        Google Ads bring nothing once you turn them off. SEO, on
+                        the other hand, is a continuously working, 24/7 customer
+                        acquisition machine — that gets stronger month after
+                        month.
                     </p>
                 </div>
 
@@ -418,7 +391,8 @@ const faqs = [
                     </h2>
                     <p class="text-lg text-gray-400">
                         SEO is not a collection of secret tricks. It's a
-                        data-driven, transparent process tailored to your industry.
+                        data-driven, transparent process tailored to your
+                        industry.
                     </p>
                 </div>
 
@@ -461,7 +435,7 @@ const faqs = [
                     </h2>
                     <p class="text-lg text-gray-400">
                         A fixed-price one-time foundation — and three monthly
-                        plans with a custom quote tailored to your market.
+                        plans with concrete, transparent pricing.
                     </p>
                 </div>
 
@@ -477,11 +451,11 @@ const faqs = [
                 </div>
 
                 <div
-                    class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-20"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-6"
                 >
-                    <!-- SETUP -->
+                    <!-- SEO FOUNDATION -->
                     <SpotlightCard
-                        class="h-full bg-gray-900/60 border border-white/10"
+                        class="h-full bg-gray-900/60 border border-emerald-500/30"
                     >
                         <div class="p-6 md:p-8 h-full flex flex-col">
                             <div
@@ -490,62 +464,60 @@ const faqs = [
                                 <span
                                     class="w-2 h-6 bg-emerald-500 rounded-full"
                                 ></span>
-                                One-Time Fee
+                                One-Time Fee · Entry
                             </div>
 
                             <h3 class="text-2xl font-bold text-white mb-2">
-                                Advanced SEO Setup
+                                {seoOneTime.foundation.name}
                             </h3>
                             <p
                                 class="text-gray-400 text-sm mb-6 leading-relaxed"
                             >
-                                Before content creation begins, we switch the
-                                system into "data-driven" mode. This critical
-                                foundation ensures measurable results.
+                                {seoOneTime.foundation.tagline}
                             </p>
 
-                            <div class="space-y-3 mb-8 flex-grow">
-                                {
-                                    setupIncludes.map((item) => (
-                                        <div class="border-b border-white/5 pb-3 last:border-0">
-                                            <div class="text-white font-bold text-sm flex items-center gap-2">
-                                                <svg
-                                                    class="w-4 h-4 text-emerald-500 flex-shrink-0"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M5 13l4 4L19 7"
-                                                    />
-                                                </svg>
-                                                {item.title}
-                                            </div>
-                                            <p class="text-xs text-gray-500 ml-6 mt-1">
-                                                {item.description}
-                                            </p>
+                            <div class="space-y-4 mb-8 flex-grow">
+                                <div>
+                                    <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">
+                                        Technical SEO Sprint · {fmtEur(seoOneTime.technicalSprint.price)}
+                                    </div>
+                                    {technicalSprintIncludes.map((item) => (
+                                        <div class="flex items-start gap-2 text-sm mb-1.5">
+                                            <svg class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                            <span class="text-gray-300">{item.title}</span>
                                         </div>
-                                    ))
-                                }
+                                    ))}
+                                </div>
+                                <div>
+                                    <div class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2 pt-2">
+                                        Keyword & Content Strategy · {fmtEur(seoOneTime.keywordContent.price)}
+                                    </div>
+                                    {keywordContentIncludes.map((item) => (
+                                        <div class="flex items-start gap-2 text-sm mb-1.5">
+                                            <svg class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                            <span class="text-gray-300">{item.title}</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
 
                             <div class="pt-6 border-t border-white/10">
-                                <div class="flex items-baseline gap-2 mb-4">
+                                <div class="flex items-baseline gap-2 mb-1">
                                     <span class="text-3xl font-black text-white"
-                                        >From &euro;400</span
+                                        >{fmtEur(seoOneTime.foundation.price)}</span
                                     >
                                     <span class="text-gray-500 text-sm"
                                         >+ VAT</span
                                     >
                                 </div>
+                                <p class="text-xs text-emerald-400/80 mb-4">
+                                    The two modules separately are {fmtEur(seoOneTime.technicalSprint.price + seoOneTime.keywordContent.price)} — cheaper as a bundle.
+                                </p>
                                 <a
-                                    href="/contact?topic=seo-setup"
+                                    href="/contact?topic=seo-foundation"
                                     class="block w-full text-center py-3 px-6 border border-emerald-500/30 text-emerald-400 font-bold rounded-full hover:bg-emerald-500/10 transition-all"
                                 >
-                                    Request Setup
+                                    Request Foundation
                                 </a>
                             </div>
                         </div>
@@ -562,19 +534,16 @@ const faqs = [
                                 <span
                                     class="w-2 h-6 bg-purple-500 rounded-full"
                                 ></span>
-                                One-Time Fee
+                                One-Time Fee · Full
                             </div>
 
                             <h3 class="text-2xl font-bold text-white mb-2">
-                                Complex SEO Setup
+                                {seoOneTime.complex.name}
                             </h3>
                             <p
                                 class="text-gray-400 text-sm mb-6 leading-relaxed"
                             >
-                                Need page expansion or have deeper technical
-                                issues? Full transformation: technical fixes,
-                                content expansion, schema, measurement and
-                                blog strategy.
+                                {seoOneTime.complex.tagline}
                             </p>
 
                             <div class="space-y-3 mb-8 flex-grow">
@@ -608,7 +577,7 @@ const faqs = [
                             <div class="pt-6 border-t border-white/10">
                                 <div class="flex items-baseline gap-2 mb-2">
                                     <span class="text-3xl font-black text-white"
-                                        >From &euro;900</span
+                                        >{fmtEur(seoOneTime.complex.price)}</span
                                     >
                                     <span class="text-gray-500 text-sm"
                                         >+ VAT</span
@@ -627,8 +596,13 @@ const faqs = [
                             </div>
                         </div>
                     </SpotlightCard>
-
                 </div>
+
+                <p class="text-center text-gray-500 text-sm max-w-3xl mx-auto mb-20">
+                    The SEO Foundation modules can also be ordered à la carte:
+                    <strong class="text-gray-300">Technical SEO Sprint {fmtEur(seoOneTime.technicalSprint.price)}</strong> ·
+                    <strong class="text-gray-300">Keyword & Content Strategy {fmtEur(seoOneTime.keywordContent.price)}</strong>.
+                </p>
 
                 <!-- MONTHLY RETAINER TIERS -->
                 <div class="text-center mb-10">
@@ -640,9 +614,9 @@ const faqs = [
                         Monthly SEO Plans
                     </h3>
                     <p class="text-gray-400 mt-3 max-w-2xl mx-auto">
-                        Three growth paces, with a minimum 6-month
-                        partnership. The fee is set in a custom quote, tailored
-                        to your market and goals.
+                        Three growth paces, with a minimum {SEO_MIN_MONTHS}-month
+                        partnership. Every plan starts with the SEO Foundation
+                        setup.
                     </p>
                 </div>
 
@@ -650,7 +624,7 @@ const faqs = [
                     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-8"
                 >
                     {
-                        retainerTiers.map((tier) => (
+                        seoMonthlyTiers.map((tier) => (
                             <SpotlightCard
                                 class={`h-full bg-gray-900/60 border relative ${
                                     tier.featured
@@ -714,15 +688,17 @@ const faqs = [
                                     <div class="pt-6 border-t border-white/10">
                                         <div class="flex items-baseline gap-2 mb-1">
                                             <span class="text-3xl font-black text-white">
-                                                Custom pricing
+                                                {fmtEur(tier.price)}
+                                            </span>
+                                            <span class="text-gray-500 text-sm">
+                                                / mo + VAT
                                             </span>
                                         </div>
                                         <p class="text-xs text-gray-500 italic mb-4">
-                                            A quote tailored to your market and
-                                            goals
+                                            Minimum {SEO_MIN_MONTHS}-month partnership
                                         </p>
                                         <a
-                                            href={tier.cta}
+                                            href={`/contact?topic=${tier.id}`}
                                             class={`block w-full text-center py-3 px-6 font-bold rounded-full transition-all ${
                                                 tier.featured
                                                     ? "bg-emerald-500 text-white hover:bg-emerald-600 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)]"
@@ -736,6 +712,36 @@ const faqs = [
                             </SpotlightCard>
                         ))
                     }
+                </div>
+
+                <!-- SEO ADD-ONS -->
+                <div class="max-w-5xl mx-auto mb-8">
+                    <h4 class="text-center text-sm font-bold tracking-widest text-gray-500 uppercase mb-6">
+                        Add-ons — alongside any monthly plan
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {
+                            seoAddons.map((addon) => (
+                                <div class="bg-gray-800/40 p-4 rounded-xl border border-white/5 flex justify-between items-center gap-3 hover:border-emerald-500/20 transition-colors">
+                                    <div>
+                                        <div class="text-white font-bold text-sm">
+                                            {addon.label}
+                                        </div>
+                                        {addon.note && (
+                                            <div class="text-gray-500 text-xs mt-0.5">
+                                                {addon.note}
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div class="text-emerald-400 font-mono text-sm text-right whitespace-nowrap flex-shrink-0">
+                                        {addon.custom
+                                            ? "Custom price"
+                                            : `${fmtEur(addon.price)}${addon.unit ? " " + addon.unit : ""}`}
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
 
                 <!-- FLEXIBLE PRICING NOTE -->
@@ -759,16 +765,16 @@ const faqs = [
                     </div>
                     <div>
                         <h4 class="text-white font-bold mb-1">
-                            Flexible pricing — you only pay for what's actually
+                            Flexible pricing — you only pay for what's genuinely
                             work
                         </h4>
                         <p class="text-gray-400 text-sm leading-relaxed">
-                            If certain elements are already working well on your
-                            site (e.g. a properly configured GA4 + Search
-                            Console, or partial schema markup), we
+                            If certain elements already work well on your website
+                            (e.g. a properly configured GA4 + Search Console, or
+                            partially complete schema markup), we
                             <strong class="text-white">deduct them from the price</strong>.
-                            In a free consultation we tailor the Setup to your
-                            actual situation.
+                            In a free consultation we tailor the setup to your
+                            current situation.
                         </p>
                     </div>
                 </div>
@@ -803,7 +809,7 @@ const faqs = [
                             <div
                                 class="text-emerald-400 font-bold text-sm mb-2 uppercase tracking-wider"
                             >
-                                6-Month Start
+                                6-Month Commitment
                             </div>
                             <p class="text-gray-300 mb-4">
                                 Blog Module development <strong
@@ -812,10 +818,10 @@ const faqs = [
                             </p>
                             <div class="text-xs text-gray-500">
                                 Value: <span class="line-through"
-                                    >&euro;320 + VAT</span
+                                    >{fmtEur(webModules.blog.price)} + VAT</span
                                 >
                                 <span class="text-emerald-400 font-bold ml-1"
-                                    >&rarr; &euro;0</span
+                                    >→ {fmtEur(0)}</span
                                 >
                             </div>
                         </div>
@@ -831,7 +837,7 @@ const faqs = [
                             <p class="text-gray-300 mb-4">
                                 Blog Module <strong class="text-white"
                                     >FREE OF CHARGE</strong
-                                > + Advanced <strong class="text-white"
+                                > + SEO Foundation <strong class="text-white"
                                     >or</strong
                                 > Complex Setup at <strong class="text-white"
                                     >20% discount</strong
@@ -839,10 +845,10 @@ const faqs = [
                             </p>
                             <div class="text-xs text-gray-500">
                                 E.g. Complex Setup: <span class="line-through"
-                                    >&euro;900 + VAT</span
+                                    >{fmtEur(seoOneTime.complex.price)} + VAT</span
                                 >
                                 <span class="text-emerald-400 font-bold ml-1"
-                                    >&rarr; &euro;720 + VAT</span
+                                    >→ {fmtEur(Math.round(seoOneTime.complex.price * 0.8))} + VAT</span
                                 >
                             </div>
                         </div>
@@ -851,35 +857,112 @@ const faqs = [
             </div>
         </section>
 
+        <!-- GEO / AEO -->
+        <section id="geo" class="py-24 md:py-32 relative overflow-hidden scroll-mt-24">
+            <div class="absolute top-20 -left-40 z-0 opacity-10 pointer-events-none">
+                <div class="w-[500px] h-[500px] rounded-full bg-cyan-600 blur-[60px] md:blur-[150px]"></div>
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <div class="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-sm text-cyan-400">
+                        <span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
+                        New: AI search visibility
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black text-white mb-4">
+                        GEO / AEO — <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-sky-400">Be there in the AI's answers</span>
+                    </h2>
+                    <p class="text-lg text-gray-400">
+                        A growing share of searches end without a click, in an
+                        AI answer. GEO (Generative Engine Optimization) makes
+                        sure ChatGPT, Gemini, Perplexity and Google AI Overview
+                        recommend your business as a source.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                    {
+                        geoServices.map((g) => (
+                            <SpotlightCard class="h-full bg-gray-900/60 border border-cyan-500/20 relative">
+                                <div class="p-6 md:p-8 h-full flex flex-col">
+                                    {g.badge && (
+                                        <div class="absolute top-0 right-0 bg-cyan-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">
+                                            {g.badge}
+                                        </div>
+                                    )}
+                                    <h3 class="text-xl font-bold text-white mb-2 pr-24">
+                                        {g.name}
+                                    </h3>
+                                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+                                        {g.tagline}
+                                    </p>
+                                    <ul class="space-y-2.5 mb-8 flex-grow text-sm">
+                                        {g.features.map((f) => (
+                                            <li class="flex items-start gap-2">
+                                                <svg class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                                <span class="text-gray-300">{f}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <div class="pt-5 border-t border-white/10 flex items-center justify-between gap-3">
+                                        <div>
+                                            <span class="text-2xl font-black text-white">{fmtEur(g.price)}</span>
+                                            <span class="text-gray-500 text-sm">{g.unit ? " " + g.unit : ""} + VAT</span>
+                                        </div>
+                                        <a href={`/contact?topic=${g.id}`} class="text-cyan-400 text-sm font-bold hover:text-cyan-300 transition-colors whitespace-nowrap">
+                                            Request →
+                                        </a>
+                                    </div>
+                                </div>
+                            </SpotlightCard>
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+
         <!-- SETUP DETAILS -->
-        <section class="py-24 md:py-32">
+        <section class="py-24 md:py-32 bg-gray-900/30 border-y border-white/5">
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
                         What happens under the hood?
                     </h2>
                     <p class="text-lg text-gray-400">
-                        The Advanced SEO Setup is not superficial tweaking. We
-                        make changes in the deeper layers of the website where
-                        content and technical infrastructure sync 100%.
+                        The SEO Foundation is not superficial tweaking. We make
+                        changes in the deeper layers of the website, where the
+                        content and the technical infrastructure get into 100%
+                        sync.
                     </p>
                 </div>
 
                 <div
                     class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
                 >
-                    {
-                        setupIncludes.map((item) => (
-                            <div class="bg-gray-900/40 border border-white/5 rounded-2xl p-8 hover:border-emerald-500/20 transition-colors">
-                                <h3 class="text-xl font-bold text-white mb-3">
-                                    {item.title}
-                                </h3>
-                                <p class="text-gray-400 leading-relaxed">
-                                    {item.description}
-                                </p>
-                            </div>
-                        ))
-                    }
+                    <div class="bg-gray-900/40 border border-white/5 rounded-2xl p-8">
+                        <h3 class="text-xl font-bold text-white mb-1">Technical SEO Sprint</h3>
+                        <p class="text-emerald-400 font-mono text-sm mb-5">{fmtEur(seoOneTime.technicalSprint.price)}</p>
+                        <div class="space-y-4">
+                            {technicalSprintIncludes.map((item) => (
+                                <div>
+                                    <div class="text-white font-bold text-sm">{item.title}</div>
+                                    <p class="text-gray-400 text-sm leading-relaxed mt-1">{item.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div class="bg-gray-900/40 border border-white/5 rounded-2xl p-8">
+                        <h3 class="text-xl font-bold text-white mb-1">Keyword & Content Strategy</h3>
+                        <p class="text-emerald-400 font-mono text-sm mb-5">{fmtEur(seoOneTime.keywordContent.price)}</p>
+                        <div class="space-y-4">
+                            {keywordContentIncludes.map((item) => (
+                                <div>
+                                    <div class="text-white font-bold text-sm">{item.title}</div>
+                                    <p class="text-gray-400 text-sm leading-relaxed mt-1">{item.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -903,7 +986,7 @@ const faqs = [
                         class="bg-gray-900/50 p-6 rounded-xl border border-white/5"
                     >
                         <div class="text-2xl font-black text-emerald-400 mb-2">
-                            Custom plan
+                            {fmtEur(seoMonthlyTiers[0].price)}/mo+
                         </div>
                         <div class="text-gray-400 text-sm">
                             Monthly SEO investment — tailored to your goals
@@ -944,7 +1027,7 @@ const faqs = [
 
                 <div class="space-y-4">
                     {
-                        faqs.map((faq, i) => (
+                        faqs.map((faq) => (
                             <details class="group bg-gray-900/40 border border-white/5 rounded-xl overflow-hidden hover:border-emerald-500/20 transition-colors">
                                 <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
                                     <h3 class="text-white font-bold pr-4">

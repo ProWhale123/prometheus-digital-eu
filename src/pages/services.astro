@@ -22,20 +22,29 @@ import FloatingElement from "../components/FloatingElement.astro";
 import MagneticButtonAstro from "../components/MagneticButtonAstro.astro";
 import LatestBlog from "../components/LatestBlog.astro";
 
-// DATA BASED ON MODULAR PRICING LOGIC
+// SINGLE PRICING SOURCE
+import {
+    fmtEur,
+    ANCHOR_PRICE,
+    webModules as W,
+    seoOneTime,
+    seoMonthlyTiers,
+    maintenanceTiers,
+} from "../data/pricing";
+
 const serviceCategories = [
     {
         icon: WebsiteIcon,
         category: "1. STRUCTURE & FOUNDATION",
-        title: "The Core & Pages",
-        price: "From €799",
+        title: "Core Structure & Pages",
+        price: `From ${fmtEur(ANCHOR_PRICE)}`,
         description:
-            "The mandatory technological foundation. Includes premium English support & EU regulatory compliance.",
+            "The mandatory technological foundation. Everything is built on it. Stable, fast and SEO-friendly.",
         features: [
-            { name: "Base Landing Module", detail: "€799 (Mandatory)" },
-            { name: "Content Subpages", detail: "€75 / page" },
-            { name: "Extra Sales Page", detail: "€180 (High-impact)" },
-            { name: "Tech Pages", detail: "€45 (404, Thank You)" },
+            { name: "Prometheus Core", detail: `${fmtEur(W.core.price)} (Mandatory)` },
+            { name: "Content Sub-pages", detail: `${fmtEur(W.subPage.price)} / ea` },
+            { name: "Sales Landing Page", detail: `${fmtEur(W.salesPage.price)}` },
+            { name: "Tech Pages", detail: `${fmtEur(W.techPage.price)} (404, Thank-you)` },
         ],
         href: "/web-design-budapest",
     },
@@ -47,22 +56,22 @@ const serviceCategories = [
         description: "From clean standard to award-winning custom design.",
         features: [
             { name: "Standard Design", detail: "€0 (In Base Package)" },
-            { name: "Custom UX/UI Design", detail: "€850 (High-Ticket)" },
-            { name: "Premium Animations", detail: "€240 (GSAP, Framer)" },
-            { name: "Dark Mode", detail: "€150" },
+            { name: "Custom UX/UI Design", detail: `From ${fmtEur(W.customDesign.price)}` },
+            { name: "Premium Animations", detail: `${fmtEur(W.premiumAnimations.price)} (GSAP, Framer)` },
+            { name: "Dark Mode", detail: `${fmtEur(W.darkMode.price)}` },
         ],
     },
     {
         icon: SeoIcon,
         category: "3. CONTENT MANAGEMENT",
         title: "CMS & Blog",
-        price: "From €180",
+        price: `From ${fmtEur(W.cmsBasic.price)}`,
         description:
             "Edit your website without a developer. Essential for blogging.",
         features: [
-            { name: "Basic CMS", detail: "€180 (Keystatic)" },
-            { name: "Complex CMS", detail: "€350 (Sanity.io)" },
-            { name: "Blog Module", detail: "€180 (+ Mandatory Basic CMS)" },
+            { name: "Basic CMS (Sanity)", detail: `${fmtEur(W.cmsBasic.price)}` },
+            { name: "Complex CMS (Sanity)", detail: `${fmtEur(W.cmsComplex.price)}` },
+            { name: "Blog Module", detail: `${fmtEur(W.blog.price)} (+ CMS)` },
             { name: "Admin Interface", detail: "User-friendly handling" },
         ],
     },
@@ -70,13 +79,13 @@ const serviceCategories = [
         icon: CartIcon,
         title: "Webshop Systems",
         category: "4. E-COMMERCE",
-        price: "From €1,050",
+        price: `From ${fmtEur(W.webshopLite.price)}`,
         description:
-            "Automated sales. The Complex CMS module is required for the webshop.",
+            "Automated sales. The webshop requires the Complex CMS module.",
         features: [
-            { name: "Webshop Lite", detail: "€1,050 (Ideal for up to 20 products)" },
-            { name: "Webshop Pro", detail: "€1,350 - €6,000 (Registration, order history)" },
-            { name: "Invoicing Integration", detail: "Included" },
+            { name: "Webshop Lite", detail: `${fmtEur(W.webshopLite.price)} (up to 20 products)` },
+            { name: "Webshop Pro", detail: `From ${fmtEur(W.webshopPro.price)} (Headless)` },
+            { name: "Invoicing Integration", detail: "Included in the price" },
             { name: "Payment Gateway", detail: "Stripe / SimplePay" },
         ],
         href: "/webshop-development-budapest",
@@ -84,14 +93,14 @@ const serviceCategories = [
     {
         icon: SeoIcon,
         category: "5. SEARCH ENGINE OPTIMIZATION",
-        title: "SEO Services",
-        price: "Custom pricing",
+        title: "SEO & GEO Services",
+        price: `From ${fmtEur(seoMonthlyTiers[0].price)} / mo`,
         description:
-            "More customers from Google. One-time audit + monthly SEO plan for sustained growth.",
+            "More customers from Google and AI search engines. One-time setup + monthly SEO for sustained growth.",
         features: [
-            { name: "Advanced SEO Setup", detail: "€450 (One-time)" },
-            { name: "Monthly SEO Plans", detail: "Start / Growth / Dominance" },
-            { name: "Content Production", detail: "2-8 expert articles/month" },
+            { name: "SEO Foundation", detail: `${fmtEur(seoOneTime.foundation.price)} (One-time)` },
+            { name: "Monthly SEO Plans", detail: "Local / Growth / Dominance" },
+            { name: "GEO/AI Visibility", detail: "Audit, Setup, Monitoring" },
             { name: "Monthly Reporting", detail: "PDF + Consultation" },
         ],
         href: "/seo-services",
@@ -99,38 +108,18 @@ const serviceCategories = [
 ];
 
 const analyticsModules = [
-    { title: "Google Analytics 4", price: "€75", desc: "Basic event tracking" },
-    {
-        title: "Google Tag Manager",
-        price: "€75",
-        desc: "Tracking code container",
-    },
-    { title: "Facebook Pixel (CAPI)", price: "€60", desc: "Ad tracking" },
-    { title: "Google Search Console", price: "€45", desc: "Search statistics" },
+    { title: "Google Analytics 4", price: fmtEur(W.ga4.price), desc: "Conversion tracking, events" },
+    { title: "Google Tag Manager", price: fmtEur(W.gtm.price), desc: "Tracking code container" },
+    { title: "Facebook Pixel (CAPI)", price: fmtEur(W.pixel.price), desc: "Ad tracking, server-side" },
+    { title: "Google Search Console", price: fmtEur(W.gsc.price), desc: "Search statistics" },
 ];
 
 const businessLogicModules = [
-    {
-        title: "Multilingual",
-        price: "€270 / language",
-        desc: "Full technical duplication",
-    },
-    { title: "Booking System", price: "€135", desc: "Not just a simple form" },
-    {
-        title: "Marketing Integration (CRM)",
-        price: "€190",
-        desc: "MiniCRM, MailerLite, ActiveCampaign",
-    },
-    {
-        title: "Newsletter Subscription",
-        price: "€120",
-        desc: "API connection (Mailchimp, etc.)",
-    },
-    {
-        title: "AI Chatbot Development",
-        price: "€450",
-        desc: "Personalized assistant",
-    },
+    { title: "Multilingual", price: `${fmtEur(W.multilingualFirst.price)} + ${fmtEur(W.multilingualNext.price)}/language`, desc: "2nd language, then each additional" },
+    { title: "Booking System", price: fmtEur(W.booking.price), desc: "Not just a simple form" },
+    { title: "Marketing / CRM Integration", price: fmtEur(W.crm.price), desc: "MiniCRM, MailerLite, ActiveCampaign" },
+    { title: "Newsletter Integration", price: fmtEur(W.newsletter.price), desc: "API connection (Mailchimp, etc.)" },
+    { title: "AI Chatbot", price: `${fmtEur(W.chatbotSetup.price)} + ${fmtEur(W.chatbotMonthly.price)}/mo`, desc: "One-time setup + operation" },
 ];
 ---
 
@@ -161,10 +150,10 @@ const businessLogicModules = [
                 url: "/services",
             },
             {
-                name: "SEO Consulting",
+                name: "SEO Services",
                 description:
                     "Data-driven search engine optimization for European businesses. More organic traffic and customers from Google.",
-                url: "/seo-consulting",
+                url: "/seo-services",
             },
         ]}
     />
@@ -249,11 +238,11 @@ const businessLogicModules = [
                             1
                         </div>
                         <h3 class="text-white font-bold mb-2">
-                            Base Module (€799)
+                            Base Module ({fmtEur(ANCHOR_PRICE)})
                         </h3>
                         <p class="text-sm text-gray-400">
-                            The entry level. Includes English support & EU
-                            compliance. Required for everything.
+                            The entry level. Single-page landing, 90+ speed,
+                            SEO foundations. Required for everything.
                         </p>
                     </div>
                     <div
@@ -268,7 +257,7 @@ const businessLogicModules = [
                             Expand as Needed
                         </h3>
                         <p class="text-sm text-gray-400">
-                            Need 3 more subpages? A blog? Or webshop function?
+                            Need 3 more sub-pages? A blog? Or a webshop function?
                             Just tick it off.
                         </p>
                     </div>
@@ -462,24 +451,32 @@ const businessLogicModules = [
                         <div>
                             <span
                                 class="text-green-400 font-bold tracking-widest text-xs uppercase mb-2 block"
-                                >Peace of Mind</span
+                                >Worry-free Operation</span
                             >
                             <h2
                                 class="text-3xl md:text-4xl font-black text-white mb-6"
                             >
-                                Annual Maintenance & Warranty
+                                Maintenance & Operation
                             </h2>
                             <p class="text-gray-400 leading-relaxed mb-8">
-                                We don't leave you alone after handover. Our
-                                annual fee includes technical background and
-                                continuous security.
+                                We don't leave you alone after handover. Four
+                                operation tiers — from hosting to a dedicated
+                                partnership — and with an annual plan you get 2
+                                months free.
                             </p>
-                            <div class="flex items-baseline gap-2">
+                            <div class="flex items-baseline gap-2 mb-6">
                                 <span class="text-4xl font-black text-white"
-                                    >€120</span
+                                    >{fmtEur(maintenanceTiers[0].monthly)}</span
                                 >
-                                <span class="text-gray-500">/ year</span>
+                                <span class="text-gray-500">/ mo and up</span>
                             </div>
+                            <a
+                                href="/pricing#maintenance"
+                                class="inline-flex items-center gap-2 text-green-400 font-bold hover:text-green-300 transition-colors"
+                            >
+                                Maintenance plans
+                                <span>→</span>
+                            </a>
                         </div>
 
                         <div class="space-y-4">
@@ -527,10 +524,10 @@ const businessLogicModules = [
                                 </div>
                                 <div>
                                     <div class="font-bold text-white">
-                                        8-Year Operation Warranty
+                                        Monitoring & Security Updates
                                     </div>
                                     <div class="text-xs text-gray-500">
-                                        If anything breaks, we fix it for free*
+                                        Uptime monitoring and regular updates
                                     </div>
                                 </div>
                             </div>
@@ -553,10 +550,10 @@ const businessLogicModules = [
                                 </div>
                                 <div>
                                     <div class="font-bold text-white">
-                                        1 Hour Monthly Development
+                                        Backup & Fast Bug-fixing
                                     </div>
                                     <div class="text-xs text-gray-500">
-                                        Text replacement, images, small tweaks
+                                        Regular backups, SLA-based fixes
                                     </div>
                                 </div>
                             </div>

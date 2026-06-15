@@ -7,8 +7,6 @@ import BackToTop from '../components/BackToTop.astro';
 import { ClientRouter } from 'astro:transitions'; 
 import GlobalSpotlight from '../components/GlobalSpotlight.astro';
 import HapticFeedback from '../components/HapticFeedback.astro';
-import LogoPreloader from '../components/LogoPreloader.astro';
-import PageTransition from '../components/PageTransition.astro';
 import NoiseOverlay from '../components/NoiseOverlay.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 
@@ -164,8 +162,6 @@ const LEAD_PATH = '/thank-you';
         </script>
     </head>
     <body class="bg-gray-900 text-gray-200 font-sans leading-relaxed selection:bg-sky-500 selection:text-white">
-        <LogoPreloader />
-        <PageTransition />
         <slot />
         
         <BackToTop />

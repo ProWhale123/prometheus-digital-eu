@@ -9,119 +9,196 @@ import arainkImage from "../assets/images/araink-background.jpg";
 import CookieBanner from "../components/CookieBanner.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 
-// The Calculator
 import PriceCalculator from "../components/react/PriceCalculator.jsx";
 import FAQSchema from "../components/FAQSchema.astro";
 
-// All FAQ items in one place for the schema
-const allFaqItems = [
+import {
+    fmtEur,
+    ANCHOR_PRICE,
+    webModules,
+    typicalConfigs,
+    maintenanceTiers,
+    maintenanceRows,
+    EXTRA_DEV_HOURLY,
+    seoOneTime,
+    SEO_AUDIT_VALUE,
+    COMPLEX_EXTRA_SUBPAGE,
+    seoMonthlyTiers,
+    type Module,
+} from "../data/pricing";
+
+// --- Module price rendering for the "full modular price list" ---
+const priceText = (m: Module): string => {
+    if (m.custom && m.price === 0) return "Custom quote";
+    let s = fmtEur(m.price);
+    if (m.from) s += " from";
+    if (m.unit) s += ` ${m.unit}`;
+    if (m.custom) s += " · custom quote";
+    return s;
+};
+
+// The full modular price list grouped into categories (transparency + SEO)
+const moduleCategories: { title: string; rows: { label: string; price: string }[] }[] = [
     {
-        question: "Why is the pricing modular?",
-        answer: "Every business is different. A simple portfolio site doesn't need complex e-commerce features. With modular pricing, you only pay for what you actually use, while the technical foundation (Prometheus Core) always represents the highest quality.",
+        title: "Structure & foundations",
+        rows: [
+            { label: webModules.core.label, price: priceText(webModules.core) },
+            { label: webModules.subPage.label, price: priceText(webModules.subPage) },
+            { label: webModules.salesPage.label, price: priceText(webModules.salesPage) },
+            { label: webModules.techPage.label, price: priceText(webModules.techPage) },
+        ],
     },
     {
-        question: "Is there a monthly fee for the website?",
-        answer: "There is no mandatory monthly fee. The website remains your property. However, we recommend our annual 'Peace of Mind' package, which includes premium hosting, domain, SSL and warranty, but it is optional.",
+        title: "Design & experience",
+        rows: [
+            { label: webModules.customDesign.label, price: priceText(webModules.customDesign) },
+            { label: webModules.premiumAnimations.label, price: priceText(webModules.premiumAnimations) },
+            { label: webModules.darkMode.label, price: priceText(webModules.darkMode) },
+        ],
     },
     {
-        question: "When should I request custom design?",
-        answer: "If your brand wants to visually stand out from competitors, or if you have specific UI/UX requirements. Our standard design is also premium and modern, but custom design allows for 100% translation of your brand DNA into the digital space.",
+        title: "Content & commerce",
+        rows: [
+            { label: webModules.cmsBasic.label, price: priceText(webModules.cmsBasic) },
+            { label: webModules.cmsComplex.label, price: priceText(webModules.cmsComplex) },
+            { label: webModules.blog.label, price: priceText(webModules.blog) },
+            { label: webModules.webshopLite.label, price: priceText(webModules.webshopLite) },
+            { label: webModules.webshopPro.label, price: priceText(webModules.webshopPro) },
+        ],
     },
     {
-        question: "Is installment payment possible?",
-        answer: "Yes. A 50% deposit is required at the start of the project, and the remaining 50% must be settled upon successful handover of the website, before going live.",
+        title: "Measurement, integration & multilingual",
+        rows: [
+            { label: webModules.ga4.label, price: priceText(webModules.ga4) },
+            { label: webModules.gsc.label, price: priceText(webModules.gsc) },
+            { label: webModules.gtm.label, price: priceText(webModules.gtm) },
+            { label: webModules.pixel.label, price: priceText(webModules.pixel) },
+            { label: webModules.booking.label, price: priceText(webModules.booking) },
+            { label: webModules.crm.label, price: priceText(webModules.crm) },
+            { label: webModules.newsletter.label, price: priceText(webModules.newsletter) },
+            {
+                label: webModules.chatbotSetup.label,
+                price: `${fmtEur(webModules.chatbotSetup.price)} + ${fmtEur(webModules.chatbotMonthly.price)} / mo`,
+            },
+            { label: webModules.multilingualFirst.label, price: priceText(webModules.multilingualFirst) },
+            { label: webModules.multilingualNext.label, price: priceText(webModules.multilingualNext) },
+        ],
     },
     {
-        question: "How long does it take to complete a project?",
-        answer: "An average Business Landing Page takes 2-3 weeks, while a more complex business site (with CMS, blog) takes 4-6 weeks from the first meeting to going live.",
-    },
-    {
-        question: "What happens if I want to expand the site later?",
-        answer: "Our system is modular. We can add a blog, webshop or new subpages at any time without having to rebuild the whole thing. You only pay for the expansion.",
-    },
-    {
-        question: "How does payment work?",
-        answer: "A 50% deposit is required at the start of the project, and the remaining 50% must be settled upon successful handover of the website, before going live.",
-    },
-    {
-        question: "Are there hidden costs?",
-        answer: "None. The price fixed in our quote covers all development costs. The only annual fee is the €120 + VAT maintenance package (hosting, domain, SSL, warranty).",
-    },
-    {
-        question: "Why is this better than a free website builder?",
-        answer: "Our websites are not built on templates. We use a modern, code-based system that far surpasses the speed and security of WordPress or Wix. This means better Google rankings and more customers.",
+        title: "Content preparation & migration",
+        rows: [
+            { label: webModules.migration.label, price: priceText(webModules.migration) },
+            { label: webModules.copywritingMain.label, price: priceText(webModules.copywritingMain) },
+            { label: webModules.copywritingSub.label, price: priceText(webModules.copywritingSub) },
+            { label: webModules.translation.label, price: priceText(webModules.translation) },
+            { label: webModules.media.label, price: priceText(webModules.media) },
+        ],
     },
 ];
 
-// Offer schema for pricing packages
+// Maintenance cards: for each tier we list only the included items
+const maintenanceCards = maintenanceTiers.map((tier, i) => ({
+    ...tier,
+    items: maintenanceRows
+        .filter((r) => r.values[i])
+        .map((r) =>
+            typeof r.values[i] === "boolean"
+                ? r.label
+                : `${r.label}: ${r.values[i]}`,
+        ),
+}));
+
+const accent = {
+    sky: {
+        eyebrow: "text-sky-400",
+        check: "text-sky-400",
+        hover: "hover:border-sky-500/50",
+    },
+    purple: {
+        eyebrow: "text-purple-400",
+        check: "text-purple-400",
+        hover: "hover:border-purple-500/50",
+    },
+};
+
+// FAQ — one place for both the schema and the visible list
+const allFaqItems = [
+    {
+        question: "Why is the pricing modular?",
+        answer:
+            "Every business is different. A simple portfolio site doesn't need complex e-commerce features. With a modular build, you only pay for what you actually use, while the technical foundation (Prometheus Core) always represents the highest quality. The base system starts at €749.",
+    },
+    {
+        question: "Is there a monthly fee for the website?",
+        answer:
+            "There is no mandatory monthly fee — the website remains your property. That said, it's worth leaving the operation to us: our four maintenance plans start at €30/mo (hosting, domain, SSL, backup, bug fixes), and with an annual subscription we only invoice 10 months — 2 months free.",
+    },
+    {
+        question: "When should I request a custom design?",
+        answer:
+            "If your brand wants to stand out visually from competitors, or if you have specific UI/UX requirements. Our standard design is also premium and modern, but a custom design (from €850) lets you translate 100% of your brand DNA into the digital space.",
+    },
+    {
+        question: "How does payment work?",
+        answer:
+            "A 50% deposit is requested at the start of the project, and the remaining 50% is settled upon successful handover of the website, before going live.",
+    },
+    {
+        question: "How long does a project take?",
+        answer:
+            "An average Starter package takes 2-3 weeks, while a more complex business site (with CMS and blog) takes 4-6 weeks from the first meeting to going live.",
+    },
+    {
+        question: "What if I want to expand the site later?",
+        answer:
+            "Our system is modular. We can add a blog, webshop or new sub-pages at any time without having to rebuild the whole thing. You only pay for the expansion.",
+    },
+    {
+        question: "How much does maintenance cost?",
+        answer:
+            "You can choose from four tiers: Essential (€30/mo), Standard (€60/mo), Business (€120/mo) and Premium (€240/mo). Each one includes hosting, domain and SSL; the higher tiers also add monitoring, faster bug-fix turnaround and a development hour quota. With an annual subscription we only invoice 10 months. Development above the quota is billed at €60/hour.",
+    },
+    {
+        question: "Are there hidden costs?",
+        answer:
+            "None. The price fixed in our quote covers all development costs. The only recurring fee is the optional maintenance plan, which starts at €30/mo.",
+    },
+    {
+        question: "Why is this better than a free website builder?",
+        answer:
+            "Our websites aren't built on templates. We use a modern, code-based system (Next.js / Astro) that far surpasses the speed and security of WordPress or Wix. That means better Google rankings and more customers.",
+    },
+];
+
+// Offer schema for the pricing packages (built from the typical configurations)
 const offerSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "itemListElement": [
-        {
-            "@type": "ListItem",
-            "position": 1,
-            "item": {
-                "@type": "Offer",
-                "name": "Business Landing",
-                "description": "Ideal for portfolios or simple business introductions. High-Impact Landing Page, 2 content subpages, basic technical SEO.",
-                "price": "799",
-                "priceCurrency": "EUR",
-                "priceSpecification": {
-                    "@type": "PriceSpecification",
-                    "valueAddedTaxIncluded": false,
-                },
-                "seller": {
-                    "@type": "Organization",
-                    "name": "Prometheus Digital",
-                },
+    itemListElement: typicalConfigs.map((c, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: {
+            "@type": "Offer",
+            name: c.name,
+            description: c.tagline,
+            price: String(c.priceFrom),
+            priceCurrency: "EUR",
+            priceSpecification: {
+                "@type": "PriceSpecification",
+                valueAddedTaxIncluded: false,
+            },
+            seller: {
+                "@type": "Organization",
+                name: "Prometheus Digital",
             },
         },
-        {
-            "@type": "ListItem",
-            "position": 2,
-            "item": {
-                "@type": "Offer",
-                "name": "Business Authority",
-                "description": "For service providers and experts who want to dominate the market. Professional CMS & Blog, 5 subpages, Advanced SEO Setup, Google Search Console & GA4.",
-                "price": "1790",
-                "priceCurrency": "EUR",
-                "priceSpecification": {
-                    "@type": "PriceSpecification",
-                    "valueAddedTaxIncluded": false,
-                },
-                "seller": {
-                    "@type": "Organization",
-                    "name": "Prometheus Digital",
-                },
-            },
-        },
-        {
-            "@type": "ListItem",
-            "position": 3,
-            "item": {
-                "@type": "Offer",
-                "name": "Elite Digital",
-                "description": "Everything included. For international markets, with custom design. Custom UX/UI design, Cinematic animations, Multilingual (i18n) Support, full SEO & Analytics Stack.",
-                "price": "2990",
-                "priceCurrency": "EUR",
-                "priceSpecification": {
-                    "@type": "PriceSpecification",
-                    "valueAddedTaxIncluded": false,
-                },
-                "seller": {
-                    "@type": "Organization",
-                    "name": "Prometheus Digital",
-                },
-            },
-        },
-    ],
+    })),
 };
 ---
 
 <Layout
     title="Website Pricing 2026 | Transparent Web Development Pricing - Prometheus Digital"
-    description="Transparent, modular pricing. Plan your website costs with our interactive calculator."
+    description="Transparent, modular pricing from €749. Typical configurations, a full module list and an interactive calculator — plan your website budget precisely."
 >
     <Header />
 
@@ -129,6 +206,7 @@ const offerSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(offerSchema)} />
 
     <main id="main-content">
+        <!-- HERO -->
         <section
             class="relative pt-40 pb-24 md:pt-48 md:pb-32 flex items-center justify-center text-center overflow-hidden"
         >
@@ -174,15 +252,21 @@ const offerSchema = {
                     </div>
                 </h1>
                 <p
-                    class="reveal-desc max-w-2xl mx-auto text-lg md:text-xl text-gray-300 font-light"
+                    class="reveal-desc max-w-2xl mx-auto text-lg md:text-xl text-gray-300 font-light mb-6"
                 >
-                    No hidden costs. Plan your project budget with exactly the
-                    elements you need.
+                    Custom, code-based websites <strong class="text-white font-bold">from {fmtEur(ANCHOR_PRICE)}</strong>.
+                    No hidden costs — plan your project budget precisely with exactly the elements you need.
                 </p>
+                <div class="reveal-desc flex flex-wrap justify-center gap-3 text-sm">
+                    <a href="#configurations" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-sky-500/50 hover:text-white transition-colors">Typical configurations</a>
+                    <a href="#calculator" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-sky-500/50 hover:text-white transition-colors">Calculator</a>
+                    <a href="#maintenance" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-sky-500/50 hover:text-white transition-colors">Maintenance</a>
+                </div>
             </div>
         </section>
 
-        <section class="py-20 md:py-32 bg-[#0B1120] relative">
+        <!-- TYPICAL CONFIGURATIONS -->
+        <section id="configurations" class="py-20 md:py-32 bg-[#0B1120] relative scroll-mt-24">
             <div
                 class="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:50px_50px] opacity-[0.03] pointer-events-none"
             >
@@ -191,274 +275,87 @@ const offerSchema = {
             <div class="container mx-auto px-4 md:px-6 relative z-10">
                 <div class="text-center max-w-3xl mx-auto mb-16">
                     <h2 class="text-3xl md:text-5xl font-black text-white mb-6">
-                        Popular Configurations
+                        Typical Configurations
                     </h2>
                     <p class="text-gray-400">
-                        No time for configuration? Choose from our pre-built
-                        packages, or customize them with the calculator below.
+                        No time for configuration? Here are three common builds to
+                        get you started — or tailor them with the calculator below.
+                        All prices are net, "from" starting prices.
                     </p>
                 </div>
 
                 <div
-                    class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-24 max-w-6xl mx-auto"
+                    class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20 max-w-6xl mx-auto"
                 >
-                    {/* STARTER */}
-                    <div
-                        class="bg-gray-900/50 border border-white/10 p-8 rounded-3xl flex flex-col hover:border-sky-500/50 transition-colors group"
-                    >
-                        <div
-                            class="text-sky-400 font-bold text-xs tracking-widest uppercase mb-4"
-                        >
-                            Starter
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">
-                            Business Landing
-                        </h3>
-                        <p class="text-gray-500 text-sm mb-6">
-                            Ideal for portfolios or simple business
-                            introductions.
-                        </p>
-                        <div class="text-3xl font-black text-white mb-8">
-                            €799 <span
-                                class="text-xs text-gray-500 font-normal"
-                                >+ VAT</span
+                    {
+                        typicalConfigs.map((config) => (
+                            <div
+                                class={`p-8 rounded-3xl flex flex-col relative transition-colors ${
+                                    config.featured
+                                        ? "bg-sky-500/5 border border-sky-500/30 scale-100 lg:scale-105 shadow-2xl shadow-sky-500/10"
+                                        : `bg-gray-900/50 border border-white/10 ${accent[config.accent].hover}`
+                                }`}
                             >
-                        </div>
+                                {config.featured && (
+                                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-sky-500 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full">
+                                        Most Popular
+                                    </div>
+                                )}
+                                <div
+                                    class={`font-bold text-xs tracking-widest uppercase mb-4 ${accent[config.accent].eyebrow}`}
+                                >
+                                    {config.kicker}
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">
+                                    {config.name}
+                                </h3>
+                                <p class="text-gray-500 text-sm mb-6">
+                                    {config.tagline}
+                                </p>
+                                <div class="text-3xl font-black text-white mb-8">
+                                    {fmtEur(config.priceFrom)} from{" "}
+                                    <span class="text-xs text-gray-500 font-normal">
+                                        + VAT
+                                    </span>
+                                </div>
 
-                        <ul class="space-y-4 mb-10 flex-grow">
-                            <li class="flex items-center text-sm text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-sky-400 mr-3"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
+                                <ul class="space-y-4 mb-10 flex-grow">
+                                    {config.features.map((f) => (
+                                        <li class="flex items-start text-sm text-gray-300">
+                                            <svg
+                                                class={`w-4 h-4 mr-3 mt-0.5 flex-shrink-0 ${accent[config.accent].check}`}
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M5 13l4 4L19 7"
+                                                />
+                                            </svg>
+                                            {f}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <a
+                                    href="#calculator"
+                                    class={`block w-full py-3 text-center rounded-full transition-colors ${
+                                        config.featured
+                                            ? "bg-sky-500 text-white font-bold hover:bg-sky-600"
+                                            : "border border-white/20 text-white hover:bg-white/5"
+                                    }`}
                                 >
-                                High-Impact Landing Page
-                            </li>
-                            <li class="flex items-center text-sm text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-sky-400 mr-3"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                2 Content Subpages
-                            </li>
-                            <li class="flex items-center text-sm text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-sky-400 mr-3"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                Basic Technical SEO
-                            </li>
-                        </ul>
-                        <a
-                            href="#calculator"
-                            class="block w-full py-3 text-center border border-white/20 text-white rounded-full hover:bg-white/5 transition-colors"
-                            >Customize →</a
-                        >
-                    </div>
-
-                    {/* GROWTH */}
-                    <div
-                        class="bg-sky-500/5 border border-sky-500/30 p-8 rounded-3xl flex flex-col relative scale-105 shadow-2xl shadow-sky-500/10"
-                    >
-                        <div
-                            class="absolute -top-4 left-1/2 -translate-x-1/2 bg-sky-500 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full"
-                        >
-                            Most Popular
-                        </div>
-                        <div
-                            class="text-sky-400 font-bold text-xs tracking-widest uppercase mb-4"
-                        >
-                            Growth
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">
-                            Business Authority
-                        </h3>
-                        <p class="text-gray-500 text-sm mb-6">
-                            For service providers and experts who want to
-                            dominate the market.
-                        </p>
-                        <div class="text-3xl font-black text-white mb-8">
-                            €1,790 <span
-                                class="text-xs text-gray-500 font-normal"
-                                >+ VAT</span
-                            >
-                        </div>
-
-                        <ul class="space-y-4 mb-10 flex-grow">
-                            <li class="flex items-center text-sm text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-sky-400 mr-3"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                Professional CMS & Blog
-                            </li>
-                            <li class="flex items-center text-sm text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-sky-400 mr-3"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                5 Subpages
-                            </li>
-                            <li class="flex items-center text-sm text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-sky-400 mr-3"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                Advanced SEO Setup (€450 value)
-                            </li>
-                            <li class="flex items-center text-sm text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-sky-400 mr-3"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                Google Search Console & GA4
-                            </li>
-                        </ul>
-                        <a
-                            href="#calculator"
-                            class="block w-full py-3 text-center bg-sky-500 text-white font-bold rounded-full hover:bg-sky-600 transition-colors"
-                            >Customize →</a
-                        >
-                    </div>
-
-                    {/* ENTERPRISE */}
-                    <div
-                        class="bg-gray-900/50 border border-white/10 p-8 rounded-3xl flex flex-col hover:border-purple-500/50 transition-colors group"
-                    >
-                        <div
-                            class="text-purple-400 font-bold text-xs tracking-widest uppercase mb-4"
-                        >
-                            Premium
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">
-                            Elite Digital
-                        </h3>
-                        <p class="text-gray-500 text-sm mb-6">
-                            Everything included. For international markets, with
-                            custom design.
-                        </p>
-                        <div class="text-3xl font-black text-white mb-8">
-                            From €2,990 <span
-                                class="text-xs text-gray-500 font-normal"
-                                >+ VAT</span
-                            >
-                        </div>
-
-                        <ul class="space-y-4 mb-10 flex-grow">
-                            <li class="flex items-center text-sm text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-purple-400 mr-3"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                Custom UX/UI Design
-                            </li>
-                            <li class="flex items-center text-sm text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-purple-400 mr-3"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                Cinematic Animations
-                            </li>
-                            <li class="flex items-center text-sm text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-purple-400 mr-3"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                Multilingual (i18n) Support
-                            </li>
-                            <li class="flex items-center text-sm text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-purple-400 mr-3"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                Full SEO & Analytics Stack
-                            </li>
-                        </ul>
-                        <a
-                            href="#calculator"
-                            class="block w-full py-3 text-center border border-white/20 text-white rounded-full hover:bg-white/5 transition-colors"
-                            >Customize →</a
-                        >
-                    </div>
+                                    Customize →
+                                </a>
+                            </div>
+                        ))
+                    }
                 </div>
 
-                <div id="calculator" class="max-w-6xl mx-auto pt-24">
+                <!-- CALCULATOR -->
+                <div id="calculator" class="max-w-6xl mx-auto pt-12 scroll-mt-24">
                     <div class="text-center mb-12">
                         <span
                             class="text-sky-400 font-bold uppercase tracking-widest text-xs"
@@ -470,91 +367,169 @@ const offerSchema = {
                     </div>
                     <PriceCalculator client:visible />
                 </div>
+
+                <!-- FULL MODULAR PRICE LIST (collapsible) -->
+                <div class="max-w-4xl mx-auto pt-24">
+                    <div class="text-center mb-10">
+                        <span
+                            class="text-sky-400 font-bold uppercase tracking-widest text-xs"
+                            >Full Transparency</span
+                        >
+                        <h2 class="text-3xl font-bold text-white mt-2">
+                            Full Modular Price List
+                        </h2>
+                        <p class="text-gray-400 mt-3">
+                            Every module, every price — open the categories.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        {
+                            moduleCategories.map((cat) => (
+                                <details class="group bg-gray-900/40 border border-white/5 rounded-2xl overflow-hidden hover:border-sky-500/20 transition-all">
+                                    <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                                        <h3 class="text-white font-bold pr-4">
+                                            {cat.title}
+                                        </h3>
+                                        <svg
+                                            class="w-5 h-5 text-sky-500 group-open:rotate-180 transition-transform duration-300 flex-shrink-0"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M19 9l-7 7-7-7"
+                                            />
+                                        </svg>
+                                    </summary>
+                                    <div class="px-6 pb-6 border-t border-white/5 pt-4">
+                                        <ul class="divide-y divide-white/5">
+                                            {cat.rows.map((row) => (
+                                                <li class="flex items-center justify-between gap-4 py-3">
+                                                    <span class="text-gray-300 text-sm">
+                                                        {row.label}
+                                                    </span>
+                                                    <span class="text-sky-400 font-mono text-sm text-right whitespace-nowrap">
+                                                        {row.price}
+                                                    </span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </details>
+                            ))
+                        }
+                    </div>
+                    <p class="text-center text-gray-500 text-xs mt-6">
+                        All prices are net, excluding VAT. Translation and
+                        photo/video content are quoted individually.
+                    </p>
+                </div>
             </div>
         </section>
 
-        <section class="py-20 border-t border-white/10 bg-gray-900/30">
-            <div class="container mx-auto px-6 max-w-4xl text-center">
-                <h2 class="text-3xl font-bold text-white mb-8">
-                    What about maintenance?
-                </h2>
-                <div
-                    class="bg-gray-900 border border-sky-500/30 p-8 rounded-2xl relative overflow-hidden"
-                >
-                    <div
-                        class="absolute top-0 right-0 bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg"
-                    >
-                        RECOMMENDED
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">
-                        Annual "Peace of Mind" Package
-                    </h3>
-                    <div class="text-4xl font-black text-sky-400 mb-6">
-                        €120 <span class="text-lg text-gray-500 font-normal"
-                            >/ year</span
-                        >
-                    </div>
-
-                    <ul
-                        class="text-gray-300 space-y-3 mb-8 text-left max-w-sm mx-auto"
-                    >
-                        <li class="flex items-center">
-                            <svg
-                                class="w-5 h-5 text-green-400 mr-3"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path></svg
-                            >Premium Hosting & Domain
-                        </li>
-                        <li class="flex items-center">
-                            <svg
-                                class="w-5 h-5 text-green-400 mr-3"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path></svg
-                            >SSL Certificate
-                        </li>
-                        <li class="flex items-center">
-                            <svg
-                                class="w-5 h-5 text-green-400 mr-3"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path></svg
-                            >8-Year Operation Warranty
-                        </li>
-                        <li class="flex items-center">
-                            <svg
-                                class="w-5 h-5 text-green-400 mr-3"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path></svg
-                            >1 Hour Monthly Modification
-                        </li>
-                    </ul>
-                    <p class="text-sm text-gray-500 italic">
-                        *Warranty valid only with active subscription. If you
-                        use your own hosting, we cannot provide the warranty.
+        <!-- RECURRING SERVICES: MAINTENANCE -->
+        <section id="maintenance" class="py-20 md:py-28 border-t border-white/10 bg-gray-900/30 relative scroll-mt-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-sky-400 font-bold uppercase tracking-widest text-xs">Recurring Services</span>
+                    <h2 class="text-3xl md:text-5xl font-black text-white mt-3 mb-4">
+                        Maintenance & Operation
+                    </h2>
+                    <p class="text-gray-400 text-lg">
+                        We don't leave you on your own after handover. Choose from
+                        four maintenance tiers — from minimal security to a
+                        dedicated partnership.
                     </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto mb-12">
+                    {
+                        maintenanceCards.map((tier) => (
+                            <div
+                                class={`p-6 rounded-3xl flex flex-col relative transition-colors ${
+                                    tier.featured
+                                        ? "bg-sky-500/5 border border-sky-500/30"
+                                        : "bg-gray-900/50 border border-white/10 hover:border-sky-500/30"
+                                }`}
+                            >
+                                {tier.featured && (
+                                    <div class="absolute top-0 right-0 bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
+                                        POPULAR
+                                    </div>
+                                )}
+                                <div class="text-sky-400 font-bold text-[11px] tracking-widest uppercase mb-2">
+                                    {tier.kicker}
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-3">
+                                    {tier.name}
+                                </h3>
+                                <div class="mb-1">
+                                    <span class="text-3xl font-black text-white">
+                                        {fmtEur(tier.monthly)}
+                                    </span>
+                                    <span class="text-sm text-gray-500 font-normal">
+                                        {" "}/ mo
+                                    </span>
+                                </div>
+                                <div class="text-xs text-gray-500 mb-6">
+                                    or {fmtEur(tier.yearly)} / yr (2 months free)
+                                </div>
+
+                                <ul class="space-y-2.5 mb-6 flex-grow text-sm">
+                                    {tier.items.map((item) => (
+                                        <li class="flex items-start text-gray-300">
+                                            <svg
+                                                class="w-4 h-4 text-sky-400 mr-2.5 mt-0.5 flex-shrink-0"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M5 13l4 4L19 7"
+                                                />
+                                            </svg>
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <a
+                                    href={`/contact?topic=maintenance-${tier.id}`}
+                                    class={`block w-full py-2.5 text-center text-sm rounded-full transition-colors ${
+                                        tier.featured
+                                            ? "bg-sky-500 text-white font-bold hover:bg-sky-600"
+                                            : "border border-white/20 text-white hover:bg-white/5"
+                                    }`}
+                                >
+                                    Choose →
+                                </a>
+                            </div>
+                        ))
+                    }
+                </div>
+
+                <!-- Annual discount + hourly rate -->
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-gradient-to-br from-sky-500/10 to-transparent border border-sky-500/20 rounded-2xl p-6 flex items-center gap-4">
+                        <div class="text-4xl font-black text-sky-400 flex-shrink-0">2</div>
+                        <div>
+                            <div class="text-white font-bold">Months free, every year</div>
+                            <p class="text-gray-400 text-sm">With an annual subscription we only invoice 10 months — the other 2 are on us.</p>
+                        </div>
+                    </div>
+                    <div class="bg-gray-900/50 border border-white/10 rounded-2xl p-6 flex items-center gap-4">
+                        <div class="text-2xl font-black text-white flex-shrink-0">{fmtEur(EXTRA_DEV_HOURLY)}</div>
+                        <div>
+                            <div class="text-white font-bold">Development beyond the quota</div>
+                            <p class="text-gray-400 text-sm">Work beyond your plan's hour quota is done at a discounted {fmtEur(EXTRA_DEV_HOURLY)}/hour.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -574,8 +549,8 @@ const offerSchema = {
                         SEO Services for Existing Sites
                     </h2>
                     <p class="text-gray-400 text-lg">
-                        You don't need a new website to rank better on Google.
-                        If you already have a working site, we fix its SEO
+                        You don't need a new website to rank better on Google. If
+                        you already have a working site, we fix its SEO
                         performance in two steps.
                     </p>
                 </div>
@@ -606,63 +581,31 @@ const offerSchema = {
                                 FREE
                             </div>
                             <div class="text-sm text-gray-500 line-through">
-                                &euro;300 value
+                                {fmtEur(SEO_AUDIT_VALUE)} value
                             </div>
                         </div>
 
                         <ul class="space-y-3 mb-8 flex-grow text-sm">
-                            <li class="flex items-start text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-emerald-400 mr-3 mt-0.5 flex-shrink-0"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path></svg>
-                                Core Web Vitals & PageSpeed analysis
-                            </li>
-                            <li class="flex items-start text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-emerald-400 mr-3 mt-0.5 flex-shrink-0"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path></svg>
-                                Indexing issue mapping
-                            </li>
-                            <li class="flex items-start text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-emerald-400 mr-3 mt-0.5 flex-shrink-0"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path></svg>
-                                Top 3 competitor quick analysis
-                            </li>
-                            <li class="flex items-start text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-emerald-400 mr-3 mt-0.5 flex-shrink-0"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path></svg>
-                                Concrete fix recommendations by priority
-                            </li>
+                            {[
+                                "Core Web Vitals & PageSpeed analysis",
+                                "Indexing issue mapping",
+                                "Top 3 competitor quick analysis",
+                                "Concrete fix recommendations by priority",
+                            ].map((f) => (
+                                <li class="flex items-start text-gray-300">
+                                    <svg
+                                        class="w-4 h-4 text-emerald-400 mr-3 mt-0.5 flex-shrink-0"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg>
+                                    {f}
+                                </li>
+                            ))}
                         </ul>
                         <a
                             href="/contact?topic=seo-assessment"
@@ -678,15 +621,13 @@ const offerSchema = {
                             Step 2 — Implementation
                         </div>
                         <h3 class="text-2xl font-bold text-white mb-2">
-                            Complex SEO Setup
+                            {seoOneTime.complex.name}
                         </h3>
                         <p class="text-gray-500 text-sm mb-6">
-                            Need page expansion or deeper technical issues?
-                            Full transformation: technical fixes, schema,
-                            content expansion, measurement and blog strategy.
+                            {seoOneTime.complex.tagline}
                         </p>
                         <div class="text-3xl font-black text-white mb-2">
-                            From &euro;900 <span
+                            {fmtEur(seoOneTime.complex.price)} <span
                                 class="text-xs text-gray-500 font-normal"
                                 >+ VAT</span
                             >
@@ -696,58 +637,26 @@ const offerSchema = {
                         </p>
 
                         <ul class="space-y-3 mb-8 flex-grow text-sm">
-                            <li class="flex items-start text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-purple-400 mr-3 mt-0.5 flex-shrink-0"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path></svg>
-                                Full Technical SEO Implementation
-                            </li>
-                            <li class="flex items-start text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-purple-400 mr-3 mt-0.5 flex-shrink-0"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path></svg>
-                                Schema.org markup on every relevant page
-                            </li>
-                            <li class="flex items-start text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-purple-400 mr-3 mt-0.5 flex-shrink-0"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path></svg>
-                                Up to 5 page rewrites + 2 blog posts + blog strategy
-                            </li>
-                            <li class="flex items-start text-gray-300">
-                                <svg
-                                    class="w-4 h-4 text-purple-400 mr-3 mt-0.5 flex-shrink-0"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 13l4 4L19 7"></path></svg>
-                                GA4 + GSC + Local SEO (extra pages: €60/each)
-                            </li>
+                            {[
+                                "SEO Foundation: full technical SEO + keyword and content strategy",
+                                "5 sub-page content expansion (extra sub-page: " + fmtEur(COMPLEX_EXTRA_SUBPAGE) + "/ea)",
+                                "GEO/AI Audit + Setup: visibility in AI search engines",
+                                "Schema.org markup, GA4 + GSC + Local SEO",
+                            ].map((f) => (
+                                <li class="flex items-start text-gray-300">
+                                    <svg
+                                        class="w-4 h-4 text-purple-400 mr-3 mt-0.5 flex-shrink-0"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"></path></svg>
+                                    {f}
+                                </li>
+                            ))}
                         </ul>
                         <a
                             href="/seo-services#packages"
@@ -757,9 +666,8 @@ const offerSchema = {
                 </div>
 
                 <p class="text-center text-gray-500 text-sm">
-                    Continue with a monthly SEO plan (Start, Growth or Dominance
-                    — custom quote) for long-term growth. <a
-                        href="/seo-services/"
+                    Continue with a monthly SEO plan — {seoMonthlyTiers.map((t) => `${t.name} ${fmtEur(t.price)}/mo`).join(", ")} — for long-term growth. <a
+                        href="/seo-services#packages"
                         class="text-emerald-400 hover:text-emerald-300 underline">See details on the SEO page →</a>
                 </p>
             </div>
@@ -773,7 +681,7 @@ const offerSchema = {
                         Frequently Asked Questions
                     </h2>
                     <p class="text-gray-400">
-                        Everything you need to know about website pricing and the process.
+                        Everything worth knowing about website pricing and the process.
                     </p>
                 </div>
 
@@ -825,6 +733,7 @@ const offerSchema = {
         // Kill all page-level ScrollTriggers to prevent accumulation on View Transitions
         ScrollTrigger.getAll().forEach(t => t.kill());
 
+        // Kill any competing tweens from previous invocations (HMR / view transitions)
         gsap.set(".reveal-text", { y: 80, opacity: 0 });
         gsap.set(".reveal-desc", { y: 40, opacity: 0 });
 
@@ -833,8 +742,8 @@ const offerSchema = {
             y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "power4.out",
         }).to(
             ".reveal-desc",
-            { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
-            "-=0.8",
+            { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power3.out" },
+            "-=0.4",
         );
 
         // Skip parallax on mobile — scrub-based scroll animation is GPU-heavy

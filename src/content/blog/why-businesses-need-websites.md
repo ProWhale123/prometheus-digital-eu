@@ -117,7 +117,7 @@ This is the most common objection — and the easiest to counter. The question i
 
 If your website brings in 3 new customers per month, and the average customer value is EUR 200, that is EUR 600 in monthly revenue. A EUR 1,200 website pays for itself in two months — and then works for you for years.
 
-At Prometheus Digital, our projects **start from EUR 790**, with payment split 50% upfront and 50% on delivery. You can find our pricing details and reference rates on our [pricing page](/services). For an overview of typical market price ranges, read our detailed guide on [website costs](/blog/6).
+At Prometheus Digital, our projects **start from EUR 749**, with payment split 50% upfront and 50% on delivery. You can find our pricing details and reference rates on our [pricing page](/pricing). For an overview of typical market price ranges, read our detailed guide on [website costs](/blog/6).
 
 ### "I'm too small — I don't need a website"
 
