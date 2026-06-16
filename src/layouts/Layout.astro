@@ -171,6 +171,38 @@ const LEAD_PATH = '/thank-you';
 <NoiseOverlay />
 
         <script>
+            // PREMIUM SMOOTH SCROLL — Lenis, synced with GSAP ScrollTrigger
+            import Lenis from "lenis";
+            import { gsap } from "gsap";
+            import { ScrollTrigger } from "gsap/ScrollTrigger";
+            gsap.registerPlugin(ScrollTrigger);
+
+            let lenis;
+            function initLenis() {
+                if (lenis) return;
+                // Mobile already has smooth native scroll — skip Lenis (avoid input lag)
+                if (window.matchMedia("(pointer: coarse)").matches) return;
+                // Respect reduced motion
+                if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+                lenis = new Lenis({
+                    lerp: 0.1, // smooth but responsive (lower = snappier)
+                    smoothWheel: true,
+                    wheelMultiplier: 1,
+                    anchors: true, // smooth in-page anchor links (#calculator etc.)
+                });
+
+                // Lenis ↔ ScrollTrigger sync: single RAF loop → no parallax jitter
+                lenis.on("scroll", ScrollTrigger.update);
+                gsap.ticker.add((time) => lenis.raf(time * 1000));
+                gsap.ticker.lagSmoothing(0);
+
+                window.lenis = lenis;
+            }
+            initLenis();
+        </script>
+
+        <script>
             // Animation logic - Consolidated setup functions for cleaner code
             function setupAnimations() {
                 const observerOptions = {
@@ -208,9 +240,25 @@ const LEAD_PATH = '/thank-you';
 </html>
 
 <style is:global>
-    /* Native smooth scrolling for anchor links (reduced-motion overrides) */
+    /* Native smooth scrolling for anchor links (mobile / reduced-motion).
+       On desktop Lenis takes over and .lenis-smooth overrides this to auto. */
     html {
         scroll-behavior: smooth;
+    }
+
+    /* Lenis premium smooth-scroll (desktop only) */
+    html.lenis,
+    html.lenis body {
+        height: auto;
+    }
+    .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+    }
+    .lenis.lenis-stopped {
+        overflow: clip;
+    }
+    .lenis.lenis-scrolling iframe {
+        pointer-events: none;
     }
 
     body {
