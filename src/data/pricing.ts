@@ -322,6 +322,7 @@ export interface GeoService {
   badge?: string;
   tagline: string;
   features: string[];
+  recurring?: boolean;
 }
 
 export const geoServices: GeoService[] = [
@@ -366,6 +367,7 @@ export const geoServices: GeoService[] = [
     name: "GEO/AI Monthly Monitoring",
     price: 150,
     unit: "/ mo",
+    recurring: true,
     tagline: "Holding the position you've won and keeping up with algorithm updates.",
     features: [
       "Continuous monitoring: monthly report on how AI answers change",
@@ -378,6 +380,7 @@ export const geoServices: GeoService[] = [
     name: "GEO/AI Fine-tuning + Monitoring",
     price: 270,
     unit: "/ mo",
+    recurring: true,
     badge: "Also a SEO add-on",
     tagline: "Intensive tier: active fine-tuning and monitoring — standalone or as a SEO add-on.",
     features: [

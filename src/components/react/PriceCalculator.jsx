@@ -1,10 +1,73 @@
 // src/components/react/PriceCalculator.jsx (EU VERSION)
 import React, { useState, useEffect } from 'react';
-import { webModules as W, seoOneTime as S } from '../../data/pricing';
+import { webModules as W, seoOneTime as S, seoMonthlyTiers, geoServices, maintenanceTiers } from '../../data/pricing';
 
 const formatPrice = (price) => {
     return new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(price);
 };
+
+// GEO partitioning driven by the data-level `recurring` flag
+const geoById = (id) => geoServices.find((g) => g.id === id);
+const geoOneTimeOptions = geoServices.filter((g) => !g.recurring);
+const geoMonthlyOptions = geoServices.filter((g) => g.recurring);
+
+const seoOneTimeOptions = [
+    { key: 'technicalSprint', ...S.technicalSprint },
+    { key: 'keywordContent', ...S.keywordContent },
+    { key: 'foundation', ...S.foundation },
+    { key: 'complex', ...S.complex },
+];
+
+const ACCENTS = {
+    sky: { text: 'text-sky-400', soft: 'text-sky-400 bg-sky-500/10', sel: 'border-sky-500 bg-sky-500/10' },
+    emerald: { text: 'text-emerald-400', soft: 'text-emerald-400 bg-emerald-500/10', sel: 'border-emerald-500 bg-emerald-500/10' },
+    cyan: { text: 'text-cyan-400', soft: 'text-cyan-400 bg-cyan-500/10', sel: 'border-cyan-500 bg-cyan-500/10' },
+};
+
+function AccordionPanel({ num, accent, title, subtitle, selectedLabel, isOpen, onToggle, children }) {
+    const a = ACCENTS[accent];
+    return (
+        <div className="border border-white/10 rounded-2xl overflow-hidden bg-gray-800/10">
+            <button
+                onClick={onToggle}
+                className="w-full flex items-center gap-3 p-4 md:p-5 text-left hover:bg-white/5 transition-colors"
+                aria-expanded={isOpen}
+            >
+                <span className={`flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm flex-shrink-0 ${a.soft}`}>{num}</span>
+                <span className="flex-grow min-w-0">
+                    <span className="block text-white font-bold text-sm">{title}</span>
+                    <span className="block text-xs text-gray-500 truncate">{subtitle}</span>
+                </span>
+                {selectedLabel && (
+                    <span className={`text-[11px] font-mono px-2 py-1 rounded hidden sm:inline ${a.soft}`}>{selectedLabel}</span>
+                )}
+                <svg className={`w-5 h-5 text-gray-500 flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            {isOpen && <div className="p-4 md:p-5 pt-1 space-y-3">{children}</div>}
+        </div>
+    );
+}
+
+function OptionRow({ selected, onClick, accent, name, sub, price, priceNote }) {
+    const a = ACCENTS[accent];
+    return (
+        <button
+            onClick={onClick}
+            className={`w-full text-left p-4 rounded-xl border transition-all flex items-start justify-between gap-3 ${selected ? a.sel : 'border-white/10 hover:border-white/25 bg-gray-800/20'}`}
+        >
+            <span className="min-w-0">
+                <span className="block text-white font-bold text-sm">{name}</span>
+                {sub && <span className="block text-xs text-gray-400 mt-1 leading-relaxed">{sub}</span>}
+            </span>
+            <span className="text-right flex-shrink-0">
+                <span className={`block text-sm font-black font-mono ${selected ? a.text : 'text-white'}`}>{price}</span>
+                {priceNote && <span className="block text-[10px] text-gray-500 font-mono mt-0.5">{priceNote}</span>}
+            </span>
+        </button>
+    );
+}
 
 export default function PriceCalculator() {
     const BASE_PRICE = W.core.price;
@@ -26,74 +89,83 @@ export default function PriceCalculator() {
             gtm: false,
             pixel: false
         },
-        seo: {
-            foundation: false,
-            monthly: false
-        },
         multilingual: 0,
         extras: {
             booking: false,
             marketing: false,
             newsletter: false,
             chatbot: false
-        }
+        },
+        // Packages (one-time + monthly)
+        seoOneTime: 'none',   // 'none' | 'technicalSprint' | 'keywordContent' | 'foundation' | 'complex'
+        seoMonthly: 'none',   // 'none' | seoMonthlyTiers id
+        geoOneTime: 'none',   // 'none' | geo-audit | geo-setup | geo-combo
+        geoMonitoring: 'none',// 'none' | geo-monitoring | geo-fine-tuning
+        maintenance: 'none',  // 'none' | indulo | alap | uzleti | premium
     });
 
-    const [total, setTotal] = useState(BASE_PRICE);
+    const [oneTimeTotal, setOneTimeTotal] = useState(BASE_PRICE);
+    const [monthlyTotal, setMonthlyTotal] = useState(0);
     const [webshopQuoteNeeded, setWebshopQuoteNeeded] = useState(false);
-    const [seoMonthlyNeeded, setSeoMonthlyNeeded] = useState(false);
+    const [openSections, setOpenSections] = useState({ seoOneTime: false, seoMonthly: false, geo: false, maintenance: false });
+
+    const toggleSection = (key) => setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
+    // Exclusive choice: clicking the same option clears it ('none')
+    const pick = (field, value) => setConfig((c) => ({ ...c, [field]: c[field] === value ? 'none' : value }));
 
     // Multilingual: 2nd language at full price, each additional at a discounted per-language rate
     const multilingualCost = (n) => n > 0 ? W.multilingualFirst.price + (n - 1) * W.multilingualNext.price : 0;
 
     useEffect(() => {
-        let sum = BASE_PRICE;
+        // --- ONE-TIME project budget ---
+        let oneTime = BASE_PRICE;
 
-        // Structure
-        sum += config.subPages * W.subPage.price;
-        if (config.salesPage) sum += W.salesPage.price;
-        if (config.migration) sum += W.migration.price;
+        oneTime += config.subPages * W.subPage.price;
+        if (config.salesPage) oneTime += W.salesPage.price;
+        if (config.migration) oneTime += W.migration.price;
 
-        // Design
-        if (config.design === 'custom') sum += W.customDesign.price;
-        if (config.premiumAnimations) sum += W.premiumAnimations.price;
-        if (config.darkMode) sum += W.darkMode.price;
+        if (config.design === 'custom') oneTime += W.customDesign.price;
+        if (config.premiumAnimations) oneTime += W.premiumAnimations.price;
+        if (config.darkMode) oneTime += W.darkMode.price;
 
-        // CMS & Blog
         if (config.blog) {
-            if (config.cms === 'none' || config.cms === 'basic') sum += W.cmsBasic.price;
-            else if (config.cms === 'complex') sum += W.cmsComplex.price;
-            sum += W.blog.price;
+            if (config.cms === 'none' || config.cms === 'basic') oneTime += W.cmsBasic.price;
+            else if (config.cms === 'complex') oneTime += W.cmsComplex.price;
+            oneTime += W.blog.price;
         } else {
-            if (config.cms === 'basic') sum += W.cmsBasic.price;
-            if (config.cms === 'complex') sum += W.cmsComplex.price;
+            if (config.cms === 'basic') oneTime += W.cmsBasic.price;
+            if (config.cms === 'complex') oneTime += W.cmsComplex.price;
         }
-        if (config.copywriting) sum += W.copywritingMain.price;
+        if (config.copywriting) oneTime += W.copywritingMain.price;
 
-        // Webshop
-        if (config.webshop === 'lite') sum += W.webshopLite.price;
-        if (config.webshop === 'pro') { sum += W.webshopPro.price; setWebshopQuoteNeeded(true); }
+        if (config.webshop === 'lite') oneTime += W.webshopLite.price;
+        if (config.webshop === 'pro') { oneTime += W.webshopPro.price; setWebshopQuoteNeeded(true); }
         else setWebshopQuoteNeeded(false);
 
-        // Analytics
-        if (config.analytics.ga4) sum += W.ga4.price;
-        if (config.analytics.gsc) sum += W.gsc.price;
-        if (config.analytics.gtm) sum += W.gtm.price;
-        if (config.analytics.pixel) sum += W.pixel.price;
+        if (config.analytics.ga4) oneTime += W.ga4.price;
+        if (config.analytics.gsc) oneTime += W.gsc.price;
+        if (config.analytics.gtm) oneTime += W.gtm.price;
+        if (config.analytics.pixel) oneTime += W.pixel.price;
 
-        // SEO
-        if (config.seo.foundation) sum += S.foundation.price;
-        if (config.seo.monthly) setSeoMonthlyNeeded(true);
-        else setSeoMonthlyNeeded(false);
+        oneTime += multilingualCost(config.multilingual);
+        if (config.extras.booking) oneTime += W.booking.price;
+        if (config.extras.marketing) oneTime += W.crm.price;
+        if (config.extras.newsletter) oneTime += W.newsletter.price;
+        if (config.extras.chatbot) oneTime += W.chatbotSetup.price;
 
-        // Extras
-        sum += multilingualCost(config.multilingual);
-        if (config.extras.booking) sum += W.booking.price;
-        if (config.extras.marketing) sum += W.crm.price;
-        if (config.extras.newsletter) sum += W.newsletter.price;
-        if (config.extras.chatbot) sum += W.chatbotSetup.price;
+        if (config.seoOneTime !== 'none') oneTime += S[config.seoOneTime].price;
+        if (config.geoOneTime !== 'none') { const g = geoById(config.geoOneTime); if (g) oneTime += g.price; }
 
-        setTotal(sum);
+        setOneTimeTotal(oneTime);
+
+        // --- MONTHLY fees (subscription) ---
+        let monthly = 0;
+        if (config.maintenance !== 'none') { const m = maintenanceTiers.find((t) => t.id === config.maintenance); if (m) monthly += m.monthly; }
+        if (config.seoMonthly !== 'none') { const s = seoMonthlyTiers.find((t) => t.id === config.seoMonthly); if (s) monthly += s.price; }
+        if (config.geoMonitoring !== 'none') { const g = geoById(config.geoMonitoring); if (g) monthly += g.price; }
+        if (config.extras.chatbot) monthly += W.chatbotMonthly.price;
+
+        setMonthlyTotal(monthly);
     }, [config]);
 
     // Enforced logic
@@ -108,7 +180,10 @@ export default function PriceCalculator() {
 
     const toggleAnalytic = (key) => setConfig({ ...config, analytics: { ...config.analytics, [key]: !config.analytics[key] } });
     const toggleExtra = (key) => setConfig({ ...config, extras: { ...config.extras, [key]: !config.extras[key] } });
-    const toggleSeo = (key) => setConfig({ ...config, seo: { ...config.seo, [key]: !config.seo[key] } });
+
+    const maintTier = config.maintenance !== 'none' ? maintenanceTiers.find((t) => t.id === config.maintenance) : null;
+    const seoMonthlyTier = config.seoMonthly !== 'none' ? seoMonthlyTiers.find((t) => t.id === config.seoMonthly) : null;
+    const geoMonthlySel = config.geoMonitoring !== 'none' ? geoById(config.geoMonitoring) : null;
 
     return (
         <div className="bg-[#0B1120] border border-white/10 rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/5">
@@ -371,35 +446,78 @@ export default function PriceCalculator() {
                         </div>
                     </section>
 
-                    {/* 5. SEO & MARKETING */}
+                    {/* 5. MARKETING & RECURRING SERVICES (accordion) */}
                     <section>
                         <div className="flex items-center gap-3 mb-6 border-b border-white/10 pb-4">
                             <span className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-400 font-bold text-sm">05</span>
-                            <h3 className="text-white font-bold uppercase tracking-widest text-sm">SEO & Marketing Strategy</h3>
+                            <h3 className="text-white font-bold uppercase tracking-widest text-sm">SEO, GEO/AI &amp; Maintenance</h3>
                         </div>
+                        <p className="text-xs text-gray-500 mb-5 -mt-2">Click a section to expand. Recurring fees are shown as a separate monthly total.</p>
 
-                        <label className={`cursor-pointer p-5 rounded-xl border transition-all flex items-start justify-between gap-4 mb-4 ${config.seo.foundation ? 'border-emerald-500 bg-emerald-500/5' : 'border-white/10 bg-gray-800/20 hover:bg-gray-800/40'}`}>
-                            <div>
-                                <span className="block text-white font-bold mb-1">SEO Foundation</span>
-                                <span className="text-xs text-gray-400 leading-relaxed block">A complete SEO foundation in a single package:</span>
-                                <ul className="text-xs text-gray-500 mt-2 space-y-1">
-                                    <li className="flex items-center gap-1.5"><span className="text-emerald-500">✓</span> Technical SEO Sprint (CWV, schema, sitemap, meta)</li>
-                                    <li className="flex items-center gap-1.5"><span className="text-emerald-500">✓</span> Keyword & Content Strategy (keyword + content plan)</li>
-                                    <li className="flex items-center gap-1.5"><span className="text-emerald-500">✓</span> Google Search Console + Analytics 4 setup</li>
-                                </ul>
-                                <div className="text-emerald-400 text-xs font-mono mt-3">{formatPrice(S.foundation.price)}</div>
-                            </div>
-                            <input type="checkbox" checked={config.seo.foundation} onChange={() => toggleSeo('foundation')} className="accent-emerald-500 w-5 h-5 mt-1" />
-                        </label>
+                        <div className="space-y-3">
+                            {/* SEO one-time */}
+                            <AccordionPanel
+                                num="A" accent="emerald"
+                                title="SEO — One-time setup"
+                                subtitle="One-time SEO setup packages"
+                                selectedLabel={config.seoOneTime !== 'none' ? S[config.seoOneTime].name : ''}
+                                isOpen={openSections.seoOneTime}
+                                onToggle={() => toggleSection('seoOneTime')}
+                            >
+                                {seoOneTimeOptions.map((o) => (
+                                    <OptionRow key={o.key} selected={config.seoOneTime === o.key} onClick={() => pick('seoOneTime', o.key)} accent="emerald" name={o.name} sub={o.tagline} price={formatPrice(o.price)} />
+                                ))}
+                            </AccordionPanel>
 
-                        <label className={`cursor-pointer p-5 rounded-xl border transition-all flex items-start justify-between gap-4 ${config.seo.monthly ? 'border-emerald-500 bg-emerald-500/5' : 'border-white/10 bg-gray-800/20 hover:bg-gray-800/40'}`}>
-                            <div>
-                                <span className="block text-white font-bold mb-1">Monthly SEO Retainer</span>
-                                <span className="text-xs text-gray-400 leading-relaxed block">Content production, link building and continuous results monitoring — SEO Local, Growth or Dominance.</span>
-                                <a href="/seo-services" className="text-emerald-400 text-xs font-mono mt-2 inline-block hover:underline">Details & Pricing →</a>
-                            </div>
-                            <input type="checkbox" checked={config.seo.monthly} onChange={() => toggleSeo('monthly')} className="accent-emerald-500 w-5 h-5 mt-1" />
-                        </label>
+                            {/* Monthly SEO */}
+                            <AccordionPanel
+                                num="B" accent="emerald"
+                                title="Monthly SEO retainer"
+                                subtitle="Ongoing content + link building (monthly)"
+                                selectedLabel={seoMonthlyTier ? seoMonthlyTier.name : ''}
+                                isOpen={openSections.seoMonthly}
+                                onToggle={() => toggleSection('seoMonthly')}
+                            >
+                                {seoMonthlyTiers.map((t) => (
+                                    <OptionRow key={t.id} selected={config.seoMonthly === t.id} onClick={() => pick('seoMonthly', t.id)} accent="emerald" name={t.name} sub={t.kicker} price={`${formatPrice(t.price)} / mo`} />
+                                ))}
+                                <a href="/seo-services#packages" className="text-emerald-400 text-xs font-mono inline-block hover:underline pt-1">What's included? Full table →</a>
+                            </AccordionPanel>
+
+                            {/* GEO / AI */}
+                            <AccordionPanel
+                                num="C" accent="cyan"
+                                title="GEO / AI visibility"
+                                subtitle="Appear in ChatGPT, Gemini & Perplexity answers"
+                                selectedLabel={[config.geoOneTime !== 'none' ? geoById(config.geoOneTime).name : null, geoMonthlySel ? geoMonthlySel.name : null].filter(Boolean).join(' + ')}
+                                isOpen={openSections.geo}
+                                onToggle={() => toggleSection('geo')}
+                            >
+                                <div className="text-[10px] uppercase tracking-widest text-gray-500 font-bold pt-1">One-time</div>
+                                {geoOneTimeOptions.map((g) => (
+                                    <OptionRow key={g.id} selected={config.geoOneTime === g.id} onClick={() => pick('geoOneTime', g.id)} accent="cyan" name={g.name} sub={g.tagline} price={formatPrice(g.price)} />
+                                ))}
+                                <div className="text-[10px] uppercase tracking-widest text-gray-500 font-bold pt-2">Monthly (subscription)</div>
+                                {geoMonthlyOptions.map((g) => (
+                                    <OptionRow key={g.id} selected={config.geoMonitoring === g.id} onClick={() => pick('geoMonitoring', g.id)} accent="cyan" name={g.name} sub={g.tagline} price={`${formatPrice(g.price)} / mo`} />
+                                ))}
+                            </AccordionPanel>
+
+                            {/* Maintenance */}
+                            <AccordionPanel
+                                num="D" accent="sky"
+                                title="Maintenance & Support"
+                                subtitle="Hosting, domain, SSL, monitoring, bug fixes (monthly)"
+                                selectedLabel={maintTier ? maintTier.name : ''}
+                                isOpen={openSections.maintenance}
+                                onToggle={() => toggleSection('maintenance')}
+                            >
+                                {maintenanceTiers.map((t) => (
+                                    <OptionRow key={t.id} selected={config.maintenance === t.id} onClick={() => pick('maintenance', t.id)} accent="sky" name={t.name} sub={t.kicker} price={`${formatPrice(t.monthly)} / mo`} priceNote={`or ${formatPrice(t.yearly)} / yr`} />
+                                ))}
+                                <p className="text-[11px] text-gray-500 pt-1">Annual billing is charged as 10 months — 2 months free. <a href="/pricing#maintenance" className="text-sky-400 hover:underline">Full table →</a></p>
+                            </AccordionPanel>
+                        </div>
                     </section>
 
                 </div>
@@ -412,7 +530,8 @@ export default function PriceCalculator() {
                             Configuration
                         </h3>
 
-                        <div className="space-y-1 mb-8 text-sm">
+                        {/* ONE-TIME items */}
+                        <div className="space-y-1 mb-6 text-sm">
                             <div className="flex justify-between py-2 border-b border-white/5">
                                 <span className="text-gray-400">Prometheus Core</span>
                                 <span className="text-white font-mono">{formatPrice(BASE_PRICE)}</span>
@@ -433,15 +552,6 @@ export default function PriceCalculator() {
                             {config.webshop === 'lite' && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-sky-400">Webshop Lite</span><span className="text-sky-400 font-mono">{formatPrice(W.webshopLite.price)}</span></div>}
                             {config.webshop === 'pro' && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-purple-400">Webshop Pro</span><span className="text-purple-400 font-mono">from {formatPrice(W.webshopPro.price)}</span></div>}
 
-                            {/* SEO */}
-                            {config.seo.foundation && (
-                                <div className="flex justify-between py-2 border-b border-white/5"><span className="text-emerald-400">SEO Foundation</span><span className="text-emerald-400 font-mono">{formatPrice(S.foundation.price)}</span></div>
-                            )}
-                            {config.seo.monthly && (
-                                <div className="flex justify-between py-2 border-b border-white/5"><span className="text-emerald-400">Monthly SEO Retainer</span><span className="text-emerald-400 font-mono">Custom</span></div>
-                            )}
-
-                            {/* Measurement Stack */}
                             {(config.analytics.ga4 || config.analytics.gsc || config.analytics.gtm || config.analytics.pixel) && (
                                 <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-400">Measurement Stack</span><span className="text-white font-mono">{formatPrice((config.analytics.ga4 ? W.ga4.price : 0) + (config.analytics.gsc ? W.gsc.price : 0) + (config.analytics.gtm ? W.gtm.price : 0) + (config.analytics.pixel ? W.pixel.price : 0))}</span></div>
                             )}
@@ -449,27 +559,44 @@ export default function PriceCalculator() {
                             {(config.extras.booking || config.extras.marketing || config.extras.newsletter || config.extras.chatbot || config.multilingual > 0) && (
                                 <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-400">Business Logic & Extras</span><span className="text-white font-mono">{formatPrice((config.extras.booking ? W.booking.price : 0) + (config.extras.marketing ? W.crm.price : 0) + (config.extras.newsletter ? W.newsletter.price : 0) + (config.extras.chatbot ? W.chatbotSetup.price : 0) + multilingualCost(config.multilingual))}</span></div>
                             )}
-                            {config.extras.chatbot && (
-                                <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-500 text-xs">AI Chatbot operation</span><span className="text-gray-500 font-mono text-xs">+ {formatPrice(W.chatbotMonthly.price)} / mo</span></div>
-                            )}
+
+                            {config.seoOneTime !== 'none' && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-emerald-400">{S[config.seoOneTime].name}</span><span className="text-emerald-400 font-mono">{formatPrice(S[config.seoOneTime].price)}</span></div>}
+                            {config.geoOneTime !== 'none' && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-cyan-400">{geoById(config.geoOneTime).name}</span><span className="text-cyan-400 font-mono">{formatPrice(geoById(config.geoOneTime).price)}</span></div>}
                         </div>
 
-                        <div className="mb-8 p-4 bg-gradient-to-br from-gray-900 to-black rounded-xl border border-white/10">
-                            <div className="text-white font-bold text-sm mb-1">Maintenance &amp; Support</div>
-                            <div className="text-xs text-gray-500 leading-relaxed mb-2">Hosting, domain, SSL, monitoring and bug fixes. Four tiers, <span className="text-green-400 font-mono">from {formatPrice(30)} / mo</span>.</div>
-                            <a href="/pricing#maintenance" className="text-green-400 text-xs font-mono hover:underline">Maintenance plans →</a>
+                        {/* ONE-TIME TOTAL */}
+                        <div className="mb-6">
+                            <div className="text-gray-500 text-xs uppercase tracking-widest mb-1">One-time project budget</div>
+                            <div className="text-3xl md:text-4xl font-black text-white tracking-tight">
+                                {(webshopQuoteNeeded || config.migration) ? "from " : ""}{formatPrice(oneTimeTotal)}
+                            </div>
+                            <div className="text-gray-600 text-xs font-mono">+ VAT</div>
+                        </div>
+
+                        {/* MONTHLY FEES */}
+                        <div className="pt-5 border-t border-white/10">
+                            <div className="text-gray-500 text-xs uppercase tracking-widest mb-3">Monthly fees (subscription)</div>
+                            {monthlyTotal > 0 ? (
+                                <>
+                                    <div className="space-y-1 text-sm mb-3">
+                                        {maintTier && <div className="flex justify-between py-1.5"><span className="text-sky-400">Maintenance ({maintTier.name})</span><span className="text-sky-400 font-mono">{formatPrice(maintTier.monthly)} / mo</span></div>}
+                                        {seoMonthlyTier && <div className="flex justify-between py-1.5"><span className="text-emerald-400">Monthly SEO ({seoMonthlyTier.name})</span><span className="text-emerald-400 font-mono">{formatPrice(seoMonthlyTier.price)} / mo</span></div>}
+                                        {geoMonthlySel && <div className="flex justify-between py-1.5"><span className="text-cyan-400">{geoMonthlySel.name}</span><span className="text-cyan-400 font-mono">{formatPrice(geoMonthlySel.price)} / mo</span></div>}
+                                        {config.extras.chatbot && <div className="flex justify-between py-1.5"><span className="text-gray-400">AI Chatbot operation</span><span className="text-white font-mono">{formatPrice(W.chatbotMonthly.price)} / mo</span></div>}
+                                    </div>
+                                    <div className="flex items-baseline justify-between">
+                                        <span className="text-2xl md:text-3xl font-black text-white tracking-tight">{formatPrice(monthlyTotal)} / mo</span>
+                                        <span className="text-gray-600 text-xs font-mono">+ VAT</span>
+                                    </div>
+                                </>
+                            ) : (
+                                <p className="text-xs text-gray-600">No recurring service selected. Maintenance, monthly SEO and GEO monitoring can be chosen above (block 05).</p>
+                            )}
                         </div>
                     </div>
 
-                    <div>
-                        <div className="text-gray-500 text-xs uppercase tracking-widest mb-1">Estimated Project Budget</div>
-                        <div className="text-4xl md:text-5xl font-black text-white mb-1 tracking-tight">
-                            {(webshopQuoteNeeded || config.migration) ? "from " : ""}{formatPrice(total)}
-                        </div>
-                        {seoMonthlyNeeded && <div className="text-emerald-400 text-xs mb-1 font-mono">+ monthly SEO fee (custom)</div>}
-                        <div className="text-gray-600 text-xs mb-5 font-mono">+ VAT</div>
-
-                        <a href={`/contact?package=custom&price=${total}`} className="block w-full py-4 bg-white hover:bg-gray-200 text-black text-center font-bold rounded-full transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                    <div className="mt-8">
+                        <a href={`/contact?package=custom&price=${oneTimeTotal}&monthly=${monthlyTotal}`} className="block w-full py-4 bg-white hover:bg-gray-200 text-black text-center font-bold rounded-full transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(255,255,255,0.1)]">
                             Request Quote
                         </a>
                         <div className="flex flex-col items-center gap-1 text-[11px] text-gray-400 mt-4">

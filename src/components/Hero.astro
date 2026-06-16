@@ -2,10 +2,13 @@
 // src/components/Hero.astro
 import SpotlightHeroBackground from "./react/SpotlightHeroBackground.jsx";
 import MagneticButton from "./react/MagneticButton.jsx";
+import { Image } from "astro:assets";
+import heroMockImage from "../assets/images/project-21.jpg";
 
 const stats = [
-    { value: "100/100", label: "Google PageSpeed" },
-    { value: "Next.js · Astro", label: "Modern stack" },
+    // The first stat counts up (see the script block).
+    { value: "100/100", label: "Google PageSpeed", countUp: true },
+    { value: "40+", label: "Projects delivered" },
     { value: "GEO / AI-ready", label: "Future-proof SEO" },
 ];
 ---
@@ -27,8 +30,10 @@ const stats = [
     </div>
 
     <div
-        class="relative z-10 container mx-auto px-4 md:px-6 flex flex-col items-center text-center w-full pt-32 md:pt-36 pb-20"
+        class="relative z-10 container mx-auto px-4 md:px-6 w-full pt-32 md:pt-36 pb-20 lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-12 lg:text-left"
     >
+        <!-- LEFT COLUMN: text block (single-column centered stack below lg) -->
+        <div class="flex flex-col items-center text-center lg:items-start lg:text-left">
         <!-- Availability / status pill -->
         <div
             class="hero-pill inline-flex items-center gap-2.5 mb-8 px-4 py-2 rounded-full border border-sky-500/20 bg-sky-500/5 text-xs md:text-sm text-sky-300 font-medium"
@@ -57,7 +62,7 @@ const stats = [
 
             <div class="overflow-hidden py-4">
                 <span
-                    class="hero-title-element block text-5xl sm:text-6xl md:text-7xl lg:text-9xl text-transparent bg-clip-text bg-gradient-to-b from-white via-sky-100 to-sky-300 filter drop-shadow-2xl leading-[1.1] md:leading-tight"
+                    class="hero-title-element block text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-transparent bg-clip-text bg-gradient-to-b from-white via-sky-100 to-sky-300 filter drop-shadow-2xl leading-[1.1] md:leading-tight"
                 >
                     DIGITAL FUTURE
                 </span>
@@ -65,7 +70,7 @@ const stats = [
         </h1>
 
         <p
-            class="hero-desc max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-9 md:mb-10 px-4"
+            class="hero-desc max-w-2xl mx-auto lg:mx-0 text-base sm:text-lg md:text-xl text-gray-400 font-light leading-relaxed mb-9 md:mb-10 px-4 lg:px-0"
         >
             Strategic, <span class="text-white font-medium">code-based</span>
             websites that are not just beautiful, but <span
@@ -76,7 +81,7 @@ const stats = [
 
         <!-- Dual CTA -->
         <div
-            class="hero-btn w-full flex flex-col sm:flex-row gap-4 justify-center items-center px-4 mb-14"
+            class="hero-btn w-full flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center px-4 lg:px-0 mb-14"
         >
             <MagneticButton
                 href="/contact/"
@@ -125,7 +130,7 @@ const stats = [
 
         <!-- Trust / stat strip -->
         <div
-            class="hero-stats flex flex-wrap items-center justify-center gap-x-8 gap-y-4 md:gap-x-12"
+            class="hero-stats flex flex-wrap items-center justify-center lg:justify-start gap-x-8 gap-y-4 md:gap-x-12"
         >
             {
                 stats.map((s, i) => (
@@ -133,9 +138,20 @@ const stats = [
                         {i > 0 && (
                             <div class="hidden sm:block w-px h-10 bg-white/10" />
                         )}
-                        <div class="text-center">
+                        <div class="text-center lg:text-left">
                             <div class="text-lg md:text-2xl font-black text-white tracking-tight">
-                                {s.value}
+                                {s.countUp ? (
+                                    /* Count-up: tabular-nums + fixed min-width → no layout shift. */
+                                    <span
+                                        class="hero-count inline-block tabular-nums text-left min-w-[3.6ch]"
+                                        data-count-target="100"
+                                        data-count-suffix="/100"
+                                    >
+                                        0/100
+                                    </span>
+                                ) : (
+                                    s.value
+                                )}
                             </div>
                             <div class="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest mt-1">
                                 {s.label}
@@ -145,6 +161,74 @@ const stats = [
                 ))
             }
         </div>
+        </div>
+        <!-- /LEFT COLUMN -->
+
+        <!-- RIGHT COLUMN: browser-frame product mock (lg+ only; hidden below lg to keep the centered stack) -->
+        <div class="hero-visual hidden lg:block w-full">
+            <div
+                class="relative rounded-2xl border border-white/10 bg-[#0d1424] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] overflow-hidden"
+            >
+                <!-- Browser chrome -->
+                <div
+                    class="flex items-center gap-3 px-4 py-3 border-b border-white/10 bg-white/[0.02]"
+                >
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-3 h-3 rounded-full bg-red-400/80"></span>
+                        <span class="w-3 h-3 rounded-full bg-amber-400/80"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-400/80"></span>
+                    </div>
+                    <div
+                        class="flex-1 flex items-center justify-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-[11px] text-gray-400 font-mono tracking-tight"
+                    >
+                        <svg
+                            class="w-3 h-3 text-sky-400/70"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                            ></path></svg
+                        >
+                        prometheusdigital.eu
+                    </div>
+                </div>
+
+                <!-- Real project screenshot (LCP candidate: eager + high priority, fixed ratio → no CLS) -->
+                <div class="relative aspect-[16/10] w-full">
+                    <Image
+                        src={heroMockImage}
+                        alt="A custom-built website by Prometheus Digital"
+                        class="w-full h-full object-cover object-top"
+                        widths={[640, 960, 1280, 1600]}
+                        sizes="(min-width: 1024px) 48vw, 0px"
+                        quality="high"
+                        loading="eager"
+                        fetchpriority="high"
+                        width={1600}
+                        height={1000}
+                    />
+                    <!-- Sky-accent performance badge (solid bg, no backdrop → cheap) -->
+                    <div
+                        class="absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sky-500 text-white text-[11px] font-bold tracking-tight shadow-lg"
+                    >
+                        <svg
+                            class="w-3.5 h-3.5"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"
+                            ></path></svg
+                        >
+                        100/100 PageSpeed
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /RIGHT COLUMN -->
     </div>
 
     <div
@@ -174,6 +258,7 @@ const stats = [
         gsap.set(".hero-desc", { y: 30, opacity: 0, filter: "blur(4px)" });
         gsap.set(".hero-btn", { y: 30, opacity: 0, scale: 0.95 });
         gsap.set(".hero-stats", { y: 20, opacity: 0 });
+        gsap.set(".hero-visual", { x: 40, opacity: 0, filter: "blur(6px)" });
         gsap.set(".hero-scroll", { opacity: 0 });
 
         const tl = gsap.timeline({ delay: 0.05 });
@@ -193,12 +278,64 @@ const stats = [
             .to(".hero-stats", {
                 y: 0, opacity: 1, duration: 0.5, ease: "power2.out",
             }, "-=0.2")
+            .to(".hero-visual", {
+                x: 0, opacity: 1, filter: "blur(0px)", duration: 0.7, ease: "power3.out",
+            }, "-=0.45")
             .to(".hero-scroll", { opacity: 1, duration: 0.5 }, "-=0.3");
         } catch (e) {
             // GSAP failure — keep hero content visible (LCP/SEO safeguard)
-            document.querySelectorAll(".hero-pill, .hero-title-element, .hero-desc, .hero-btn, .hero-stats, .hero-scroll").forEach((el) => { el.style.opacity = "1"; el.style.transform = "none"; el.style.filter = "none"; });
+            document.querySelectorAll(".hero-pill, .hero-title-element, .hero-desc, .hero-btn, .hero-stats, .hero-visual, .hero-scroll").forEach((el) => { el.style.opacity = "1"; el.style.transform = "none"; el.style.filter = "none"; });
         }
     }
 
-    document.addEventListener("astro:page-load", animateHero);
+    // COUNT-UP: animates the "100/100" stat. Writes only textContent, starts via
+    // IntersectionObserver, tabular-nums + fixed min-width keep it layout-shift free.
+    function animateHeroCount() {
+        const el = document.querySelector<HTMLElement>(".hero-count");
+        if (!el) return;
+
+        const target = parseInt(el.dataset.countTarget || "100", 10);
+        const suffix = el.dataset.countSuffix || "";
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        if (reduce) {
+            el.textContent = target + suffix;
+            return;
+        }
+
+        let started = false;
+        const run = () => {
+            if (started) return;
+            started = true;
+            const duration = 1100; // ms
+            const start = performance.now();
+            const tick = (now: number) => {
+                const t = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+                el.textContent = Math.round(eased * target) + suffix;
+                if (t < 1) requestAnimationFrame(tick);
+                else el.textContent = target + suffix;
+            };
+            requestAnimationFrame(tick);
+        };
+
+        if (!("IntersectionObserver" in window)) {
+            run();
+            return;
+        }
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    run();
+                    io.disconnect();
+                }
+            });
+        }, { threshold: 0.6 });
+        io.observe(el);
+    }
+
+    document.addEventListener("astro:page-load", () => {
+        animateHero();
+        animateHeroCount();
+    });
 </script>
