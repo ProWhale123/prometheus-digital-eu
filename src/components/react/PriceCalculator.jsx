@@ -72,7 +72,7 @@ export default function PriceCalculator() {
 
         // Webshop
         if (config.webshop === 'lite') sum += W.webshopLite.price;
-        if (config.webshop === 'pro') setWebshopQuoteNeeded(true);
+        if (config.webshop === 'pro') { sum += W.webshopPro.price; setWebshopQuoteNeeded(true); }
         else setWebshopQuoteNeeded(false);
 
         // Analytics
@@ -286,7 +286,7 @@ export default function PriceCalculator() {
                                     onClick={() => setConfig({ ...config, webshop: config.webshop === 'lite' ? 'none' : 'lite' })}
                                     className={`p-5 rounded-xl border text-left relative transition-all ${config.webshop === 'lite' ? 'border-sky-500 bg-sky-500/10' : 'border-white/10 hover:bg-gray-800/50'}`}
                                 >
-                                    <div className="font-bold text-white text-sm">Lite Commerce</div>
+                                    <div className="font-bold text-white text-sm">Simple webshop (Lite)</div>
                                     <div className="text-xs text-gray-400 mt-2 leading-relaxed">Integrated cart & checkout, Stripe payments, invoicing integration. Ideal for up to 20 products.</div>
                                     <div className="text-sky-400 text-xs font-mono mt-3 font-bold">{formatPrice(W.webshopLite.price)}</div>
                                     {config.webshop === 'lite' && <span className="absolute top-3 right-3 w-2 h-2 bg-sky-500 rounded-full shadow-[0_0_10px_#38bdf8]"></span>}
@@ -296,7 +296,7 @@ export default function PriceCalculator() {
                                     onClick={() => setConfig({ ...config, webshop: config.webshop === 'pro' ? 'none' : 'pro' })}
                                     className={`p-5 rounded-xl border text-left relative transition-all ${config.webshop === 'pro' ? 'border-purple-500 bg-purple-500/10' : 'border-white/10 hover:bg-gray-800/50'}`}
                                 >
-                                    <div className="font-bold text-white text-sm">Pro Commerce (Headless)</div>
+                                    <div className="font-bold text-white text-sm">Scalable webshop (Pro)</div>
                                     <div className="text-xs text-gray-400 mt-2 leading-relaxed">User registration, order history, invoicing integration. Scalable e-commerce.</div>
                                     <div className="text-purple-400 text-xs font-mono mt-3 font-bold">from {formatPrice(W.webshopPro.price)}</div>
                                     {config.webshop === 'pro' && <span className="absolute top-3 right-3 w-2 h-2 bg-purple-500 rounded-full shadow-[0_0_10px_#a855f7]"></span>}
@@ -405,7 +405,7 @@ export default function PriceCalculator() {
                 </div>
 
                 {/* RIGHT SIDE: SMART QUOTE (Sticky) */}
-                <div className="lg:col-span-1 bg-[#050911] p-6 md:p-8 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-white/10 relative lg:sticky lg:top-0 h-auto lg:h-screen overflow-y-auto custom-scrollbar">
+                <div className="lg:col-span-1 bg-[#050911] p-6 md:p-8 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-white/10 relative lg:sticky lg:top-24 h-auto lg:max-h-[calc(100vh-7rem)] overflow-y-auto custom-scrollbar">
                     <div>
                         <h3 className="text-white font-black text-xl mb-6 uppercase tracking-wider flex items-center">
                             <span className="w-2 h-2 bg-green-500 rounded-full mr-3 animate-pulse"></span>
@@ -414,7 +414,7 @@ export default function PriceCalculator() {
 
                         <div className="space-y-1 mb-8 text-sm">
                             <div className="flex justify-between py-2 border-b border-white/5">
-                                <span className="text-gray-400">Core System</span>
+                                <span className="text-gray-400">Prometheus Core</span>
                                 <span className="text-white font-mono">{formatPrice(BASE_PRICE)}</span>
                             </div>
 
@@ -431,7 +431,7 @@ export default function PriceCalculator() {
                             {config.copywriting && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-gray-400">Copywriting</span><span className="text-white font-mono">{formatPrice(W.copywritingMain.price)}</span></div>}
 
                             {config.webshop === 'lite' && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-sky-400">Webshop Lite</span><span className="text-sky-400 font-mono">{formatPrice(W.webshopLite.price)}</span></div>}
-                            {config.webshop === 'pro' && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-purple-400">Webshop Pro</span><span className="text-purple-400 font-mono">Custom</span></div>}
+                            {config.webshop === 'pro' && <div className="flex justify-between py-2 border-b border-white/5"><span className="text-purple-400">Webshop Pro</span><span className="text-purple-400 font-mono">from {formatPrice(W.webshopPro.price)}</span></div>}
 
                             {/* SEO */}
                             {config.seo.foundation && (
@@ -455,7 +455,7 @@ export default function PriceCalculator() {
                         </div>
 
                         <div className="mb-8 p-4 bg-gradient-to-br from-gray-900 to-black rounded-xl border border-white/10">
-                            <div className="text-white font-bold text-sm mb-1">Maintenance &amp; Warranty</div>
+                            <div className="text-white font-bold text-sm mb-1">Maintenance &amp; Support</div>
                             <div className="text-xs text-gray-500 leading-relaxed mb-2">Hosting, domain, SSL, monitoring and bug fixes. Four tiers, <span className="text-green-400 font-mono">from {formatPrice(30)} / mo</span>.</div>
                             <a href="/pricing#maintenance" className="text-green-400 text-xs font-mono hover:underline">Maintenance plans →</a>
                         </div>
@@ -463,16 +463,21 @@ export default function PriceCalculator() {
 
                     <div>
                         <div className="text-gray-500 text-xs uppercase tracking-widest mb-1">Estimated Project Budget</div>
-                        <div className="text-3xl md:text-4xl font-black text-white mb-1 tracking-tight">
-                            {(webshopQuoteNeeded || seoMonthlyNeeded) ? "Custom Quote" : formatPrice(total)}
+                        <div className="text-4xl md:text-5xl font-black text-white mb-1 tracking-tight">
+                            {(webshopQuoteNeeded || config.migration) ? "from " : ""}{formatPrice(total)}
                         </div>
-                        {seoMonthlyNeeded && !webshopQuoteNeeded && <div className="text-emerald-400 text-xs mb-1 font-mono">+ monthly SEO fee</div>}
-                        <div className="text-gray-600 text-xs mb-6 font-mono">+ VAT</div>
+                        {seoMonthlyNeeded && <div className="text-emerald-400 text-xs mb-1 font-mono">+ monthly SEO fee (custom)</div>}
+                        <div className="text-gray-600 text-xs mb-5 font-mono">+ VAT</div>
 
-                        <a href={`/contact?package=custom&price=${webshopQuoteNeeded ? 'custom' : total}`} className="block w-full py-4 bg-white hover:bg-gray-200 text-black text-center font-bold rounded-full transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-                            {webshopQuoteNeeded ? "Request Consultation" : "Request Quote"}
+                        <a href={`/contact?package=custom&price=${total}`} className="block w-full py-4 bg-white hover:bg-gray-200 text-black text-center font-bold rounded-full transition-all hover:scale-[1.02] shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                            Request Quote
                         </a>
-                        <p className="text-center text-[10px] text-gray-600 mt-4 leading-tight">
+                        <div className="flex flex-col items-center gap-1 text-[11px] text-gray-400 mt-4">
+                            <span>✓ 50% deposit, 50% on delivery</span>
+                            <span>✓ Start within 2-3 weeks</span>
+                            <span>✓ Personal quote within 24 hours</span>
+                        </div>
+                        <p className="text-center text-[10px] text-gray-600 mt-3 leading-tight">
                             This is a preliminary calculation. The final quote will be prepared after clarifying the specifications.
                         </p>
                     </div>
