@@ -94,6 +94,14 @@ body {
     transform: translateY(0);
 }
 
+/* PERFORMANCE: promote large decorative blur-glow blobs to their own
+   compositing layer so they only translate during scroll instead of
+   repainting every frame — this fixes the hero-section scroll stutter.
+   will-change does not override the glows' existing transform (centering). */
+[class*="blur-["] {
+    will-change: transform;
+}
+
 /* ACCESSIBILITY: Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
