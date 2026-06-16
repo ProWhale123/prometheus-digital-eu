@@ -50,11 +50,11 @@ const a = {
     <table class="w-full min-w-[640px] border-separate border-spacing-0 text-left">
         <thead>
             <tr>
-                <th class="sticky left-0 z-10 bg-[#0B1120] align-bottom p-3 md:p-4 w-[30%]"></th>
+                <th class="sticky left-0 z-10 bg-[#0B1120] align-top p-3 md:p-4 w-[30%]"></th>
                 {
                     tiers.map((t) => (
                         <th
-                            class={`align-bottom p-3 md:p-4 text-center relative ${t.featured ? a.bg + " border-t " + a.topBorder + " rounded-t-2xl" : ""}`}
+                            class={`align-top px-3 md:px-4 pb-3 md:pb-4 pt-6 text-center relative ${t.featured ? a.bg + " border-t " + a.topBorder + " rounded-t-2xl" : ""}`}
                         >
                             {t.featured && (
                                 <span class={`absolute -top-2.5 left-1/2 -translate-x-1/2 ${a.badge} text-white text-[10px] font-bold uppercase tracking-wider px-3 py-0.5 rounded-full whitespace-nowrap`}>

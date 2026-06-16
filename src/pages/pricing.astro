@@ -103,7 +103,7 @@ const maintTableTiers = maintenanceTiers.map((tier) => ({
     priceSub: `or ${fmtEur(tier.yearly)} / yr`,
     cta: `/contact?topic=maintenance-${tier.id}`,
     ctaLabel: "Choose →",
-    featured: tier.featured,
+    featured: false,
 }));
 
 const accent = {
