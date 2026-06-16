@@ -10,6 +10,7 @@ import Breadcrumb from "../components/Breadcrumb.astro";
 
 import PriceCalculator from "../components/react/PriceCalculator.jsx";
 import FAQSchema from "../components/FAQSchema.astro";
+import ComparisonTable from "../components/ComparisonTable.astro";
 
 import {
     fmtEur,
@@ -95,15 +96,14 @@ const moduleCategories: { title: string; rows: { label: string; price: string }[
 ];
 
 // Maintenance cards: for each tier we list only the included items
-const maintenanceCards = maintenanceTiers.map((tier, i) => ({
-    ...tier,
-    items: maintenanceRows
-        .filter((r) => r.values[i])
-        .map((r) =>
-            typeof r.values[i] === "boolean"
-                ? r.label
-                : `${r.label}: ${r.values[i]}`,
-        ),
+const maintTableTiers = maintenanceTiers.map((tier) => ({
+    name: tier.name,
+    kicker: tier.kicker,
+    price: `${fmtEur(tier.monthly)} / mo`,
+    priceSub: `or ${fmtEur(tier.yearly)} / yr`,
+    cta: `/contact?topic=maintenance-${tier.id}`,
+    ctaLabel: "Choose →",
+    featured: tier.featured,
 }));
 
 const accent = {
@@ -387,72 +387,14 @@ const offerSchema = {
                     </p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto mb-12">
-                    {
-                        maintenanceCards.map((tier) => (
-                            <div
-                                class={`p-6 rounded-3xl flex flex-col relative transition-colors ${
-                                    tier.featured
-                                        ? "bg-sky-500/5 border border-sky-500/30"
-                                        : "bg-gray-900/50 border border-white/10 hover:border-sky-500/30"
-                                }`}
-                            >
-                                {tier.featured && (
-                                    <div class="absolute top-0 right-0 bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
-                                        POPULAR
-                                    </div>
-                                )}
-                                <div class="text-sky-400 font-bold text-[11px] tracking-widest uppercase mb-2">
-                                    {tier.kicker}
-                                </div>
-                                <h3 class="text-xl font-bold text-white mb-3">
-                                    {tier.name}
-                                </h3>
-                                <div class="mb-1">
-                                    <span class="text-3xl font-black text-white">
-                                        {fmtEur(tier.monthly)}
-                                    </span>
-                                    <span class="text-sm text-gray-500 font-normal">
-                                        {" "}/ mo
-                                    </span>
-                                </div>
-                                <div class="text-xs text-gray-500 mb-6">
-                                    or {fmtEur(tier.yearly)} / yr (2 months free)
-                                </div>
-
-                                <ul class="space-y-2.5 mb-6 flex-grow text-sm">
-                                    {tier.items.map((item) => (
-                                        <li class="flex items-start text-gray-300">
-                                            <svg
-                                                class="w-4 h-4 text-sky-400 mr-2.5 mt-0.5 flex-shrink-0"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M5 13l4 4L19 7"
-                                                />
-                                            </svg>
-                                            <span>{item}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                                <a
-                                    href={`/contact?topic=maintenance-${tier.id}`}
-                                    class={`block w-full py-2.5 text-center text-sm rounded-full transition-colors ${
-                                        tier.featured
-                                            ? "bg-sky-500 text-white font-bold hover:bg-sky-600"
-                                            : "border border-white/20 text-white hover:bg-white/5"
-                                    }`}
-                                >
-                                    Choose →
-                                </a>
-                            </div>
-                        ))
-                    }
+                <div class="mb-6 text-center text-gray-400 text-sm">What each tier includes:</div>
+                <div class="mb-12">
+                    <ComparisonTable
+                        tiers={maintTableTiers}
+                        rows={maintenanceRows}
+                        accent="sky"
+                        featuredLabel="Popular"
+                    />
                 </div>
 
                 <!-- Annual discount + hourly rate -->

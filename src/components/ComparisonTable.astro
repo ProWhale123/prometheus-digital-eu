@@ -1,0 +1,139 @@
+---
+// src/components/ComparisonTable.astro
+// Reusable comparison table (maintenance, monthly SEO, etc.):
+// sticky first column, highlighted featured column, ✓ / value / — cells,
+// horizontally scrollable on mobile.
+interface Tier {
+    name: string;
+    kicker?: string;
+    price: string;
+    priceSub?: string;
+    cta: string;
+    ctaLabel: string;
+    featured?: boolean;
+}
+interface Row {
+    label: string;
+    values: (string | boolean)[];
+}
+interface Props {
+    tiers: Tier[];
+    rows: Row[];
+    accent?: "sky" | "emerald";
+    featuredLabel?: string;
+}
+const { tiers, rows, accent = "sky", featuredLabel = "Most popular" } = Astro.props;
+
+const a = {
+    sky: {
+        text: "text-sky-400",
+        bg: "bg-sky-500/[0.06]",
+        btn: "bg-sky-500 text-white hover:bg-sky-600",
+        ghost: "border border-sky-500/30 text-sky-400 hover:bg-sky-500/10",
+        check: "text-sky-400",
+        badge: "bg-sky-500",
+        topBorder: "border-sky-500/40",
+    },
+    emerald: {
+        text: "text-emerald-400",
+        bg: "bg-emerald-500/[0.06]",
+        btn: "bg-emerald-500 text-white hover:bg-emerald-600",
+        ghost: "border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10",
+        check: "text-emerald-400",
+        badge: "bg-emerald-500",
+        topBorder: "border-emerald-500/40",
+    },
+}[accent];
+---
+
+<div class="max-w-5xl mx-auto overflow-x-auto custom-scrollbar -mx-4 px-4 md:mx-auto md:px-0 pt-3">
+    <table class="w-full min-w-[640px] border-separate border-spacing-0 text-left">
+        <thead>
+            <tr>
+                <th class="sticky left-0 z-10 bg-[#0B1120] align-bottom p-3 md:p-4 w-[30%]"></th>
+                {
+                    tiers.map((t) => (
+                        <th
+                            class={`align-bottom p-3 md:p-4 text-center relative ${t.featured ? a.bg + " border-t " + a.topBorder + " rounded-t-2xl" : ""}`}
+                        >
+                            {t.featured && (
+                                <span class={`absolute -top-2.5 left-1/2 -translate-x-1/2 ${a.badge} text-white text-[10px] font-bold uppercase tracking-wider px-3 py-0.5 rounded-full whitespace-nowrap`}>
+                                    {featuredLabel}
+                                </span>
+                            )}
+                            {t.kicker && (
+                                <div class={`text-[10px] font-bold uppercase tracking-widest mb-1 ${a.text}`}>
+                                    {t.kicker}
+                                </div>
+                            )}
+                            <div class="text-white font-bold text-base md:text-lg">
+                                {t.name}
+                            </div>
+                            <div class="text-xl md:text-2xl font-black text-white mt-1.5">
+                                {t.price}
+                            </div>
+                            {t.priceSub && (
+                                <div class="text-[11px] text-gray-500 mt-0.5">
+                                    {t.priceSub}
+                                </div>
+                            )}
+                        </th>
+                    ))
+                }
+            </tr>
+        </thead>
+        <tbody>
+            {
+                rows.map((row) => (
+                    <tr>
+                        <td class="sticky left-0 z-10 bg-[#0B1120] text-sm text-gray-300 py-3 px-3 md:px-4 border-b border-white/5">
+                            {row.label}
+                        </td>
+                        {row.values.map((v, ci) => (
+                            <td
+                                class={`text-center text-sm py-3 px-3 md:px-4 border-b border-white/5 ${tiers[ci] && tiers[ci].featured ? a.bg : ""}`}
+                            >
+                                {v === true ? (
+                                    <svg
+                                        class={`w-5 h-5 mx-auto ${a.check}`}
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2.5"
+                                            d="M5 13l4 4L19 7"
+                                        />
+                                    </svg>
+                                ) : v === false ? (
+                                    <span class="text-gray-600 text-lg leading-none">—</span>
+                                ) : (
+                                    <span class="text-gray-200">{v}</span>
+                                )}
+                            </td>
+                        ))}
+                    </tr>
+                ))
+            }
+            <tr>
+                <td class="sticky left-0 z-10 bg-[#0B1120]" />
+                {
+                    tiers.map((t) => (
+                        <td
+                            class={`p-3 md:p-4 text-center ${t.featured ? a.bg + " border-b " + a.topBorder + " rounded-b-2xl" : ""}`}
+                        >
+                            <a
+                                href={t.cta}
+                                class={`block w-full py-2.5 px-3 text-xs md:text-sm font-bold rounded-full transition-colors ${t.featured ? a.btn : a.ghost}`}
+                            >
+                                {t.ctaLabel}
+                            </a>
+                        </td>
+                    ))
+                }
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -7,17 +7,30 @@ import Breadcrumb from "../components/Breadcrumb.astro";
 import ServiceSchema from "../components/ServiceSchema.astro";
 import MagneticButtonAstro from "../components/MagneticButtonAstro.astro";
 import SpotlightCard from "../components/SpotlightCard.astro";
+import ComparisonTable from "../components/ComparisonTable.astro";
 
 import {
     fmtEur,
     webModules,
     seoOneTime,
     seoMonthlyTiers,
+    seoMonthlyRows,
     seoAddons,
     geoServices,
     SEO_MIN_MONTHS,
     COMPLEX_EXTRA_SUBPAGE,
 } from "../data/pricing";
+
+// Monthly SEO comparison-table columns
+const seoTableTiers = seoMonthlyTiers.map((tier) => ({
+    name: tier.name,
+    kicker: tier.kicker,
+    price: `${fmtEur(tier.price)} / mo`,
+    priceSub: `+ VAT · min. ${SEO_MIN_MONTHS} mo`,
+    cta: `/contact?topic=${tier.id}`,
+    ctaLabel: "Request a Quote →",
+    featured: tier.featured,
+}));
 
 const seoProcess = [
     {
@@ -616,98 +629,13 @@ const faqs = [
                     </p>
                 </div>
 
-                <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-8"
-                >
-                    {
-                        seoMonthlyTiers.map((tier) => (
-                            <SpotlightCard
-                                class={`h-full bg-gray-900/60 border relative ${
-                                    tier.featured
-                                        ? "border-emerald-500/40"
-                                        : "border-white/10"
-                                }`}
-                            >
-                                <div class="p-6 md:p-8 h-full flex flex-col">
-                                    {tier.featured && (
-                                        <div class="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl">
-                                            MOST POPULAR
-                                        </div>
-                                    )}
-
-                                    <div class="inline-flex items-center gap-2 mb-4 text-xs font-bold tracking-widest text-gray-500 uppercase">
-                                        <span
-                                            class={`w-2 h-6 rounded-full ${
-                                                tier.featured
-                                                    ? "bg-emerald-500"
-                                                    : "bg-emerald-500/40"
-                                            }`}
-                                        />
-                                        {tier.kicker}
-                                    </div>
-
-                                    <h3 class="text-2xl font-bold text-white mb-2">
-                                        {tier.name}
-                                    </h3>
-                                    <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-                                        {tier.description}
-                                    </p>
-
-                                    <div class="space-y-3 mb-8 flex-grow">
-                                        {tier.baseNote && (
-                                            <p class="text-xs font-bold text-emerald-400/80 uppercase tracking-wider">
-                                                {tier.baseNote}
-                                            </p>
-                                        )}
-                                        {tier.features.map((item) => (
-                                            <div class="flex items-start gap-2 text-sm">
-                                                <svg
-                                                    class="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M5 13l4 4L19 7"
-                                                    />
-                                                </svg>
-                                                <span class="text-gray-300">
-                                                    {item}
-                                                </span>
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    <div class="pt-6 border-t border-white/10">
-                                        <div class="flex items-baseline gap-2 mb-1">
-                                            <span class="text-3xl font-black text-white">
-                                                {fmtEur(tier.price)}
-                                            </span>
-                                            <span class="text-gray-500 text-sm">
-                                                / mo + VAT
-                                            </span>
-                                        </div>
-                                        <p class="text-xs text-gray-500 italic mb-4">
-                                            Minimum {SEO_MIN_MONTHS}-month partnership
-                                        </p>
-                                        <a
-                                            href={`/contact?topic=${tier.id}`}
-                                            class={`block w-full text-center py-3 px-6 font-bold rounded-full transition-all ${
-                                                tier.featured
-                                                    ? "bg-emerald-500 text-white hover:bg-emerald-600 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)]"
-                                                    : "border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
-                                            }`}
-                                        >
-                                            Request a Quote
-                                        </a>
-                                    </div>
-                                </div>
-                            </SpotlightCard>
-                        ))
-                    }
+                <div class="mb-8">
+                    <ComparisonTable
+                        tiers={seoTableTiers}
+                        rows={seoMonthlyRows}
+                        accent="emerald"
+                        featuredLabel="Most popular"
+                    />
                 </div>
 
                 <!-- SEO ADD-ONS -->

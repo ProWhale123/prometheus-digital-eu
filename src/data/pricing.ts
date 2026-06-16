@@ -276,6 +276,18 @@ export const seoMonthlyTiers: SeoMonthlyTier[] = [
 
 export const SEO_MIN_MONTHS = 6;
 
+/** Monthly SEO comparison matrix. `values` follows the seoMonthlyTiers order (Local / Growth / Dominance). */
+export const seoMonthlyRows: { label: string; values: (string | boolean)[] }[] = [
+  { label: "SEO expert articles / mo (with pillar content)", values: ["2 articles", "4 articles", "6 articles"] },
+  { label: "On-page optimisation",                           values: ["monthly", "4 pages / mo", "8 pages / mo"] },
+  { label: "Technical monitoring (CWV, GSC)",                values: ["monthly", "bi-weekly", "weekly + alerts"] },
+  { label: "Link building",                                  values: [false, "4 links / mo", "6–8 links + 2 PR articles"] },
+  { label: "Local SEO (Google Business Profile)",            values: [false, "baseline", "full, multi-location"] },
+  { label: "Competitor analysis",                            values: [false, "quarterly", "monthly"] },
+  { label: "Monthly PDF report",                             values: [true, true, true] },
+  { label: "Consultation (phone / Teams / Viber)",           values: ["30 min / mo", "60 min / mo", "bi-weekly"] },
+];
+
 // -----------------------------------------------------------------------------
 // 6. SEO — ADD-ONS (alongside any monthly package)
 // -----------------------------------------------------------------------------
