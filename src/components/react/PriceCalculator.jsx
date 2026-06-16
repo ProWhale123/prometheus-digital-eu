@@ -30,6 +30,7 @@ const ICONS = {
     integrations: <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" />,
     seo: (<><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></>),
     geomaint: <path d="M12 3l1.9 4.9L19 9.5l-5.1 1.6L12 16l-1.9-4.9L5 9.5l5.1-1.6L12 3z" />,
+    maint: <path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" />,
 };
 
 const DEFAULT_CONFIG = {
@@ -209,7 +210,8 @@ export default function PriceCalculator() {
     const partSeoOneTime = config.seoOneTime !== 'none' ? S[config.seoOneTime].price : 0;
     const partSeoMonthly = seoMonthlyTier ? seoMonthlyTier.price : 0;
     const partGeoOneTime = config.geoOneTime !== 'none' ? (geoById(config.geoOneTime)?.price || 0) : 0;
-    const partGeoMaintMonthly = (geoMonthlySel ? geoMonthlySel.price : 0) + (maintTier ? maintTier.monthly : 0);
+    const partGeoMonthly = geoMonthlySel ? geoMonthlySel.price : 0;
+    const partMaintMonthly = maintTier ? maintTier.monthly : 0;
 
     const sumBase = `Prometheus Core${config.subPages ? ` · ${config.subPages} pages` : ''}${config.salesPage ? ' · Sales page' : ''}${config.migration ? ' · migration' : ''}`;
     const designExtras = [config.premiumAnimations && 'animations', config.darkMode && 'dark mode'].filter(Boolean);
@@ -220,8 +222,9 @@ export default function PriceCalculator() {
     const sumInteg = integCount ? `${integCount} selected` : 'Nothing selected';
     const seoParts = [config.seoOneTime !== 'none' && S[config.seoOneTime].name, seoMonthlyTier && seoMonthlyTier.name].filter(Boolean);
     const sumSeo = seoParts.length ? seoParts.join(' · ') : 'One-time + monthly packages';
-    const geoParts = [config.geoOneTime !== 'none' && geoById(config.geoOneTime).name, geoMonthlySel && geoMonthlySel.name, maintTier && `Maintenance: ${maintTier.name}`].filter(Boolean);
-    const sumGeo = geoParts.length ? geoParts.join(' · ') : 'AI visibility + maintenance';
+    const geoParts = [config.geoOneTime !== 'none' && geoById(config.geoOneTime).name, geoMonthlySel && geoMonthlySel.name].filter(Boolean);
+    const sumGeo = geoParts.length ? geoParts.join(' · ') : 'Appear in AI search answers';
+    const sumMaint = maintTier ? `${maintTier.name} — ${maintTier.kicker}` : 'Nothing selected';
 
     const analyticsItems = [
         { id: 'ga4', label: 'Google Analytics 4', price: W.ga4.price },
@@ -316,17 +319,21 @@ export default function PriceCalculator() {
                         <a href="/seo-services#packages" className="text-emerald-400 text-xs font-mono inline-block hover:underline pt-1">What's included? Full table →</a>
                     </Category>
 
-                    {/* 6. GEO/AI & MAINTENANCE */}
-                    <Category id="geomaint" openId={openId} setOpen={setOpenId} icon="geomaint" accent="cyan" title="GEO/AI & maintenance" summary={sumGeo} oneTime={partGeoOneTime} monthly={partGeoMaintMonthly}>
-                        <SubLabel>GEO/AI visibility — one-time</SubLabel>
+                    {/* 6. GEO / AI VISIBILITY */}
+                    <Category id="geo" openId={openId} setOpen={setOpenId} icon="geomaint" accent="cyan" title="GEO / AI visibility" summary={sumGeo} oneTime={partGeoOneTime} monthly={partGeoMonthly}>
+                        <p className="text-[11px] text-gray-400 leading-snug pb-1">Be there in ChatGPT, Gemini, Perplexity and Google AI Overview answers — standalone or alongside SEO.</p>
+                        <SubLabel>One-time</SubLabel>
                         {geoOneTimeOptions.map((g) => (
                             <Row key={g.id} name={g.name} desc={g.tagline} price={formatPrice(g.price)} accent="cyan" selected={config.geoOneTime === g.id} onClick={() => pick('geoOneTime', g.id)} />
                         ))}
-                        <SubLabel>GEO/AI visibility — monthly</SubLabel>
+                        <SubLabel>Monthly (subscription)</SubLabel>
                         {geoMonthlyOptions.map((g) => (
                             <Row key={g.id} name={g.name} desc={g.tagline} price={`${formatPrice(g.price)} / mo`} accent="cyan" selected={config.geoMonitoring === g.id} onClick={() => pick('geoMonitoring', g.id)} />
                         ))}
-                        <SubLabel>Maintenance & support</SubLabel>
+                    </Category>
+
+                    {/* 7. MAINTENANCE & SUPPORT */}
+                    <Category id="maint" openId={openId} setOpen={setOpenId} icon="maint" accent="sky" title="Maintenance & support" summary={sumMaint} oneTime={0} monthly={partMaintMonthly}>
                         {maintenanceTiers.map((t) => (
                             <Row key={t.id} name={t.name} desc={t.kicker} price={`${formatPrice(t.monthly)} / mo`} priceNote={`or ${formatPrice(t.yearly)} / yr`} accent="sky" selected={config.maintenance === t.id} onClick={() => pick('maintenance', t.id)} />
                         ))}

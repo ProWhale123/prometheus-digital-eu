@@ -37,63 +37,6 @@ const priceText = (m: Module): string => {
     return s;
 };
 
-// The full modular price list grouped into categories (transparency + SEO)
-const moduleCategories: { title: string; rows: { label: string; price: string }[] }[] = [
-    {
-        title: "Structure & foundations",
-        rows: [
-            { label: webModules.core.label, price: priceText(webModules.core) },
-            { label: webModules.subPage.label, price: priceText(webModules.subPage) },
-            { label: webModules.salesPage.label, price: priceText(webModules.salesPage) },
-        ],
-    },
-    {
-        title: "Design & experience",
-        rows: [
-            { label: webModules.customDesign.label, price: priceText(webModules.customDesign) },
-            { label: webModules.premiumAnimations.label, price: priceText(webModules.premiumAnimations) },
-            { label: webModules.darkMode.label, price: priceText(webModules.darkMode) },
-        ],
-    },
-    {
-        title: "Content & commerce",
-        rows: [
-            { label: webModules.cmsBasic.label, price: priceText(webModules.cmsBasic) },
-            { label: webModules.cmsComplex.label, price: priceText(webModules.cmsComplex) },
-            { label: webModules.blog.label, price: priceText(webModules.blog) },
-            { label: webModules.webshopLite.label, price: priceText(webModules.webshopLite) },
-            { label: webModules.webshopPro.label, price: priceText(webModules.webshopPro) },
-        ],
-    },
-    {
-        title: "Measurement, integration & multilingual",
-        rows: [
-            { label: webModules.ga4.label, price: priceText(webModules.ga4) },
-            { label: webModules.gsc.label, price: priceText(webModules.gsc) },
-            { label: webModules.gtm.label, price: priceText(webModules.gtm) },
-            { label: webModules.pixel.label, price: priceText(webModules.pixel) },
-            { label: webModules.booking.label, price: priceText(webModules.booking) },
-            { label: webModules.crm.label, price: priceText(webModules.crm) },
-            { label: webModules.newsletter.label, price: priceText(webModules.newsletter) },
-            {
-                label: webModules.chatbotSetup.label,
-                price: `${fmtEur(webModules.chatbotSetup.price)} + ${fmtEur(webModules.chatbotMonthly.price)} / mo`,
-            },
-            { label: webModules.multilingualFirst.label, price: priceText(webModules.multilingualFirst) },
-            { label: webModules.multilingualNext.label, price: priceText(webModules.multilingualNext) },
-        ],
-    },
-    {
-        title: "Content preparation & migration",
-        rows: [
-            { label: webModules.migration.label, price: priceText(webModules.migration) },
-            { label: webModules.copywritingMain.label, price: priceText(webModules.copywritingMain) },
-            { label: webModules.copywritingSub.label, price: priceText(webModules.copywritingSub) },
-            { label: webModules.translation.label, price: priceText(webModules.translation) },
-            { label: webModules.media.label, price: priceText(webModules.media) },
-        ],
-    },
-];
 
 // Maintenance cards: for each tier we list only the included items
 const maintTableTiers = maintenanceTiers.map((tier) => ({
@@ -275,7 +218,6 @@ const offerSchema = {
                     <a href="#configurations" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-sky-500/50 hover:text-white transition-colors">Configurations</a>
                     <a href="#calculator" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-sky-500/50 hover:text-white transition-colors">Calculator</a>
                     <a href="#maintenance" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-sky-500/50 hover:text-white transition-colors">Maintenance</a>
-                    <a href="#modules" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-sky-500/50 hover:text-white transition-colors">Modules</a>
                     <a href="#seo" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-emerald-500/50 hover:text-white transition-colors">SEO</a>
                     <a href="#ai" class="px-4 py-2 rounded-full border border-white/15 text-gray-300 hover:border-cyan-500/50 hover:text-white transition-colors">GEO / AI</a>
                 </div>
@@ -429,66 +371,6 @@ const offerSchema = {
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- FULL MODULAR PRICE LIST (below maintenance) -->
-        <section id="modules" class="py-20 md:py-28 bg-[#0B1120] border-t border-white/5 scroll-mt-24">
-            <div class="container mx-auto px-6">
-                <div class="text-center max-w-3xl mx-auto mb-10">
-                    <span class="text-sky-400 font-bold uppercase tracking-widest text-xs">Full Transparency</span>
-                    <h2 class="text-3xl md:text-5xl font-black text-white mt-3 mb-4">
-                        Full Modular Price List
-                    </h2>
-                    <p class="text-gray-400">
-                        Every module, every price — open the categories.
-                    </p>
-                </div>
-
-                <div class="max-w-4xl mx-auto space-y-4">
-                    {
-                        moduleCategories.map((cat) => (
-                            <details class="group bg-gray-900/40 border border-white/5 rounded-2xl overflow-hidden hover:border-sky-500/20 transition-all">
-                                <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
-                                    <h3 class="text-white font-bold pr-4">
-                                        {cat.title}
-                                    </h3>
-                                    <svg
-                                        class="w-5 h-5 text-sky-500 group-open:rotate-180 transition-transform duration-300 flex-shrink-0"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M19 9l-7 7-7-7"
-                                        />
-                                    </svg>
-                                </summary>
-                                <div class="px-6 pb-6 border-t border-white/5 pt-4">
-                                    <ul class="divide-y divide-white/5">
-                                        {cat.rows.map((row) => (
-                                            <li class="flex items-center justify-between gap-4 py-3">
-                                                <span class="text-gray-300 text-sm">
-                                                    {row.label}
-                                                </span>
-                                                <span class="text-sky-400 font-mono text-sm text-right whitespace-nowrap">
-                                                    {row.price}
-                                                </span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </details>
-                        ))
-                    }
-                </div>
-                <p class="text-center text-gray-500 text-xs mt-6 max-w-4xl mx-auto">
-                    All prices are net, excluding VAT. Translation and
-                    photo/video content are quoted individually.
-                </p>
             </div>
         </section>
 
