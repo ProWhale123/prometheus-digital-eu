@@ -164,7 +164,9 @@ const stats = [
 
     function animateHero() {
         if (!document.querySelector(".hero-title-element")) return;
-
+        // Reduced-motion: leave content at its visible CSS default — no reveal.
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        try {
         gsap.set(".hero-pill", { y: 20, opacity: 0 });
         gsap.set(".hero-title-element", { y: 50, opacity: 0, filter: "blur(10px)", scale: 1.05 });
         gsap.set(".hero-desc", { y: 30, opacity: 0, filter: "blur(4px)" });
@@ -190,6 +192,10 @@ const stats = [
                 y: 0, opacity: 1, duration: 0.5, ease: "power2.out",
             }, "-=0.2")
             .to(".hero-scroll", { opacity: 1, duration: 0.5 }, "-=0.3");
+        } catch (e) {
+            // GSAP failure — keep hero content visible (LCP/SEO safeguard)
+            document.querySelectorAll(".hero-pill, .hero-title-element, .hero-desc, .hero-btn, .hero-stats, .hero-scroll").forEach((el) => { el.style.opacity = "1"; el.style.transform = "none"; el.style.filter = "none"; });
+        }
     }
 
     document.addEventListener("astro:page-load", animateHero);

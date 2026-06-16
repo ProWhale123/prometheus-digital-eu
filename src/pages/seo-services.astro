@@ -3,10 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import Contact from "../components/Contact.astro";
-import CookieBanner from "../components/CookieBanner.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 import ServiceSchema from "../components/ServiceSchema.astro";
-import LocalBusinessSchema from "../components/LocalBusinessSchema.astro";
 import MagneticButtonAstro from "../components/MagneticButtonAstro.astro";
 import SpotlightCard from "../components/SpotlightCard.astro";
 
@@ -183,8 +181,8 @@ const faqs = [
 ---
 
 <Layout
-    title="SEO Services for Businesses | Search Engine Optimization - Prometheus Digital"
-    description="Professional SEO for businesses: one-time SEO Foundation from €870, three-tier monthly SEO (Local €450, Growth €810, Dominance €1,350) and GEO/AI visibility in AI search engines."
+    title="SEO Services for Businesses | Prometheus Digital"
+    description="Professional SEO for businesses: SEO Foundation from €870, three-tier monthly SEO (€450–€1,350) and GEO/AI visibility in AI search engines."
 >
     <Header />
 
@@ -234,8 +232,6 @@ const faqs = [
             },
         ]}
     />
-
-    <LocalBusinessSchema />
 
     <main id="main-content" class="overflow-hidden">
         <!-- HERO -->
@@ -1107,5 +1103,4 @@ const faqs = [
         <Contact />
     </main>
     <Footer />
-    <CookieBanner />
 </Layout>

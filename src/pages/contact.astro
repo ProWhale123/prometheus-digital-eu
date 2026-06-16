@@ -4,7 +4,6 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ContactSection from "../components/Contact.astro";
-import CookieBanner from "../components/CookieBanner.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 ---
 
@@ -40,5 +39,54 @@ import Breadcrumb from "../components/Breadcrumb.astro";
     </main>
 
     <Footer />
-    <CookieBanner />
+
+    <script>
+        // Pre-fills the form subject from CTA params ?topic= / ?package=&price=
+        function prefillContactForm() {
+            const params = new URLSearchParams(window.location.search);
+            const topic = params.get("topic");
+            const pkg = params.get("package");
+            const price = params.get("price");
+
+            const subjectEl = document.querySelector('form[name="contact"] input[name="subject"]');
+            const msgEl = document.querySelector('form[name="contact"] textarea[name="message"]');
+            if (!subjectEl) return;
+
+            const labels = {
+                "seo-assessment": "Free SEO assessment",
+                "seo-foundation": "SEO Foundation — quote request",
+                "complex-seo-setup": "Complex SEO Setup — quote request",
+                "seo-local": "SEO Local monthly plan — quote request",
+                "seo-growth": "SEO Growth monthly plan — quote request",
+                "seo-dominance": "SEO Dominance monthly plan — quote request",
+                "geo-audit": "GEO/AI Visibility Audit — quote request",
+                "geo-setup": "GEO/AI Setup — quote request",
+                "geo-combo": "GEO/AI Audit + Setup bundle — quote request",
+                "geo-monitoring": "GEO/AI Monthly Monitoring — quote request",
+                "geo-fine-tuning": "GEO/AI Fine-tuning + Monitoring — quote request",
+                "maintenance-essential": "Maintenance — Essential plan",
+                "maintenance-standard": "Maintenance — Standard plan",
+                "maintenance-business": "Maintenance — Business plan",
+                "maintenance-premium": "Maintenance — Premium plan",
+            };
+
+            let subject = "";
+            if (pkg === "custom") {
+                subject = "Custom website configuration — quote request";
+                const n = parseInt(price || "", 10);
+                if (!isNaN(n)) subject += ` (approx. €${new Intl.NumberFormat("en-IE").format(n)})`;
+            } else if (topic) {
+                subject = labels[topic] || (topic.charAt(0).toUpperCase() + topic.slice(1).replace(/-/g, " "));
+            }
+
+            if (subject && !subjectEl.value) {
+                subjectEl.value = subject;
+                if (msgEl && !msgEl.value) {
+                    msgEl.value = `I'd like to ask about: ${subject}.\n\n`;
+                }
+                try { msgEl && msgEl.focus(); } catch (e) {}
+            }
+        }
+        document.addEventListener("astro:page-load", prefillContactForm);
+    </script>
 </Layout>

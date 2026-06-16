@@ -6,7 +6,6 @@ import Footer from "../components/Footer.astro";
 import Contact from "../components/Contact.astro";
 import { Image } from "astro:assets";
 import arainkImage from "../assets/images/araink-background.jpg";
-import CookieBanner from "../components/CookieBanner.astro";
 import Breadcrumb from "../components/Breadcrumb.astro";
 
 import PriceCalculator from "../components/react/PriceCalculator.jsx";
@@ -180,10 +179,11 @@ const offerSchema = {
             "@type": "Offer",
             name: c.name,
             description: c.tagline,
-            price: String(c.priceFrom),
             priceCurrency: "EUR",
             priceSpecification: {
                 "@type": "PriceSpecification",
+                minPrice: String(c.priceFrom),
+                priceCurrency: "EUR",
                 valueAddedTaxIncluded: false,
             },
             seller: {
@@ -196,8 +196,8 @@ const offerSchema = {
 ---
 
 <Layout
-    title="Website Pricing 2026 | Transparent Web Development Pricing - Prometheus Digital"
-    description="Transparent, modular pricing from €749. Typical configurations, maintenance, SEO and GEO/AI prices, a full module list and an interactive calculator — every price in one place."
+    title="Website Pricing 2026 – Transparent | Prometheus Digital"
+    description="Transparent, modular website pricing from €749. Typical configurations, maintenance, SEO and AI prices, with an interactive calculator."
 >
     <Header />
 
@@ -747,7 +747,6 @@ const offerSchema = {
     </main>
 
     <Footer />
-    <CookieBanner />
 </Layout>
 
 <script>
@@ -756,10 +755,13 @@ const offerSchema = {
     gsap.registerPlugin(ScrollTrigger);
 
     function animatePricing() {
+        // Reduced-motion: no reveal/parallax — content is visible by default.
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         // Kill all page-level ScrollTriggers to prevent accumulation on View Transitions
         ScrollTrigger.getAll().forEach(t => t.kill());
 
         // Kill any competing tweens from previous invocations (HMR / view transitions)
+        try {
         gsap.set(".reveal-text", { y: 80, opacity: 0 });
         gsap.set(".reveal-desc", { y: 40, opacity: 0 });
 
@@ -771,6 +773,10 @@ const offerSchema = {
             { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: "power3.out" },
             "-=0.4",
         );
+        } catch (e) {
+            // GSAP failure — keep hero text visible
+            document.querySelectorAll(".reveal-text, .reveal-desc").forEach((el) => { el.style.opacity = "1"; el.style.transform = "none"; });
+        }
 
         // Skip parallax on mobile — scrub-based scroll animation is GPU-heavy
         if (!window.matchMedia('(pointer: coarse)').matches) {

@@ -112,9 +112,18 @@ body {
     }
 
     .reveal,
-    .animate-on-scroll {
+    .animate-on-scroll,
+    .hero-pill,
+    .hero-title-element,
+    .hero-desc,
+    .hero-btn,
+    .hero-stats,
+    .hero-scroll,
+    .reveal-text,
+    .reveal-desc {
         opacity: 1 !important;
         transform: none !important;
+        filter: none !important;
         transition: none !important;
     }
 }
