@@ -11,6 +11,8 @@ export default defineConfig({
   // Cseréld le a végleges domain nevedre, ha más!
   site: 'https://www.prometheusdigital.eu',
 
+  trailingSlash: 'always',
+
   vite: {
     plugins: [tailwindcss()]
   },

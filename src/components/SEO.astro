@@ -18,7 +18,8 @@ const siteName = "Prometheus Digital";
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const absoluteImageUrl = new URL(image, Astro.site);
 
-// Hreflang path mapping (EN → HU)
+// Hreflang path mapping (EN → HU). Only pages with a REAL HU equivalent.
+// Region pages (Vienna/Salzburg) have no HU twin → must NOT emit a hu alternate.
 const enToHuPaths: Record<string, string> = {
     "/": "/",
     "/services": "/szolgaltatasok",
@@ -29,11 +30,12 @@ const enToHuPaths: Record<string, string> = {
     "/contact": "/kapcsolat",
     "/seo-services": "/seo-szolgaltatasok",
     "/privacy-policy": "/adatvedelem",
-    "/web-design-budapest": "/weboldal-keszites-budapest",
-    "/webshop-development-budapest": "/webshop-keszites-budapest",
 };
 const cleanPath = Astro.url.pathname.replace(/\/$/, "") || "/";
-const huPath = enToHuPaths[cleanPath] || "/";
+const huPathRaw = enToHuPaths[cleanPath] ?? null;
+const huHref = huPathRaw
+    ? `https://www.prometheusdigital.hu${huPathRaw === "/" ? "/" : huPathRaw + "/"}`
+    : null;
 ---
 
 <!-- Basic Meta Tags -->
@@ -53,8 +55,8 @@ const huPath = enToHuPaths[cleanPath] || "/";
 
 <!-- Hreflang (EN ↔ HU) -->
 <link rel="alternate" hreflang="en" href={canonicalURL} />
-<link rel="alternate" hreflang="hu" href={`https://www.prometheusdigital.hu${huPath}`} />
-<link rel="alternate" hreflang="x-default" href={`https://www.prometheusdigital.hu${huPath}`} />
+{huHref && <link rel="alternate" hreflang="hu" href={huHref} />}
+<link rel="alternate" hreflang="x-default" href={huHref ?? canonicalURL} />
 
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="/favicon.png?v=3" />
